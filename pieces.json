@@ -212,15 +212,15 @@
         "instances": {
           "Billiards Room": {
             "combo": ["food", "living", "sleep"],
-            "exits": [[3, 0], [4, 5]]
+            "exits": [[0, 5], [1, 10], [4, 3]]
           },
           "Oratory": {
             "combo": ["sleep", "living", "downstairs"],
-            "exits": [[3, 0], [4, 9]]
+            "exits": [[0, 5], [1, 10], [3, 10]]
           },
           "Sewing Room": {
             "combo": ["living", "utility", "sleep"],
-            "exits": [[3, 0], [4, 9]]
+            "exits": [[0, 7], [3, 10], [4, 7]]
           }
         }
       }
