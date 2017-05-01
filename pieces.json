@@ -1,0 +1,229 @@
+{
+  "150": {
+    "type": "circle",
+    "dimensions": [6, 6],
+    "rooms": {
+      "activity": {
+        "points": 3,
+        "modifier": -1,
+        "instances": {
+          "Piano Room": {
+            "combo": ["living", "sleep"],
+            "exits": [[0, 3], [3, 6], [6, 3]]
+          },
+          "Berchta Room": {
+            "combo": ["living", "sleep"],
+            "exits": [[3, 0], [6, 3], [3, 6]]
+          },
+          "Flute Room": {
+            "combo": ["living", "sleep"],
+            "exits": [[0, 3], [3, 6], [3, 0]]
+          }
+        }
+      },
+      "downstairs": {
+        "points": 3,
+        "all-modifier": 1,
+        "instances": {
+          "Bottomless Pit": {
+            "combo": ["outdoor"],
+            "exits": [[0, 3]]
+          },
+          "Fungus Room": {
+            "combo": ["food"],
+            "exits": [[0, 3]]
+          },
+          "The Hole": {
+            "combo": ["sleep"],
+            "exits": [[6, 3]]
+          }
+        }
+      },
+      "living": {
+        "points": 4,
+        "modifier": 1,
+        "instances": {
+          "Study": {
+            "combo": ["living"],
+            "exits": [[0, 3], [6, 3], [3, 0], [3, 6]]
+          },
+          "Sitting Room": {
+            "combo": ["outdoor"],
+            "exits": [[0, 3], [6, 3], [3, 0], [3, 6]]
+          },
+          "Parlor": {
+            "combo": ["activity"],
+            "exits": [[0, 3], [6, 3], [3, 0], [3, 6]]
+          }
+        }
+      }
+    }
+  },
+  "100": {
+    "type": "rectangle",
+    "dimensions": [4, 4],
+    "rooms": {
+      "food": {
+        "points": 2,
+        "instances": {
+          "Pantry": {
+            "exits": [[3, 0], [1, 4]]
+          },
+          "Larder": {
+            "exits": [[3, 0], [3, 4]]
+          },
+          "Buttery": {
+            "exits": [[1, 0], [3, 4]]
+          }
+        }
+      },
+      "utility": {
+        "points": 1,
+        "instances": {
+          "Powder Room": {
+            "exits": [[4, 3]]
+          },
+          "Broom Closet": {
+            "exits": [[4, 1]]
+          },
+          "Cloak Room": {
+            "exits": [[4, 1]]
+          }
+        }
+      },
+      "living": {
+        "points": 5,
+        "instances": {
+          "Pink Cabinet": {
+            "exits": [[1, 0], [0, 3], [1, 4], [4, 3]]
+          },
+          "Focus Room": {
+            "exits": [[1, 0], [0, 3], [3, 4], [4, 3]]
+          },
+          "Lilac Cabinet": {
+            "exits": [[1, 0], [0, 1], [3, 4], [4, 3]]
+          }
+        }
+      }
+    }
+  },
+  "200": {
+    "type": "rectangle",
+    "dimensions": [4, 8],
+    "rooms": {
+      "utility": {
+        "points": 2,
+        "instances": {
+          "Washroom": {
+            "exits": [[4, 5]]
+          },
+          "Dirt Room": {
+            "exits": [[1, 8]]
+          },
+          "Utility Room": {
+            "exits": [[3, 8]]
+          }
+        }
+      },
+      "food": {
+        "points": 1,
+        "modifier": 3,
+        "instances": {
+          "Anteroom": {
+            "combo": ["sleep"],
+            "exits": [[0, 3], [4, 5]]
+          },
+          "Food Prep Room": {
+            "combo": ["activity"],
+            "exits": [[0, 7], [4, 7]]
+          },
+          "Meat Locker": {
+            "combo": ["outdoor"],
+            "exits": [[1, 0], [1, 8]]
+          }
+        }
+      },
+      "sleep": {
+        "points": 2,
+        "modifier": 2,
+        "instances": {
+          "Nap Room": {
+            "combo": ["living"],
+            "exits": [[3, 8], [4, 3]]
+          },
+          "Dressing Room": {
+            "combo": ["food"],
+            "exits": [[1, 8], [3, 0]]
+          },
+          "Solar": {
+            "combo": ["outdoor"],
+            "exits": [[3, 8], [4, 7]]
+          }
+        }
+      }
+    }
+  },
+  "250": {
+    "type": "rectangle",
+    "dimensions": [4, 10],
+    "rooms": {
+      "outdoor": {
+        "points": 1,
+        "modifier": 1,
+        "instances": {
+          "Porch": {
+            "combo": ["sleep"],
+            "exits": [[4, 1], [4, 9]],
+            "fence": "U"
+          },
+          "Gatehouse": {
+            "combo": ["outdoor"],
+            "exits": [[4, 1], [4, 9]],
+            "fence": "U"
+          },
+          "Shed": {
+            "combo": ["utility"],
+            "exits": [[4, 1], [3, 10]],
+            "fence": "U"
+          }
+        }
+      },
+      "downstairs": {
+        "points": 2,
+        "all-modifier": 2,
+        "instances": {
+          "Mold Room": {
+            "combo": ["food"],
+            "exits": [[3, 0], [4, 5]]
+          },
+          "Knight Room": {
+            "combo": ["sleep"],
+            "exits": [[3, 0], [4, 9]]
+          },
+          "Crypt": {
+            "combo": ["living"],
+            "exits": [[3, 0], [4, 9]]
+          }
+        }
+      },
+      "activity": {
+        "points": 4,
+        "modifier": -1,
+        "instances": {
+          "Billiards Room": {
+            "combo": ["food", "living", "sleep"],
+            "exits": [[3, 0], [4, 5]]
+          },
+          "Oratory": {
+            "combo": ["sleep", "living", "downstairs"],
+            "exits": [[3, 0], [4, 9]]
+          },
+          "Sewing Room": {
+            "combo": ["living", "utility", "sleep"],
+            "exits": [[3, 0], [4, 9]]
+          }
+        }
+      }
+    }
+  }
+}
