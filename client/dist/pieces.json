@@ -75,7 +75,7 @@
       },
       "downstairs": {
         "points": 3,
-        "all-modifier": 1,
+        "all_modifier": 1,
         "instances": {
           "Bottomless Pit": {
             "combo": ["outdoor"],
@@ -242,7 +242,7 @@
       },
       "downstairs": {
         "points": 2,
-        "all-modifier": 2,
+        "all_modifier": 2,
         "instances": {
           "Mold Room": {
             "combo": ["food"],
@@ -286,13 +286,13 @@
         "points": 3,
         "instances": {
           "Sauna": {
-            "exits": [[7, 8]],
+            "exits": [[7, 8]]
           },
           "Panic Room": {
-            "exits": [[1, 4]],
+            "exits": [[1, 4]]
           },
           "Laundry Room": {
-            "exits": [[5, 8]],
+            "exits": [[5, 8]]
           }
         }
       },
@@ -344,11 +344,11 @@
         "instances": {
           "Salon": {
             "combo": ["activity"],
-            "exits": [[0, 11], [3, 0], [3, 14], [4, 9]],
+            "exits": [[0, 11], [3, 0], [3, 14], [4, 9]]
           },
           "Gallery of Mirrors": {
             "combo": ["corridor"],
-            "exits": [[0, 13], [3, 0], [3, 14], [4, 1]],
+            "exits": [[0, 13], [3, 0], [3, 14], [4, 1]]
           }
         }
       },
@@ -394,11 +394,11 @@
         "instances": {
           "East Tapestry Chamber": {
             "combo": ["activity", "outdoor"],
-            "exits": [[0, 5], [3, 0], [3, 8], [8, 7]],
+            "exits": [[0, 5], [3, 0], [3, 8], [8, 7]]
           },
           "Observatory": {
             "combo": ["activity", "living"],
-            "exits": [[0, 3], [3, 9], [5, 0], [8, 5]],
+            "exits": [[0, 3], [3, 9], [5, 0], [8, 5]]
           }
         }
       },
@@ -442,11 +442,11 @@
         "instances": {
           "Drawing Room": {
             "combo": ["activity", "utility"],
-            "exits": [[0, 5], [1, 12], [3, 0], [6, 11]],
+            "exits": [[0, 5], [1, 12], [3, 0], [6, 11]]
           },
           "West Tapestry Room": {
             "combo": ["activity", "outdoor"],
-            "exits": [[0, 11], [3, 0], [3, 12], [6, 1]],
+            "exits": [[0, 11], [3, 0], [3, 12], [6, 1]]
           }
         }
       },
@@ -466,7 +466,7 @@
       },
       "downstairs": {
         "points": 1,
-        "all-modifier": 2,
+        "all_modifier": 2,
         "instances": {
           "Armory": {
             "combo": ["activity"],
@@ -490,11 +490,11 @@
         "instances": {
           "Forum": {
             "combo": ["food", "downstairs", "living", "sleep"],
-            "exits": [[0, 5], [5, 10], [10, 5]],
+            "exits": [[0, 5], [5, 10], [10, 5]]
           },
           "Theater": {
             "combo": ["utility", "corridor", "living", "sleep"],
-            "exits": [[0, 5], [5, 0], [5, 10]],
+            "exits": [[0, 5], [5, 0], [5, 10]]
           }
         }
       },
@@ -516,10 +516,10 @@
       },
       "downstairs": {
         "points": 1,
-        "all-modifier": 2,
+        "all_modifier": 2,
         "instances": {
           "Venus Grotto": {
-            "all-modifier": 1,
+            "all_modifier": 1,
             "combo": ["corridor"],
             "exits": [[5, 0], [5, 10]]
           },
@@ -541,11 +541,11 @@
         "instances": {
           "Vestibule": {
             "combo": ["food"],
-            "exits": [[0, 7], [5, 0], [5, 14], [8, 7]],
+            "exits": [[0, 7], [5, 0], [5, 14], [8, 7]]
           },
           "Throne Room": {
             "combo": ["sleep"],
-            "exits": [[0, 11], [3, 0], [5, 14], [8, 11]],
+            "exits": [[0, 11], [3, 0], [5, 14], [8, 11]]
           }
         }
       },
