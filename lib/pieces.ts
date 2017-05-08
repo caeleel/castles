@@ -109,7 +109,7 @@ export module Pieces {
       }
 
       this.exits.forEach((exit: number[]) => {
-        let newY: number = this.height - exit[0];
+        let newY: number = this.width - exit[0];
         exit[0] = exit[1];
         exit[1] = newY;
       });
@@ -120,8 +120,8 @@ export module Pieces {
     }
 
     constructor(
-      public height: number,
       public width: number,
+      public height: number,
       public sqft: number,
       public points: number,
       public modifier: number,
@@ -168,6 +168,11 @@ export module Pieces {
               let instance: RoomInstance = room.instances[name];
               let n = instance.number || 1;
               for (let i=0; i<n; i++) {
+                if (instance.exits) {
+                  for (let j=0; j<instance.exits.length; j++) {
+                    instance.exits[j] = instance.exits[j].slice(0);
+                  }
+                }
                 rooms.push(new Piece(
                   roomSize.dimensions[0],
                   roomSize.dimensions[1],
@@ -175,8 +180,8 @@ export module Pieces {
                   room.points || 0,
                   room.modifier || 0,
                   room.all_modifier || 0,
-                  instance.combo || [],
-                  instance.exits,
+                  instance.combo? instance.combo.slice(0) : [],
+                  instance.exits? instance.exits.slice(0) : [],
                   roomSize.type,
                   instance.fence? [0, 1] : null,
                   name
