@@ -3,7 +3,8 @@ import 'isomorphic-fetch'
 export module Pieces {
   const octagonal: string[] = ['circle', 'octagon'];
   const rectangular: string[] = ['rectangle', 'L'];
-  const cellArea: number = 4;
+  const cellLen: number = 2;
+  const cellArea: number = cellLen * cellLen;
 
   interface RoomInstance {
     combo?: string[];
@@ -66,11 +67,19 @@ export module Pieces {
 
       let overlap: number = xOverlap * yOverlap;
 
-      if (octagonal.indexOf(this.type) >= 0 && octagonal.indexOf(p.type)) {
+      if (octagonal.indexOf(this.type) >= 0 && octagonal.indexOf(p.type) >= 0) {
         overlap -= cellArea;
       }
-      if (this.subrect) {
+      if (this.subrect != null) {
         overlap -= this.subrect.overlap(p);
+      }
+      if (p.subrect != null) {
+        overlap -= p.subrect.overlap(this);
+      }
+      if (this.subrect != null && p.subrect != null &&
+          this.subrect.x === p.subrect.x &&
+          this.subrect.y === p.subrect.y) {
+        overlap -= cellArea;
       }
 
       return overlap;
@@ -89,7 +98,7 @@ export module Pieces {
         this.x = x;
         this.y = y;
         if (this.subrect) {
-          this.subrect.moveTo(x + 4, y);
+          this.subrect.moveTo(x + 2*cellLen, y);
         }
       } else {
         this.moveRelative(x - this.x, y - this.y);
@@ -101,7 +110,7 @@ export module Pieces {
         let xLocal = this.subrect.x - this.x;
         let yLocal = this.subrect.y - this.y;
 
-        this.subrect.moveRelative(yLocal - xLocal, 4 - xLocal - yLocal);
+        this.subrect.moveRelative(yLocal - xLocal, 2*cellLen - xLocal - yLocal);
       }
 
       if (this.fence != null) {
