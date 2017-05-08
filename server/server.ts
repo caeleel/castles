@@ -1,14 +1,13 @@
 import * as http from 'http';
 import * as fs from 'fs';
-import {Pieces} from './lib/pieces';
+import {Pieces} from '../lib/pieces';
 
 http.createServer(function (request, response) {
   console.log(request.url);
-  if (request.url.indexOf('/dist/') === 0) {
-    const path : string = '.' + request.url;
+  if (request.url.indexOf('/static/') === 0) {
+    const path : string = 'server' + request.url;
     fs.readFile(path, (error, content) => {
       if (error) {
-        console.log('hmm');
         if (error.code == 'ENOENT') response.writeHead(404);
         else response.writeHead(500);
         response.end();

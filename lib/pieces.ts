@@ -33,9 +33,74 @@ export module Pieces {
     [sqft: string]: RoomSize;
   }
 
+  interface overlapFunction {
+    (p: Piece): boolean;
+  }
+
+  interface moveFunction {
+    (x: number, y: number): void;
+  }
+
   export class Piece {
     public x?: number;
     public y?: number;
+    private subrect?: Piece;
+    private radius?: number;
+
+    public overlaps: overlapFunction = (p) => {
+      let xOverlap: number = Math.min((this.x + this.width - p.x), (p.x + p.width - this.x));
+      let yOverlap: number = Math.min((this.y + this.height - p.y), (p.y + p.height - this.y));
+
+      if (xOverlap <= 0 || yOverlap <= 0) return false;
+      if (this.type === 'circle' && p.type === 'circle') {
+        let x
+      }
+
+      return false;
+    };
+
+    public moveRelative: moveFunction = (x, y) => {
+      this.x += x;
+      this.y += y;
+      if (this.subrect) {
+        this.subrect.moveRelative(x, y);
+      }
+    }
+
+    public moveTo: moveFunction = (x, y) => {
+      if (this.x == null) {
+        this.x = x;
+        this.y = y;
+        if (this.subrect) {
+          this.subrect.moveTo(x + 4, y);
+        }
+      } else {
+        this.moveRelative(x - this.x, y - this.y);
+      }
+    }
+
+    public rotate = () => {
+      if (this.subrect != null) {
+        let xLocal = this.subrect.x - this.x;
+        let yLocal = this.subrect.y - this.y;
+
+        this.subrect.moveRelative(yLocal - xLocal, 4 - xLocal - yLocal);
+      }
+
+      if (this.fence != null) {
+        this.fence = [-this.fence[1], this.fence[0]];
+      }
+
+      this.exits.forEach((exit: number[]) => {
+        let newY: number = this.height - exit[0];
+        exit[0] = exit[1];
+        exit[1] = newY;
+      });
+
+      let newHeight: number = this.width;
+      this.width = this.height;
+      this.height = newHeight;
+    }
 
     constructor(
       public height: number,
@@ -47,9 +112,27 @@ export module Pieces {
       public combo: string[],
       public exits: number[][],
       public type: string,
-      public fence: boolean,
+      public fence: number[],
       public name: string
     ) {
+      if (this.type === 'circle') {
+        this.radius = width / 2;
+      } else if (this.type === 'L') {
+        this.subrect = new Piece(
+          this.height / 2,
+          this.width / 2,
+          this.sqft / 4,
+          0,
+          0,
+          0,
+          [],
+          [],
+          'rectangle',
+          null,
+          'subtract'
+        );
+      }
+      this.moveTo(0, 0);
     }
   }
 
@@ -78,7 +161,7 @@ export module Pieces {
                   instance.combo || [],
                   instance.exits,
                   roomSize.type,
-                  instance.fence || false,
+                  instance.fence? [0, 1] : null,
                   name
                 ));
               }
