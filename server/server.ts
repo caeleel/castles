@@ -5,7 +5,7 @@ import {Pieces} from '../lib/pieces';
 http.createServer(function (request, response) {
   console.log(request.url);
   if (request.url.indexOf('/static/') === 0) {
-    const path : string = 'server' + request.url;
+    const path : string = '.' + request.url;
     fs.readFile(path, (error, content) => {
       if (error) {
         if (error.code == 'ENOENT') response.writeHead(404);
