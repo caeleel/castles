@@ -1,6 +1,10 @@
 import 'isomorphic-fetch'
 
 export module Pieces {
+  const octagonal: string[] = ['circle', 'octagon'];
+  const rectangular: string[] = ['rectangle', 'L'];
+  const cellArea: number = 4;
+
   interface RoomInstance {
     combo?: string[];
     exits?: number[][];
@@ -34,7 +38,7 @@ export module Pieces {
   }
 
   interface overlapFunction {
-    (p: Piece): boolean;
+    (p: Piece): number;
   }
 
   interface moveFunction {
@@ -47,16 +51,29 @@ export module Pieces {
     private subrect?: Piece;
     private radius?: number;
 
-    public overlaps: overlapFunction = (p) => {
+    // Returns positive number if pieces overlap, 0 if they do not.
+    public overlap: overlapFunction = (p) => {
       let xOverlap: number = Math.min((this.x + this.width - p.x), (p.x + p.width - this.x));
       let yOverlap: number = Math.min((this.y + this.height - p.y), (p.y + p.height - this.y));
 
-      if (xOverlap <= 0 || yOverlap <= 0) return false;
+      if (xOverlap <= 0 || yOverlap <= 0) return 0;
       if (this.type === 'circle' && p.type === 'circle') {
-        let x
+        let dx:number = Math.abs(p.x + p.radius - this.x - this.radius);
+        let dy:number = Math.abs(p.y + p.radius - this.y - this.radius);
+        let d:number = Math.sqrt(dx*dx + dy*dy);
+        return Math.max(this.radius + p.radius - d, 0);
       }
 
-      return false;
+      let overlap: number = xOverlap * yOverlap;
+
+      if (octagonal.indexOf(this.type) >= 0 && octagonal.indexOf(p.type)) {
+        overlap -= cellArea;
+      }
+      if (this.subrect) {
+        overlap -= this.subrect.overlap(p);
+      }
+
+      return overlap;
     };
 
     public moveRelative: moveFunction = (x, y) => {
