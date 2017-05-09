@@ -1,11 +1,29 @@
 import * as React from "react";
 
-export interface PieceProps { compiler: string; framework: string; }
+import { Pieces } from '../../../lib/pieces';
 
-// 'PieceProps' describes the shape of props.
-// State is never set so we use the 'undefined' type.
-export class Piece extends React.Component<PieceProps, undefined> {
-    render() {
-        return <h1>Piece from {this.props.compiler} and {this.props.framework}!</h1>;
+interface Position {
+    x: number;
+    y: number;
+}
+
+export module Piece {
+    export interface PieceProps { piece: Pieces.Piece; }
+
+    // 'PieceProps' describes the shape of props.
+    // State is never set so we use the 'undefined' type.
+    export class Piece extends React.Component<PieceProps, undefined> {
+        render() {
+
+            let style = {
+                x: this.props.piece.x,
+                y: this.props.piece.y,
+                height: this.props.piece.height,
+                width: this.props.piece.width,
+                backgroundColor: '#AAAAAA'
+            };
+
+            return <div className="piece" style={style}></div>;
+        }
     }
 }

@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { Piece } from "./components/Piece";
+import { Board } from "./components/Board";
 
 ReactDOM.render(
-    <Piece compiler="TypeScript" framework="React" />,
-    document.getElementById("example")
+    <Board compiler="TypeScript" framework="React" />,
+    document.getElementById("board")
 );
