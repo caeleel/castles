@@ -26,7 +26,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
     render() {
         console.log(this.state.pieces)
         return (
-            <div id="golf">
+            <div>
                 {
                     this.state.pieces.map(function(piece, i: number){return (
                         <Piece.Piece key={i} piece={piece} />
