@@ -1,8 +1,6 @@
 import 'isomorphic-fetch'
 
 export module Pieces {
-  const octagonal: string[] = ['circle', 'octagon'];
-  const rectangular: string[] = ['rectangle', 'L'];
   const cellLen: number = 2;
   const cellArea: number = cellLen * cellLen;
 
@@ -42,6 +40,10 @@ export module Pieces {
     (p: Piece): number;
   }
 
+  interface overlapsFunction {
+    (p: Piece): boolean;
+  }
+
   interface moveFunction {
     (x: number, y: number): void;
   }
@@ -51,6 +53,7 @@ export module Pieces {
     public y?: number;
     private subrect?: Piece;
     private radius?: number;
+    public orientation?: number[];
 
     // Returns positive number if pieces overlap, 0 if they do not.
     public overlap: overlapFunction = (p) => {
@@ -67,15 +70,13 @@ export module Pieces {
 
       let overlap: number = xOverlap * yOverlap;
 
-      if (octagonal.indexOf(this.type) >= 0 && octagonal.indexOf(p.type) >= 0) {
+      if ((this.type === 'octagon' || this.sqft === 500) &&
+          (p.type === 'octagon' || p.sqft === 500)) {
         overlap -= cellArea;
       }
-      if (this.subrect != null) {
-        overlap -= this.subrect.overlap(p);
-      }
-      if (p.subrect != null) {
-        overlap -= p.subrect.overlap(this);
-      }
+      if (this.subrect != null) overlap -= this.subrect.overlap(p);
+      if (p.subrect != null) overlap -= p.subrect.overlap(this);
+
       if (this.subrect != null && p.subrect != null &&
           this.subrect.x === p.subrect.x &&
           this.subrect.y === p.subrect.y) {
@@ -84,6 +85,54 @@ export module Pieces {
 
       return overlap;
     };
+
+    public fenceTouches: overlapsFunction = (p) => {
+      if (this.rType != 'outdoor') return false;
+
+      let tester = new Piece(0, 0, 0, 0, 0, 0, [], [], 'rectangle', null, 'tester');
+      if (this.type === 'rectangle') {
+        tester.x = this.x + (this.orientation[0] == 1? this.width : cellLen*this.orientation[0]);
+        tester.y = this.y + (this.orientation[1] == 1? this.height : cellLen*this.orientation[1]);
+        tester.width = this.orientation[1] != 0? this.width : cellLen;
+        tester.height = this.orientation[0] != 0? this.height : cellLen;
+      } else if (this.type == 'octagon') {
+        tester.x = this.x + (this.orientation[0] == 1? this.width : (this.orientation[0]*2 + 1)*cellLen);
+        tester.y = this.y + (this.orientation[1] == 1? this.height : (this.orientation[1]*2 + 1)*cellLen);
+        tester.width = this.orientation[1] != 0? this.width - 2*cellLen : cellLen;
+        tester.height = this.orientation[0] != 0? this.height - 2*cellLen : cellLen;
+      } else if (this.type == 'circle') {
+        tester.width = cellLen;
+        tester.height = cellLen;
+        tester.x = this.x + this.orientation[0]*cellLen*(p.type === 'rectangle'? 3 : 4) + cellLen*2;
+        tester.y = this.y + this.orientation[1]*cellLen*(p.type === 'rectangle'? 3 : 4)  + cellLen*2;
+
+        return tester.overlap(p) > 0;
+      }
+
+      let overlap: number = tester.overlap(p);
+      if (p.type === 'octagon' || p.type === 'circle') overlap -= cellArea;
+      if (p.sqft === 500) overlap -= cellArea;
+      if (overlap > 0) return true;
+      if (p.type !== 'octagon' || this.type !== 'octagon') return false;
+
+      tester.x = this.x + (this.orientation[0] == 1? this.width - cellLen : 0);
+      tester.y = this.y + (this.orientation[1] == 1? this.height - cellLen : 0);
+      tester.width = this.orientation[1] != 0? this.width : cellLen;
+      tester.height = this.orientation[0] != 0? this.height : cellLen;
+
+      return tester.overlap(p) > 0;
+    }
+
+    public overlaps: overlapsFunction = (p) => {
+      let overlap: number = this.overlap(p);
+      if (overlap > 0) return true;
+
+      let xOverlap: number = Math.min((this.x + this.width - p.x), (p.x + p.width - this.x));
+      let yOverlap: number = Math.min((this.y + this.height - p.y), (p.y + p.height - this.y));
+      if (xOverlap < 0 || yOverlap < 0) return false;
+
+      return this.fenceTouches(p) || p.fenceTouches(this);
+    }
 
     public moveRelative: moveFunction = (x, y) => {
       this.x += x;
@@ -113,8 +162,8 @@ export module Pieces {
         this.subrect.moveRelative(yLocal - xLocal, 2*cellLen - xLocal - yLocal);
       }
 
-      if (this.fence != null) {
-        this.fence = [-this.fence[1], this.fence[0]];
+      if (this.orientation != null) {
+        this.orientation = [-this.orientation[1], this.orientation[0]];
       }
 
       this.exits.forEach((exit: number[]) => {
@@ -138,15 +187,15 @@ export module Pieces {
       public combo: string[],
       public exits: number[][],
       public type: string,
-      public fence: number[],
+      public rType: string,
       public name: string
     ) {
       if (this.type === 'circle') {
         this.radius = width / 2;
       } else if (this.type === 'L') {
         this.subrect = new Piece(
-          this.height / 2,
           this.width / 2,
+          this.height / 2,
           this.sqft / 4,
           0,
           0,
@@ -192,7 +241,7 @@ export module Pieces {
                   instance.combo? instance.combo.slice(0) : [],
                   instance.exits? instance.exits.slice(0) : [],
                   roomSize.type,
-                  instance.fence? [0, 1] : null,
+                  roomType,
                   name
                 ));
               }
