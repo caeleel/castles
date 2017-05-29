@@ -5,10 +5,6 @@ module.exports = {
   context: path.resolve(__dirname),
   entry: {
     castles: "./app/castles.tsx",
-    dependencies: [
-      'react-redux',
-      'redux',
-    ]
   },
   output: {
     filename: "bundle-[name].js",
