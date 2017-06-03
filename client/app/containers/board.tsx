@@ -3,7 +3,7 @@ import * as actions from '../actions/actions';
 import { Dispatch } from 'redux';
 import { Board, DataProps, EventHandlerProps } from '../components/board'
 import { Piece } from '../components/piece'
-import { Pieces } from '../../../lib/pieces';
+import Pieces from '../../../lib/pieces';
 import { AppState } from '../reducers/reducers';
 
 function mapStateToProps(state: AppState): DataProps {

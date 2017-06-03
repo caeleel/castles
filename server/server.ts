@@ -1,7 +1,7 @@
 import * as http from 'http';
 import * as fs from 'fs';
 import * as WebSocket from 'ws';
-import {Pieces} from '../lib/pieces';
+import Pieces from '../lib/pieces';
 
 http.createServer(function (request, response) {
   console.log(request.url);

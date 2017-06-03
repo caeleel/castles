@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Pieces } from '../../../lib/pieces';
+import Pieces from '../../../lib/pieces';
 import { Piece } from "./Piece";
 
 

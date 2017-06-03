@@ -1,4 +1,4 @@
-import { Pieces } from '../../../lib/Pieces';
+import Pieces from '../../../lib/pieces';
 
 export interface SetSelectedIdActionType {
     type: string;

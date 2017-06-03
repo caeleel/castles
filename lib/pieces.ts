@@ -1,6 +1,6 @@
 import 'isomorphic-fetch'
 
-export module Pieces {
+module Pieces {
   const cellLen: number = 2;
   const cellArea: number = cellLen * cellLen;
 
@@ -253,3 +253,5 @@ export module Pieces {
       });
   }
 }
+
+export default Pieces;
