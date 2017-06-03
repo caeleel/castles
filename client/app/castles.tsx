@@ -7,9 +7,21 @@ import BoardContainer from './containers/board';
 import * as actions from './actions/actions';
 import { gameMiddleware } from './middleware/game';
 import castlesApp from './reducers/reducers';
+import Pieces from '../../lib/pieces';
 
 document.addEventListener('DOMContentLoaded', () => {
-  let store = Redux.createStore(castlesApp)
+    Pieces.loadPieces().then((pieces : Pieces.Piece[]) => {
+      let store = Redux.createStore(castlesApp, {pieces: {pieces: pieces, selectedId: ""}}, Redux.applyMiddleware(gameMiddleware))
+      ReactDOM.render(
+        <ReactRedux.Provider store={store}>
+          <BoardContainer />
+        </ReactRedux.Provider>,
+        document.getElementById("board")
+      );
+    }).catch(err => {
+      console.log(err);
+    })
+
   // let store = Redux.createStore((state: any, action: any) => {
   //     return state;
   //   }, Redux.applyMiddleware(gameMiddleware)
@@ -18,19 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // store.dispatch(actions.game.echo({
   //   data: 'hello'
   // }));
-  // let lol: Array<Pieces.Piece> = []
-  // Pieces.loadPieces().then((pieces : Pieces.Piece[]) => {
-  //   //this.setState({pieces: pieces});
-  //   store.dispatch(actions.setPieces(pieces));
-  // }).catch(err => {
-  //   console.log(err);
-  // })
 
 
-  ReactDOM.render(
-    <ReactRedux.Provider store={store}>
-      <BoardContainer />
-    </ReactRedux.Provider>,
-    document.getElementById("board")
-  );
 });

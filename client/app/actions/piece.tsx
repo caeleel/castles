@@ -12,7 +12,7 @@ export interface MoveSelectedIdActionType {
 
 export interface SetPiecesType {
     type: string;
-    id: string;
+    pieces: Array<Pieces.Piece>;
 }
 
 export const setSelectedId = (id: string) => ({

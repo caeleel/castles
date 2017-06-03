@@ -19,7 +19,7 @@ export interface Action<T> {
   readonly type: T;
 }
 
-type actionType = actions.SetSelectedIdActionType | actions.MoveSelectedIdActionType;
+type actionType = actions.SetSelectedIdActionType | actions.MoveSelectedIdActionType | actions.SetPiecesType;
 
 export function piecesReducer(
   state: PiecesState = DEFAULT_PIECES_STATE,
@@ -30,6 +30,13 @@ export function piecesReducer(
         pieces: state.pieces,
         selectedId: "something",
       };
+    case "MOVE_SELECTED_ID":
+      return state;
+    // case "SET_PIECES":
+    //   return {
+    //     pieces: (<actions.SetPiecesType>action).pieces,
+    //     selectedId: "",
+    //   }
     default:
       return state;
   }
