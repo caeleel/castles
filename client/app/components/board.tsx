@@ -3,37 +3,35 @@ import * as React from "react";
 import { Pieces } from '../../../lib/pieces';
 import { Piece } from "./Piece";
 
-export interface BoardProps { compiler: string; framework: string; }
 
+export interface DataProps {
+    pieces: Array<Pieces.Piece>;
+    selectedId: string;
+}
+
+export interface EventHandlerProps {
+    onLoadPiecesClick: () => void;
+    onPieceClick: (id: string) => void;
+}
+
+export type BoardProps = DataProps & EventHandlerProps;
 
 export interface BoardState {
-  pieces: Array<Pieces.Piece>;
 }
 
 // 'BoardProps' describes the shape of props.
 export class Board extends React.Component<BoardProps, BoardState> {
-
-    componentWillMount() {
-        let lol: Array<Pieces.Piece> = []
-        this.setState({pieces: lol})
-        Pieces.loadPieces().then((pieces : Pieces.Piece[]) => {
-          this.setState({pieces: pieces});
-        }).catch(err => {
-          console.log(err);
-        })
-    }
-
     render() {
-        console.log(this.state.pieces)
+        let onPieceClick = this.props.onPieceClick;
         return (
             <div>
+                <button onClick={this.props.onLoadPiecesClick} />
                 {
-                    this.state.pieces.map(function(piece, i: number){return (
-                        <Piece.Piece key={i} piece={piece} />
+                    this.props.pieces.map(function(piece, i: number){return (
+                        <Piece.Piece key={i} piece={piece} onClick={() => onPieceClick(i.toString())} />
                     );})
                 }
             </div>
         );
-
     }
 }

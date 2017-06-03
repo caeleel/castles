@@ -18,6 +18,7 @@ http.createServer(function (request, response) {
       return;
     }
 
+    response.setHeader('Access-Control-Allow-Origin', '*');
     response.writeHead(200);
     response.end(content, 'utf-8');
   })

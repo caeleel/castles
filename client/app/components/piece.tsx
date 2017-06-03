@@ -15,7 +15,7 @@ export interface PieceState {
 const SCALE = 20;
 
 export module Piece {
-    export interface PieceProps { piece: Pieces.Piece; }
+    export interface PieceProps { piece: Pieces.Piece, onClick: () => void; }
 
     // 'PieceProps' describes the shape of props.
     // State is never set so we use the 'undefined' type.
@@ -25,7 +25,8 @@ export module Piece {
         }
 
         handleClick() {
-            this.setState({x: this.state.x + 100})
+            this.props.onClick()
+            //this.setState({x: this.state.x + 100})
         }
 
         classNames() {
