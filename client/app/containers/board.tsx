@@ -18,7 +18,7 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: Piece.PieceP
     onLoadPiecesClick(): void {
       let lol: Array<Pieces.Piece> = []
       Pieces.loadPieces().then((pieces : Pieces.Piece[]) => {
-        dispatch(actions.setPieces(pieces));
+        dispatch(actions.piece.setPieces({pieces: pieces}));
       }).catch(err => {
         console.log(err);
       })
@@ -28,7 +28,10 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: Piece.PieceP
         dispatch(actions.game.echo({
             data: 'hello'
         }));
-        dispatch(actions.setSelectedId(id))
+        dispatch(actions.piece.setSelectedId({id: id}))
+    },
+    onMoveClick(x: number, y: number): void {
+        dispatch(actions.piece.moveSelectedId({x: x, y: y}));
     },
   };
 }

@@ -1,31 +1,8 @@
 import Pieces from '../../../lib/pieces';
+import { actionCreator } from './helpers'
 
-export interface SetSelectedIdActionType {
-    type: string;
-    id: string;
+export namespace piece {
+  export const setSelectedId = actionCreator<{ id: string }>('SET_SELECTED_ID');
+  export const moveSelectedId = actionCreator<{ x: number, y: number }>('MOVE_SELECTED_ID');
+  export const setPieces = actionCreator<{ pieces: Array<Pieces.Piece> }>('SET_PIECES');
 }
-
-export interface MoveSelectedIdActionType {
-    type: string;
-    id: string;
-}
-
-export interface SetPiecesType {
-    type: string;
-    pieces: Array<Pieces.Piece>;
-}
-
-export const setSelectedId = (id: string) => ({
-  type: 'SET_SELECTED_ID',
-  id
-})
-
-export const moveSelectedId = (id: string) => ({
-  type: 'MOVE_SELECTED_ID',
-  id
-})
-
-export const setPieces = (pieces: Array<Pieces.Piece>) => ({
-  type: 'SET_PIECES',
-  pieces
-})

@@ -15,7 +15,7 @@ export interface PieceState {
 const SCALE = 20;
 
 export module Piece {
-    export interface PieceProps { piece: Pieces.Piece, onClick: () => void; }
+    export interface PieceProps { piece: Pieces.Piece, x: number, y: number, selected: boolean, onClick: () => void; }
 
     // 'PieceProps' describes the shape of props.
     // State is never set so we use the 'undefined' type.
@@ -30,17 +30,20 @@ export module Piece {
         }
 
         classNames() {
-            return "piece " + (this.props.piece.type)
+            return "piece " + (this.props.piece.type) + " " + (this.props.selected ? "selected" : "")
         }
 
         render() {
             let style = {
-                left: this.state.x,
-                top: this.state.y,
+                left: this.props.x,
+                top: this.props.y,
                 height: this.props.piece.height * SCALE,
-                width: this.props.piece.width * SCALE,
-                backgroundColor: '#AAAAAA'
+                width: this.props.piece.width * SCALE
             };
+
+            if (this.props.selected) {
+                console.log("i am here")
+            }
 
             return <div onClick={() => this.handleClick()} className={this.classNames()} style={style}>
                 {this.props.piece.name}

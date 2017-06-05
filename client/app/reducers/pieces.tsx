@@ -1,10 +1,6 @@
 import * as actions from '../actions/actions';
 import Pieces from '../../../lib/pieces';
 
-export class Piece {
-  public readonly id: string;
-}
-
 export interface PiecesState {
   pieces: Array<Pieces.Piece>;
   selectedId: string;
@@ -15,31 +11,20 @@ export const DEFAULT_PIECES_STATE: PiecesState = {
   selectedId: "",
 };
 
-export interface Action<T> {
-  readonly type: T;
-}
-
-type actionType = actions.SetSelectedIdActionType | actions.MoveSelectedIdActionType | actions.SetPiecesType;
-
-export function piecesReducer(
-  state: PiecesState = DEFAULT_PIECES_STATE,
-  action: actionType): PiecesState {
-  switch (action.type) {
-    case "SET_SELECTED_ID":
-      return {
-        pieces: state.pieces,
-        selectedId: "something",
-      };
-    case "MOVE_SELECTED_ID":
-      return state;
-    // case "SET_PIECES":
-    //   return {
-    //     pieces: (<actions.SetPiecesType>action).pieces,
-    //     selectedId: "",
-    //   }
-    default:
-      return state;
+export function piecesReducer(state: PiecesState = DEFAULT_PIECES_STATE, action: actions.Action<any>): PiecesState {
+  if (actions.piece.setSelectedId.matches(action)) {
+    return {
+      pieces: state.pieces,
+      selectedId: action.payload.id,
+    }
+  } else if (actions.piece.moveSelectedId.matches(action)) {
+    return state;
+  } else if (actions.piece.setPieces.matches(action)) {
+    return {
+      pieces: action.payload.pieces,
+      selectedId: "",
+    }
+  } else {
+    return state;
   }
 }
-
-
