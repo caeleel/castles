@@ -5,6 +5,10 @@ import {
   auctionReducer,
 } from './auction';
 import {
+  GameState,
+  gameReducer,
+} from './game';
+import {
   PiecesState,
   piecesReducer,
 } from './pieces';
@@ -12,10 +16,12 @@ import {
 export interface AppState {
   pieces: PiecesState;
   auction: AuctionState;
+  game: GameState;
 }
 
 const castlesApp = combineReducers<AppState>({
   auction: auctionReducer,
+  game: gameReducer,
   pieces: piecesReducer,
 })
 

@@ -1,3 +1,9 @@
+.continue {
+    position: absolute;
+    top: 300px;
+    left: 100px;
+}
+
 .piece {
     position: absolute;
     background-color: #AAAAAA;

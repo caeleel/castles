@@ -12,7 +12,7 @@ import Pieces from '../../lib/pieces';
 
 document.addEventListener('DOMContentLoaded', () => {
     Pieces.loadPieces().then((pieceMap : Pieces.PieceMap) => {
-      let store = Redux.createStore(castlesApp, {pieces: {pieceMap: pieceMap, selectedId: ""}, auction: {pieceNames: [{pieceName: "Buttery", juice: 0}, {pieceName: "Salon", juice: 0}, {pieceName: "Train Room", juice: 0}]}}, Redux.applyMiddleware(gameMiddleware))
+      let store = Redux.createStore(castlesApp, {pieces: {pieceMap: pieceMap, selectedId: ""}, auction: {pieceNames: [{pieceName: "Buttery", juice: 0}, {pieceName: "Green House", juice: 0}, {pieceName: "Great Hall", juice: 0}]}}, Redux.applyMiddleware(gameMiddleware))
       ReactDOM.render(
         <ReactRedux.Provider store={store}>
           <GameContainer />
