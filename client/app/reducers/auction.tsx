@@ -2,32 +2,32 @@ import * as actions from '../actions/actions';
 import Pieces from '../../../lib/pieces';
 
 export interface AuctionPiece {
-  pieceId: string;
+  pieceName: string;
   juice: number;
 }
 
 export interface AuctionState {
-  pieceIds: Array<AuctionPiece>;
+  pieceNames: Array<AuctionPiece>;
 }
 
 export const DEFAULT_AUCTION_STATE: AuctionState = {
-  pieceIds: [{pieceId: "1", juice: 0}] as Array<AuctionPiece>,
+  pieceNames: [{pieceName: "1", juice: 0}] as Array<AuctionPiece>,
 };
 
 export function auctionReducer(state: AuctionState = DEFAULT_AUCTION_STATE, action: actions.Action<any>): AuctionState {
   if (actions.auction.swapWithFront.matches(action)) {
-    let pieceIds = state.pieceIds;
-    let temp = state.pieceIds[0];
-    pieceIds[0] = pieceIds[action.payload.index];
-    pieceIds[action.payload.index] = temp;
+    let pieceNames = state.pieceNames;
+    let temp = state.pieceNames[0];
+    pieceNames[0] = pieceNames[action.payload.index];
+    pieceNames[action.payload.index] = temp;
     return {
-      pieceIds: pieceIds,
+      pieceNames: pieceNames,
     }
   } else if (actions.auction.setPieces.matches(action)) {
-    let pieces = action.payload.pieceIds;
+    let pieces = action.payload.pieceNames;
     return {
-      pieceIds: pieces.map((pieceId) => {
-        return {pieceId: pieceId, juice: 0};
+      pieceNames: pieces.map((pieceName) => {
+        return {pieceName: pieceName, juice: 0};
       }),
     }
   } else {

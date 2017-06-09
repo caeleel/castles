@@ -36,6 +36,10 @@ module Pieces {
     [sqft: string]: RoomSize;
   }
 
+  export interface PieceMap {
+    [name: string]: Piece
+  }
+
   interface overlapFunction {
     (p: Piece): number;
   }
@@ -216,7 +220,7 @@ module Pieces {
       .then(resp => {
         return resp.json();
       }).then((pieces: PieceFile) => {
-        let rooms: Piece[] = [];
+        let pieceMap: PieceMap = {};
 
         Object.keys(pieces).forEach((sqft: string) => {
           let roomSize: RoomSize = pieces[sqft];
@@ -231,7 +235,7 @@ module Pieces {
                     instance.exits[j] = instance.exits[j].slice(0);
                   }
                 }
-                rooms.push(new Piece(
+                pieceMap[name] = new Piece(
                   roomSize.dimensions[0],
                   roomSize.dimensions[1],
                   sqft === '150-H' ? 150 : Number(sqft),
@@ -243,13 +247,13 @@ module Pieces {
                   roomSize.type,
                   roomType,
                   name
-                ));
+                );
               }
             });
           });
         });
 
-        return rooms;
+        return pieceMap;
       });
   }
 }

@@ -1,14 +1,14 @@
 import { connect } from 'react-redux'
 import * as actions from '../actions/actions';
 import { Dispatch } from 'redux';
-import { Board, DataProps, EventHandlerProps } from '../components/board'
+import { Game, DataProps, EventHandlerProps } from '../components/game'
 import { Piece } from '../components/piece'
 import Pieces from '../../../lib/pieces';
 import { AppState } from '../reducers/reducers';
 
 function mapStateToProps(state: AppState): DataProps {
   return {
-    pieces: state.pieces.pieces,
+    pieceMap: state.pieces.pieceMap,
     selectedId: state.pieces.selectedId,
   };
 }
@@ -16,9 +16,8 @@ function mapStateToProps(state: AppState): DataProps {
 function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: Piece.PieceProps): EventHandlerProps {
   return {
     onLoadPiecesClick(): void {
-      let lol: Array<Pieces.Piece> = []
-      Pieces.loadPieces().then((pieces : Pieces.Piece[]) => {
-        dispatch(actions.piece.setPieces({pieces: pieces}));
+      Pieces.loadPieces().then((pieceMap : Pieces.PieceMap) => {
+        dispatch(actions.piece.setPieces({pieceMap: pieceMap}));
       }).catch(err => {
         console.log(err);
       })
@@ -36,9 +35,9 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: Piece.PieceP
   };
 }
 
-const BoardContainer = connect<DataProps, EventHandlerProps, {}>(
+const GameContainer = connect<DataProps, EventHandlerProps, {}>(
   mapStateToProps,
   mapDispatchToProps,
-)(Board);
+)(Game);
 
-export default BoardContainer
+export default GameContainer
