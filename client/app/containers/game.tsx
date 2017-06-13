@@ -24,9 +24,6 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: Piece.PieceP
 
     },
     onPieceClick(id: string): void {
-        dispatch(actions.game.echo({
-            data: 'hello'
-        }));
         dispatch(actions.piece.setSelectedId({id: id}))
     },
     onMoveClick(x: number, y: number): void {

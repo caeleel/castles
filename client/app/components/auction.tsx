@@ -28,8 +28,8 @@ export class Auction extends React.Component<AuctionProps, AuctionState> {
     render() {
         let auctionProps = this.props;
         return (
-            <div>
-                <div>
+            <div className="auction">
+                <div className="pieces">
                     {
                         this.props.pieces.map(function(piece, i: number){return (
                             <Piece.Piece

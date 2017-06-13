@@ -1,3 +1,15 @@
+.auction .pieces {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    border: 1px solid #AAAAAA;
+}
+
+.auction .pieces div {
+    margin: 10px;
+}
+
 .continue {
     position: absolute;
     top: 300px;
@@ -5,7 +17,7 @@
 }
 
 .piece {
-    position: absolute;
+    /* position: absolute; */
     background-color: #AAAAAA;
 }
 
