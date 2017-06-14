@@ -4,27 +4,17 @@ import Pieces from '../../../lib/pieces';
 
 const SCALE = 20;
 
-export module Piece {
-  export interface PieceProps {
+export module ActivePiece {
+  export interface ActivePieceProps {
     piece: Pieces.Piece;
     x: number;
     y: number;
     rotation: number;
-    selected: boolean;
-    onClick: () => void;
   }
 
   // 'PieceProps' describes the shape of props.
   // State is never set so we use the 'undefined' type.
-  export class Piece extends React.Component<PieceProps, undefined> {
-    handleClick() {
-      this.props.onClick()
-    }
-
-    classNames() {
-      return "piece " + (this.props.piece.type) + " " + (this.props.selected ? "selected" : "")
-    }
-
+  export class ActivePiece extends React.Component<ActivePieceProps, undefined> {
     render() {
       let style = {
         left: this.props.x,
@@ -33,7 +23,7 @@ export module Piece {
         width: this.props.piece.width * SCALE
       };
 
-      return <div onClick={() => this.handleClick()} className={this.classNames()} style={style}>
+      return <div className="piece" style={style}>
         {this.props.piece.name}
       </div>;
     }

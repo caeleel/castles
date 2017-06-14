@@ -3,16 +3,35 @@ import * as ReactDOM from 'react-dom';
 import * as ReactRedux from 'react-redux';
 import * as Redux from 'redux';
 
-import Auction from './containers/auction';
 import GameContainer from './containers/game';
-import * as actions from './actions/actions';
 import { gameMiddleware } from './middleware/game';
 import castlesApp from './reducers/reducers';
+import { State } from './reducers/game';
 import Pieces from '../../lib/pieces';
 
 document.addEventListener('DOMContentLoaded', () => {
     Pieces.loadPieces().then((pieceMap : Pieces.PieceMap) => {
-      let store = Redux.createStore(castlesApp, {pieces: {pieceMap: pieceMap, selectedId: ""}, auction: {pieceNames: [{pieceName: "Buttery", juice: 0}, {pieceName: "Green House", juice: 0}, {pieceName: "Great Hall", juice: 0}]}}, Redux.applyMiddleware(gameMiddleware))
+      let store = Redux.createStore(castlesApp, {
+        board: {
+          byPlayerName: {"golf": {
+            name: "golf",
+            pieces: [{name: "Berchta Room", x: 150, y: 150, rotation: 0}],
+            selectedPiece: {name: "Green House", x: 0, y: 0, rotation: 0}}
+          },
+          playerNames: ["golf"],
+        },
+        pieces: {
+          pieceMap: pieceMap
+        },
+        game: {currentPlayerName: "golf", mode: State.Pricing},
+        auction: {
+          selectedPieceName: "Buttery",
+          pieceNames: [
+            {pieceName: "Buttery", juice: 0},
+            {pieceName: "Green House", juice: 0},
+            {pieceName: "Great Hall", juice: 0}
+          ]
+        }}, Redux.applyMiddleware(gameMiddleware))
       ReactDOM.render(
         <ReactRedux.Provider store={store}>
           <GameContainer />
@@ -22,15 +41,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }).catch(err => {
       console.log(err);
     })
-
-  // let store = Redux.createStore((state: any, action: any) => {
-  //     return state;
-  //   }, Redux.applyMiddleware(gameMiddleware)
-  // );
-
-  // store.dispatch(actions.game.echo({
-  //   data: 'hello'
-  // }));
-
-
 });

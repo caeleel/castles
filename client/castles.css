@@ -10,6 +10,14 @@
     margin: 10px;
 }
 
+.board {
+    position: relative;
+}
+
+.board div {
+    position: absolute;
+}
+
 .continue {
     position: absolute;
     top: 300px;

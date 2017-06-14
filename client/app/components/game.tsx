@@ -1,47 +1,51 @@
 import * as React from "react";
 
 import Pieces from '../../../lib/pieces';
-import { Piece } from "./Piece";
+import Players from '../../../lib/players';
+import { Board } from "./board";
 import AuctionContainer from '../containers/auction';
+import { BoardState } from '../reducers/board'
+import { State, GameState } from '../reducers/game'
 
 export interface DataProps {
-    pieceMap: Pieces.PieceMap;
-    selectedId: string;
+  board: BoardState;
+  game: GameState;
+  pieceMap: Pieces.PieceMap;
 }
 
 export interface EventHandlerProps {
-    onLoadPiecesClick: () => void;
-    onPieceClick: (id: string) => void;
-    onMoveClick: (x: number, y: number) => void;
+  onLoadPiecesClick: () => void;
+  onMoveActivePiece(playerName: string, x: number, y: number): void;
+  onRotateActivePiece(playerName: string): void;
 }
 
 export type GameProps = DataProps & EventHandlerProps;
 
-export interface GameState {
-}
-
 // 'GameProps' describes the shape of props.
-export class Game extends React.Component<GameProps, GameState> {
-    render() {
-        let onPieceClick = this.props.onPieceClick;
-        let selectedId = this.props.selectedId;
-        return (
-            <div>
-                <AuctionContainer />
-            </div>
-        );
-        // return (
-        //     <div>
-        //         <AuctionContainer />
-        //         <div onClick={(e) => this.props.onMoveClick(e.nativeEvent.offsetX, e.nativeEvent.offsetY)}>
-        //             <button onClick={this.props.onLoadPiecesClick} />
-        //             {
-        //                 this.props.pieces.map(function(piece, i: number){return (
-        //                     <Piece.Piece key={i} piece={piece} x={0} y={0} selected={selectedId == i.toString()} onClick={() => onPieceClick(i.toString())} />
-        //                 );})
-        //             }
-        //         </div>
-        //     </div>
-        // );
-    }
+export class Game extends React.Component<GameProps, undefined> {
+  render() {
+    let gameProps = this.props;
+    return (
+      <div>
+        {this.props.game.mode == State.Placing ? "Placing" : "Pricing"}
+        <AuctionContainer />
+        {
+          this.props.board.playerNames.map(function (playerName: string, i: number) {
+            let player = gameProps.board.byPlayerName[playerName];
+              <Board
+                key={i}
+                currentPlayerName={playerName}
+                pieces={player.pieces}
+                selectedPieceName={player.selectedPiece.name}
+                pieceMap={gameProps.pieceMap}
+                selectedPieceX={player.selectedPiece.x}
+                selectedPieceY={player.selectedPiece.x}
+                onMoveActivePiece={gameProps.onMoveActivePiece}
+                onRotateActivePiece={gameProps.onRotateActivePiece}
+              />
+          })
+        }
+      </div>
+    );
+  }
 }

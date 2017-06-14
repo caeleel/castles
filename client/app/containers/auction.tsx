@@ -9,14 +9,15 @@ import { State } from '../reducers/game'
 
 function mapStateToProps(state: AppState): DataProps {
   return {
-    pieces: state.auction.pieceNames,
-    selectedId: state.pieces.selectedId,
+    playerName: state.board.playerNames[0],
+    pieceNames: state.auction.pieceNames,
+    selectedPieceName: state.board.byPlayerName[state.board.playerNames[0]].selectedPiece.name,
     pieceMap: state.pieces.pieceMap,
     pricing: state.game.mode == State.Pricing,
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: Piece.PieceProps): EventHandlerProps {
+function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
   return {
     swapWithFront(index: number): void {
       console.log("SWAPPING WITH FRONT")
@@ -26,8 +27,8 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: Piece.PieceP
       console.log("CONTINUE CLICK LEESSGO")
       dispatch(actions.game.nextState());
     },
-    setSelectedIndex(index: number): void {
-      dispatch(actions.piece.setSelectedId({id: index + ""}))
+    setSelectedIndex(playerName: string, index: number): void {
+      dispatch(actions.piece.setSelectedPieceName({playerName: playerName, pieceName: index + ""}))
     }
   };
 }

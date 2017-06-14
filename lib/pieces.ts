@@ -52,6 +52,13 @@ module Pieces {
     (x: number, y: number): void;
   }
 
+  export interface PiecePlacement {
+    name: string;
+    x: number;
+    y: number;
+    rotation: number;
+  }
+
   export class Piece {
     public x?: number;
     public y?: number;

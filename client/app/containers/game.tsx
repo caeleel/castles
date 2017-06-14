@@ -8,12 +8,13 @@ import { AppState } from '../reducers/reducers';
 
 function mapStateToProps(state: AppState): DataProps {
   return {
+    board: state.board,
+    game: state.game,
     pieceMap: state.pieces.pieceMap,
-    selectedId: state.pieces.selectedId,
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: Piece.PieceProps): EventHandlerProps {
+function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: DataProps): EventHandlerProps {
   return {
     onLoadPiecesClick(): void {
       Pieces.loadPieces().then((pieceMap : Pieces.PieceMap) => {
@@ -23,12 +24,12 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: Piece.PieceP
       })
 
     },
-    onPieceClick(id: string): void {
-        dispatch(actions.piece.setSelectedId({id: id}))
+    onMoveActivePiece(playerName: string, x: number, y: number): void {
+      dispatch(actions.piece.moveSelectedPiece({playerName: playerName, x: x, y: y}));
     },
-    onMoveClick(x: number, y: number): void {
-        dispatch(actions.piece.moveSelectedId({x: x, y: y}));
-    },
+    onRotateActivePiece(playerName: string): void {
+
+    }
   };
 }
 
