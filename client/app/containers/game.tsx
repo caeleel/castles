@@ -25,7 +25,8 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: DataProps): 
 
     },
     onMoveActivePiece(playerName: string, x: number, y: number): void {
-      dispatch(actions.piece.moveSelectedPiece({playerName: playerName, x: x, y: y}));
+      // TODO: if mode is pricing, prevent this action
+      dispatch(actions.game.moveSelectedPiece({playerName: playerName, x: x, y: y}));
     },
     onRotateActivePiece(playerName: string): void {
 

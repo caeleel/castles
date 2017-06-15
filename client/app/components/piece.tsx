@@ -14,8 +14,6 @@ export module Piece {
     onClick: () => void;
   }
 
-  // 'PieceProps' describes the shape of props.
-  // State is never set so we use the 'undefined' type.
   export class Piece extends React.Component<PieceProps, undefined> {
     handleClick() {
       this.props.onClick()

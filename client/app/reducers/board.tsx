@@ -17,12 +17,13 @@ export const DEFAULT_BOARD_STATE: BoardState = {
 };
 
 export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: actions.Action<any>): BoardState {
-  if (actions.piece.setSelectedPieceName.matches(action)) {
+  if (actions.game.setSelectedPieceName.matches(action)) {
+    state = Object.assign({}, state);
     state.byPlayerName[action.payload.playerName].selectedPiece.name = action.payload.pieceName;
-    return {
-      ...state,
-    }
-  } else if (actions.piece.moveSelectedPiece.matches(action)) {
+    state.byPlayerName[action.payload.playerName].selectedPiece.rotation = 0;
+    return state;
+  } else if (actions.game.moveSelectedPiece.matches(action)) {
+    state = Object.assign({}, state);
     state.byPlayerName[action.payload.playerName].selectedPiece.x = action.payload.x;
     state.byPlayerName[action.payload.playerName].selectedPiece.y = action.payload.y;
     return state;

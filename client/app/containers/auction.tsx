@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
 import * as actions from '../actions/actions';
 import { Dispatch } from 'redux';
-import { Auction, DataProps, EventHandlerProps } from '../components/Auction'
+import { Auction, DataProps, EventHandlerProps } from '../components/auction'
 import { Piece } from '../components/piece'
 import Pieces from '../../../lib/pieces';
 import { AppState } from '../reducers/reducers';
+import { AuctionPiece } from '../reducers/auction';
 import { State } from '../reducers/game'
 
 function mapStateToProps(state: AppState): DataProps {
@@ -17,7 +18,7 @@ function mapStateToProps(state: AppState): DataProps {
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
+function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: DataProps): EventHandlerProps {
   return {
     swapWithFront(index: number): void {
       console.log("SWAPPING WITH FRONT")
@@ -27,8 +28,8 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
       console.log("CONTINUE CLICK LEESSGO")
       dispatch(actions.game.nextState());
     },
-    setSelectedIndex(playerName: string, index: number): void {
-      dispatch(actions.piece.setSelectedPieceName({playerName: playerName, pieceName: index + ""}))
+    setSelectedIndex(playerName: string, pieceNames: Array<AuctionPiece>, index: number): void {
+      dispatch(actions.game.setSelectedPieceName({playerName: playerName, pieceName: pieceNames[index].pieceName}))
     }
   };
 }

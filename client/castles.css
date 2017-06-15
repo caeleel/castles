@@ -12,6 +12,7 @@
 
 .board {
     position: relative;
+    height: 500px;
 }
 
 .board div {

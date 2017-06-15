@@ -12,9 +12,12 @@ export module ActivePiece {
     rotation: number;
   }
 
-  // 'PieceProps' describes the shape of props.
-  // State is never set so we use the 'undefined' type.
   export class ActivePiece extends React.Component<ActivePieceProps, undefined> {
+
+    classNames() {
+      return "piece " + (this.props.piece.type);
+    }
+
     render() {
       let style = {
         left: this.props.x,
@@ -23,7 +26,7 @@ export module ActivePiece {
         width: this.props.piece.width * SCALE
       };
 
-      return <div className="piece" style={style}>
+      return <div className={this.classNames()} style={style}>
         {this.props.piece.name}
       </div>;
     }

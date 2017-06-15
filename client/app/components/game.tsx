@@ -21,7 +21,6 @@ export interface EventHandlerProps {
 
 export type GameProps = DataProps & EventHandlerProps;
 
-// 'GameProps' describes the shape of props.
 export class Game extends React.Component<GameProps, undefined> {
   render() {
     let gameProps = this.props;
@@ -30,19 +29,16 @@ export class Game extends React.Component<GameProps, undefined> {
         {this.props.game.mode == State.Placing ? "Placing" : "Pricing"}
         <AuctionContainer />
         {
-          this.props.board.playerNames.map(function (playerName: string, i: number) {
-            let player = gameProps.board.byPlayerName[playerName];
+          this.props.board.playerNames.map(function (playerName: string) {
+            return (
               <Board
-                key={i}
-                currentPlayerName={playerName}
-                pieces={player.pieces}
-                selectedPieceName={player.selectedPiece.name}
+                key={playerName}
                 pieceMap={gameProps.pieceMap}
-                selectedPieceX={player.selectedPiece.x}
-                selectedPieceY={player.selectedPiece.x}
+                player={gameProps.board.byPlayerName[playerName]}
                 onMoveActivePiece={gameProps.onMoveActivePiece}
                 onRotateActivePiece={gameProps.onRotateActivePiece}
               />
+             )
           })
         }
       </div>
