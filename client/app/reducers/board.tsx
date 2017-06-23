@@ -12,7 +12,7 @@ export interface BoardState {
 }
 
 export const DEFAULT_BOARD_STATE: BoardState = {
-  byPlayerName: {"golf": {name: "golf", pieces: [{name: "test", x: 1, y: 1, rotation: 0}], selectedPiece: {name: "test", x: 1, y: 1, rotation: 0}}},
+  byPlayerName: {"golf": {name: "golf", score: 0, pieces: [{name: "test", x: 1, y: 1, rotation: 0}], selectedPiece: {name: "test", x: 1, y: 1, rotation: 0}}},
   playerNames: ["golf"],
 };
 

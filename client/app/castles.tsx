@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         board: {
           byPlayerName: {"golf": {
             name: "golf",
+            score: 0,
             pieces: [{name: "Berchta Room", x: 150, y: 150, rotation: 0}],
             selectedPiece: {name: "Green House", x: 0, y: 0, rotation: 0}}
           },
@@ -27,8 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
         auction: {
           pieceNames: [
             {pieceName: "Buttery", juice: 0},
-            {pieceName: "Green House", juice: 0},
-            {pieceName: "Great Hall", juice: 0}
+            {pieceName: "Green House", juice: 1},
+            {pieceName: "Great Hall", juice: 0},
+            {pieceName: "Foyer (Blue)", juice: 0}
           ]
         }}, Redux.applyMiddleware(gameMiddleware))
       ReactDOM.render(

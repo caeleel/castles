@@ -31,8 +31,10 @@ export module Piece {
         width: this.props.piece.width * SCALE
       };
 
-      return <div onClick={() => this.handleClick()} className={this.classNames()} style={style}>
-        {this.props.piece.name}
+      return <div style={style}>
+        <div onClick={() => this.handleClick()} className={this.classNames()}>
+          {this.props.piece.name}
+        </div>
       </div>;
     }
   }

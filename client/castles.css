@@ -26,8 +26,12 @@
 }
 
 .piece {
-    /* position: absolute; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #AAAAAA;
+    height: 100%;
+    width: 100%;
 }
 
 .circle {
@@ -35,8 +39,8 @@
 }
 
 .octagon {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     background: #AAAAAA;
     position: relative;
 }

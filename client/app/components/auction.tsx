@@ -1,14 +1,14 @@
 import * as React from "react";
 
 import Pieces from '../../../lib/pieces';
+import Players from '../../../lib/players';
 import { AuctionPiece } from '../reducers/auction';
 import { Piece } from "./Piece";
 
 
 export interface DataProps {
-  playerName: string;
+  player: Players.Player;
   pieceNames: Array<AuctionPiece>;
-  selectedPieceName: string;
   pieceMap: Pieces.PieceMap;
   pricing: boolean;
 }
@@ -26,7 +26,7 @@ export class Auction extends React.Component<AuctionProps, undefined> {
     let auctionProps = this.props;
     return (
       <div className="auction">
-        {this.props.playerName}
+        {this.props.player.name}: {this.props.player.score}
         <div className="pieces">
           {
             this.props.pieceNames.map(function(piece, i: number){return (
@@ -36,8 +36,8 @@ export class Auction extends React.Component<AuctionProps, undefined> {
                 x={i * 200}
                 y={0}
                 rotation={0}
-                selected={auctionProps.selectedPieceName == i.toString()}
-                onClick={() => { auctionProps.pricing ? auctionProps.swapWithFront(i) : auctionProps.setSelectedIndex(auctionProps.playerName, auctionProps.pieceNames, i) }} />
+                selected={auctionProps.player.selectedPiece.name == i.toString()}
+                onClick={() => { auctionProps.pricing ? auctionProps.swapWithFront(i) : auctionProps.setSelectedIndex(auctionProps.player.name, auctionProps.pieceNames, i) }} />
             );})
           }
         </div>
