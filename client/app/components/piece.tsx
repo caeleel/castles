@@ -1,4 +1,5 @@
 import * as React from "react";
+import { DragSource } from 'react-dnd';
 
 import Pieces from '../../../lib/pieces';
 
@@ -38,4 +39,5 @@ export module Piece {
       </div>;
     }
   }
+
 }
