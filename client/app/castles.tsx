@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         game: {currentPlayerName: "golf", mode: State.Pricing},
         auction: {
           pieceNames: [
-            {pieceName: "Buttery", juice: 0},
+            {pieceName: "Larder", juice: 0},
             {pieceName: "Green House", juice: 1},
             {pieceName: "Great Hall", juice: 0},
             {pieceName: "Foyer (Blue)", juice: 0}

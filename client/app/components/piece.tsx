@@ -24,6 +24,9 @@ export module Piece {
       return "piece " + (this.props.piece.type) + " " + (this.props.selected ? "selected" : "")
     }
 
+    backgroundImageName() {
+      return "/public/" + this.props.piece.name + ".png";
+    }
     render() {
       let style = {
         left: this.props.x,
@@ -32,8 +35,13 @@ export module Piece {
         width: this.props.piece.width * SCALE
       };
 
+      let innerStyle = {
+        backgroundImage: 'url("' + this.backgroundImageName() + '")',
+        backgroundSize: "cover",
+      }
+
       return <div style={style}>
-        <div onClick={() => this.handleClick()} className={this.classNames()}>
+        <div onClick={() => this.handleClick()} className={this.classNames()} style={innerStyle}>
           {this.props.piece.name}
         </div>
       </div>;
