@@ -9,7 +9,7 @@
     margin: 10px;
 }
 
-.auction-slot {
+.auction .slot {
     height: 300px;
     display: flex;
     align-items: center;
@@ -20,7 +20,7 @@
     height: 500px;
 }
 
-.board div {
+.board .piece-position {
     position: absolute;
 }
 
@@ -31,10 +31,6 @@
 }
 
 .piece {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #AAAAAA;
     height: 100%;
     width: 100%;
 }
@@ -76,4 +72,8 @@
 
 .selected {
     background-color: #999999;
+}
+
+.draggable {
+    cursor: move;
 }

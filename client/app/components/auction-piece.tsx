@@ -104,15 +104,21 @@ export module AuctionPiece {
   export class AuctionPiece extends React.Component<AuctionPieceProps, Test> {
     render(): JSX.Element | false {
       const { connectDragSource, connectDropTarget, isDragging, index, piece, setSelectedIndex, player, pieceNames } = this.props;
+      let style = {
+        x: index * 200,
+        y: 0
+      }
 
       return connectDragSource(connectDropTarget(
-        <div className="auction-slot" onClick={() => setSelectedIndex(player.name, pieceNames, index)} >
+        <div
+          className="slot"
+          onClick={() => setSelectedIndex(player.name, pieceNames, index)}
+          style={style}
+        >
           <Piece.Piece
             key={piece.name}
             piece={piece}
             visible={!isDragging}
-            x={index * 200}
-            y={0}
             rotation={0}
             selected={false}
           />

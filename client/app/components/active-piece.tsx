@@ -43,15 +43,16 @@ export module ActivePiece {
     }
     render(): false | JSX.Element {
       const { x, y, connectDragSource, isDragging, piece } = this.props;
-
+      let style = {
+        left: x,
+        top: y,
+      }
       return connectDragSource(
-        <div>
+        <div className="piece-position" style={style}>
           <Piece.Piece
             key={piece.name}
             piece={piece}
             visible={!isDragging}
-            x={x}
-            y={y}
             rotation={0}
             selected={false}
           />

@@ -38,10 +38,8 @@ let targetSpec: DropTargetSpec<BoardProps> = {
     let item = (monitor.getItem() as any);
     const delta = monitor.getDifferenceFromInitialOffset();
     const left = Math.round(item.x + delta.x);
-    const top = Math.round(item.x + delta.y);
+    const top = Math.round(item.y + delta.y);
 
-    console.log(left)
-    console.log(top)
     props.onMoveActivePiece(props.player.name, left, top);
   }
 }
@@ -55,16 +53,20 @@ export class Board extends React.Component<BoardProps, undefined> {
     return connectDropTarget(
       <div className="board">
         {
-          this.props.player.pieces.map(function(piece: Pieces.PiecePlacement){return (
-            <Piece.Piece
-              key={piece.name}
-              piece={pieceMap[piece.name]}
-              x={piece.x}
-              y={piece.y}
-              selected={false}
-              rotation={piece.rotation}
-              visible={true}
-            />
+          this.props.player.pieces.map(function(piece: Pieces.PiecePlacement){
+            let style = {
+              left: piece.x,
+              top: piece.y,
+            };
+            return (
+              <div key={piece.name} className="piece-position" style={style}>
+                <Piece.Piece
+                  piece={pieceMap[piece.name]}
+                  selected={false}
+                  rotation={piece.rotation}
+                  visible={true}
+                />
+              </div>
           );})
         }
         {player.selectedPiece.name != "" &&
