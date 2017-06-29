@@ -24,7 +24,7 @@ export type AuctionProps = DataProps & EventHandlerProps;
 
 export class Auction extends React.Component<AuctionProps, undefined> {
   render() {
-    let { pieceMap, player, swapPieces, setSelectedIndex } = this.props;
+    let { pieceMap, player, swapPieces, pieceNames, setSelectedIndex } = this.props;
     return (
       <div className="auction">
         {this.props.player.name}: {this.props.player.score}
@@ -38,12 +38,14 @@ export class Auction extends React.Component<AuctionProps, undefined> {
                 x={i * 200}
                 y={0}
                 rotation={0}
-                selected={player.selectedPiece.name == i.toString()}
-                swapPieces={swapPieces}
                 setSelectedIndex={setSelectedIndex}
+                swapPieces={swapPieces}
                 isDragging={false}
                 connectDragSource={null}
                 connectDropTarget={null}
+                // TODO: learn how to pass props into reducers via ownProps and stop passing these to the child
+                player={player}
+                pieceNames={pieceNames}
                />
             );})
           }

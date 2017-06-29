@@ -16,6 +16,7 @@ import {
   DropTargetSpec } from 'react-dnd';
 import { findDOMNode } from 'react-dom';
 import Pieces from '../../../lib/pieces';
+import Players from '../../../lib/players';
 import { Piece } from './Piece'
 import { AuctionPiece as AuctionPieceData } from '../reducers/auction';
 
@@ -85,9 +86,10 @@ export module AuctionPiece {
     x: number;
     y: number;
     rotation: number;
-    selected: boolean;
     swapPieces: (i: number, j: number) => void;
     setSelectedIndex: (playerName: string, pieceNames: Array<AuctionPieceData>, index: number) => void;
+    player: Players.Player;
+    pieceNames: Array<AuctionPieceData>;
   }
 
   export interface Test{}
@@ -101,10 +103,10 @@ export module AuctionPiece {
   }))
   export class AuctionPiece extends React.Component<AuctionPieceProps, Test> {
     render(): JSX.Element | false {
-      const { connectDragSource, connectDropTarget, isDragging, index, piece, selected } = this.props;
+      const { connectDragSource, connectDropTarget, isDragging, index, piece, setSelectedIndex, player, pieceNames } = this.props;
 
       return connectDragSource(connectDropTarget(
-        <div>
+        <div className="auction-slot" onClick={() => setSelectedIndex(player.name, pieceNames, index)} >
           <Piece.Piece
             key={piece.name}
             piece={piece}
@@ -112,7 +114,7 @@ export module AuctionPiece {
             x={index * 200}
             y={0}
             rotation={0}
-            selected={selected}
+            selected={false}
           />
         </div>
       ));

@@ -1,6 +1,5 @@
 .auction .pieces {
     display: flex;
-    align-items: center;
     justify-content: center;
     flex-direction: row;
     border: 1px solid #AAAAAA;
@@ -8,6 +7,12 @@
 
 .auction .pieces div {
     margin: 10px;
+}
+
+.auction-slot {
+    height: 300px;
+    display: flex;
+    align-items: center;
 }
 
 .board {
