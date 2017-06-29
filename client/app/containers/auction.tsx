@@ -19,8 +19,8 @@ function mapStateToProps(state: AppState): DataProps {
 
 function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: DataProps): EventHandlerProps {
   return {
-    swapWithFront(index: number): void {
-      dispatch(actions.auction.swapWithFront({index: index}));
+    swapPieces(i: number, j: number): void {
+      dispatch(actions.auction.swapPieces({i: i, j: j}));
     },
     continueClick(): void {
       dispatch(actions.game.nextState());

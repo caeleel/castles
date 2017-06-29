@@ -1,5 +1,4 @@
 import * as React from "react";
-import { DragSource } from 'react-dnd';
 
 import Pieces from '../../../lib/pieces';
 
@@ -12,39 +11,33 @@ export module Piece {
     y: number;
     rotation: number;
     selected: boolean;
-    onClick: () => void;
+    visible: boolean;
   }
 
-  export class Piece extends React.Component<PieceProps, undefined> {
-    handleClick() {
-      this.props.onClick()
-    }
-
-    classNames() {
-      return "piece " + (this.props.piece.type) + " " + (this.props.selected ? "selected" : "")
-    }
-
-    backgroundImageName() {
-      return "/public/" + this.props.piece.name + ".png";
-    }
-    render() {
+  export class Piece extends React.Component<PieceProps, null> {
+    render(): false | JSX.Element {
+      let classNames = "piece " + (this.props.piece.type) + " " + (this.props.selected ? "selected" : "");
+      let backgroundImageName = "/public/" + this.props.piece.name + ".png";
       let style = {
         left: this.props.x,
         top: this.props.y,
         height: this.props.piece.height * SCALE,
-        width: this.props.piece.width * SCALE
+        width: this.props.piece.width * SCALE,
+        visibility: this.props.visible ? "visible" : "hidden",
       };
 
       let innerStyle = {
-        backgroundImage: 'url("' + this.backgroundImageName() + '")',
+        backgroundImage: 'url("' + backgroundImageName + '")',
         backgroundSize: "cover",
       }
 
-      return <div style={style}>
-        <div onClick={() => this.handleClick()} className={this.classNames()} style={innerStyle}>
-          {this.props.piece.name}
+      return (
+        <div style={style}>
+          <div className={classNames} style={innerStyle}>
+            {this.props.piece.name}
+          </div>
         </div>
-      </div>;
+      );
     }
   }
 

@@ -15,11 +15,11 @@ export const DEFAULT_AUCTION_STATE: AuctionState = {
 };
 
 export function auctionReducer(state: AuctionState = DEFAULT_AUCTION_STATE, action: actions.Action<any>): AuctionState {
-  if (actions.auction.swapWithFront.matches(action)) {
+  if (actions.auction.swapPieces.matches(action)) {
     let pieceNames = state.pieceNames.slice();
-    let temp = state.pieceNames[0];
-    pieceNames[0] = pieceNames[action.payload.index];
-    pieceNames[action.payload.index] = temp;
+    let temp = state.pieceNames[action.payload.i];
+    pieceNames[action.payload.i] = pieceNames[action.payload.j];
+    pieceNames[action.payload.j] = temp;
     return {
       pieceNames: pieceNames,
     }

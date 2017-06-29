@@ -6,6 +6,8 @@ import { Board } from "./board";
 import AuctionContainer from '../containers/auction';
 import { BoardState } from '../reducers/board'
 import { State, GameState } from '../reducers/game'
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 export interface DataProps {
   board: BoardState;
@@ -19,9 +21,9 @@ export interface EventHandlerProps {
   onRotateActivePiece(playerName: string): void;
 }
 
-export type GameProps = DataProps & EventHandlerProps;
+type GameProps = DataProps & EventHandlerProps;
 
-export class Game extends React.Component<GameProps, undefined> {
+class Game extends React.Component<GameProps, undefined> {
   render() {
     let gameProps = this.props;
     return (
@@ -37,6 +39,7 @@ export class Game extends React.Component<GameProps, undefined> {
                 player={gameProps.board.byPlayerName[playerName]}
                 onMoveActivePiece={gameProps.onMoveActivePiece}
                 onRotateActivePiece={gameProps.onRotateActivePiece}
+                connectDropTarget={null}
               />
              )
           })
@@ -45,3 +48,6 @@ export class Game extends React.Component<GameProps, undefined> {
     );
   }
 }
+
+export default DragDropContext(HTML5Backend)(Game);
+

@@ -3,6 +3,7 @@ import * as React from "react";
 import Pieces from '../../../lib/pieces';
 import Players from '../../../lib/players';
 import { AuctionPiece } from '../reducers/auction';
+import { AuctionPiece as AuctionPieceComponent } from './auction-piece';
 import { Piece } from "./Piece";
 
 
@@ -14,7 +15,7 @@ export interface DataProps {
 }
 
 export interface EventHandlerProps {
-  swapWithFront: (index: number) => void;
+  swapPieces: (i: number, j: number) => void;
   setSelectedIndex: (playerName: string, pieceNames: Array<AuctionPiece>, index: number) => void;
   continueClick: () => void;
 }
@@ -23,21 +24,27 @@ export type AuctionProps = DataProps & EventHandlerProps;
 
 export class Auction extends React.Component<AuctionProps, undefined> {
   render() {
-    let auctionProps = this.props;
+    let { pieceMap, player, swapPieces, setSelectedIndex } = this.props;
     return (
       <div className="auction">
         {this.props.player.name}: {this.props.player.score}
         <div className="pieces">
           {
             this.props.pieceNames.map(function(piece, i: number){return (
-              <Piece.Piece
+              <AuctionPieceComponent.AuctionPiece
                 key={piece.pieceName}
-                piece={auctionProps.pieceMap[piece.pieceName]}
+                piece={pieceMap[piece.pieceName]}
+                index={i}
                 x={i * 200}
                 y={0}
                 rotation={0}
-                selected={auctionProps.player.selectedPiece.name == i.toString()}
-                onClick={() => { auctionProps.pricing ? auctionProps.swapWithFront(i) : auctionProps.setSelectedIndex(auctionProps.player.name, auctionProps.pieceNames, i) }} />
+                selected={player.selectedPiece.name == i.toString()}
+                swapPieces={swapPieces}
+                setSelectedIndex={setSelectedIndex}
+                isDragging={false}
+                connectDragSource={null}
+                connectDropTarget={null}
+               />
             );})
           }
         </div>

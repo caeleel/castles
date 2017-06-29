@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import * as actions from '../actions/actions';
 import { Dispatch } from 'redux';
-import { Game, DataProps, EventHandlerProps } from '../components/game'
+import Game, { DataProps, EventHandlerProps } from '../components/game'
 import { Piece } from '../components/piece'
 import Pieces from '../../../lib/pieces';
 import { AppState } from '../reducers/reducers';
