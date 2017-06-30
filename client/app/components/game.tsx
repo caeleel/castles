@@ -2,7 +2,7 @@ import * as React from "react";
 
 import Pieces from '../../../lib/pieces';
 import Players from '../../../lib/players';
-import { Board } from "./board";
+import { BoardContainer } from "../containers/board";
 import AuctionContainer from '../containers/auction';
 import { BoardState } from '../reducers/board'
 import { State, GameState } from '../reducers/game'
@@ -17,15 +17,12 @@ export interface DataProps {
 
 export interface EventHandlerProps {
   onLoadPiecesClick(): void;
-  onMoveActivePiece(playerName: string, x: number, y: number): void;
-  onRotateActivePiece(playerName: string): void;
   continueClick(board: BoardState, game: GameState, pieces: Pieces.PieceMap): void;
 }
 
 type GameProps = DataProps & EventHandlerProps;
 
 class Game extends React.Component<GameProps, undefined> {
-
   stateTooltip = function () {
     switch (this.props.game.mode) {
       case State.Placing:
@@ -35,26 +32,20 @@ class Game extends React.Component<GameProps, undefined> {
     }
   }
   render() {
-    let { board, game, pieceMap, onLoadPiecesClick, onMoveActivePiece, onRotateActivePiece, continueClick } = this.props;
+    let { board, game, pieceMap, onLoadPiecesClick, continueClick } = this.props;
     return (
       <div>
         {this.stateTooltip()}
         <AuctionContainer />
+
         <div>
           <button className="continue" onClick={() => continueClick(board, game, pieceMap)}>Continue</button>
         </div>
+
         {
           this.props.board.playerNames.map(function (playerName: string) {
-            return (
-              <Board
-                key={playerName}
-                pieceMap={pieceMap}
-                player={board.byPlayerName[playerName]}
-                onMoveActivePiece={onMoveActivePiece}
-                onRotateActivePiece={onRotateActivePiece}
-                connectDropTarget={null}
-              />
-             )
+            // TODO: figure out a good key that will make react rerender the board when necessary
+            return <BoardContainer key={playerName + (board.byPlayerName[playerName].selectedPiece ? board.byPlayerName[playerName].selectedPiece.name : "")} player={board.byPlayerName[playerName]} />
           })
         }
       </div>
@@ -63,4 +54,3 @@ class Game extends React.Component<GameProps, undefined> {
 }
 
 export default DragDropContext(HTML5Backend)(Game);
-

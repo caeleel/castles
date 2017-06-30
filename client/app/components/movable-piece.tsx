@@ -14,31 +14,32 @@ import Pieces from '../../../lib/pieces';
 import { Piece } from './Piece'
 
 // Spec: drag events to handle.
-let sourceSpec: DragSourceSpec<ActivePiece.ActivePieceProps> = {
-  beginDrag: (props: ActivePiece.ActivePieceProps) => ({
+let sourceSpec: DragSourceSpec<MovablePieceProps> = {
+  beginDrag: (props: MovablePieceProps) => ({
+    name: props.piece.name,
     x: props.x,
     y: props.y,
   }),
 };
 
-export module ActivePiece {
-  export interface ActivePieceProps {
-    isDragging : boolean;
-    connectDragSource: ConnectDragSource;
-    piece: Pieces.Piece;
-    x: number;
-    y: number;
-    rotation: number;
-  }
+interface MovablePieceProps {
+  isDragging : boolean;
+  connectDragSource: ConnectDragSource;
+  piece: Pieces.Piece;
+  x: number;
+  y: number;
+  rotation: number;
+}
 
-  export interface Test{}
+export module MovablePiece {
 
-  @DragSource("active-piece", sourceSpec, (connect: DragSourceConnector, monitor: DragSourceMonitor) => ({
+
+  @DragSource("movable-piece", sourceSpec, (connect: DragSourceConnector, monitor: DragSourceMonitor) => ({
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging()
   }))
-  export class ActivePiece extends React.Component<ActivePieceProps, Test> {
-    constructor(props: ActivePieceProps) {
+  export class MovablePiece extends React.Component<MovablePieceProps, {}> {
+    constructor(props: MovablePieceProps) {
       super(props);
     }
     render(): false | JSX.Element {
@@ -54,7 +55,7 @@ export module ActivePiece {
             piece={piece}
             visible={!isDragging}
             rotation={0}
-            selected={true}
+            selected={false}
           />
         </div>
       );

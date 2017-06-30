@@ -16,7 +16,7 @@ function mapStateToProps(state: AppState): DataProps {
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: DataProps): EventHandlerProps {
+function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
   return {
     onLoadPiecesClick(): void {
       Pieces.loadPieces().then((pieceMap : Pieces.PieceMap) => {
@@ -26,13 +26,6 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: DataProps): 
       })
 
     },
-    onMoveActivePiece(playerName: string, x: number, y: number): void {
-      // TODO: if mode is pricing, prevent this action
-      dispatch(actions.game.moveSelectedPiece({playerName: playerName, x: x, y: y}));
-    },
-    onRotateActivePiece(playerName: string): void {
-
-    },
     continueClick(board: BoardState, game: GameState, pieces: Pieces.PieceMap): void {
       switch (game.mode) {
         case State.Placing:
@@ -40,7 +33,7 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: DataProps): 
             return;
           }
           dispatch(actions.auction.removeSelectedPiece({name: board.byPlayerName[board.playerNames[0]].selectedPiece.name}));
-          dispatch(actions.game.placeSelectedPiece({playerName: 'golf'}));
+          dispatch(actions.board.placeSelectedPiece({playerName: 'golf'}));
         case State.Pricing:
           console.log("did nothing");
       }

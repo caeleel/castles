@@ -18,17 +18,17 @@ import { findDOMNode } from 'react-dom';
 import Pieces from '../../../lib/pieces';
 import Players from '../../../lib/players';
 import { Piece } from './Piece'
-import { AuctionPiece as AuctionPieceData } from '../reducers/auction';
+import { AuctionPiece } from '../reducers/auction';
 
 // Spec: drag events to handle.
-let sourceSpec: DragSourceSpec<AuctionPiece.AuctionPieceProps> = {
-  beginDrag: (props: AuctionPiece.AuctionPieceProps) => ({
+let sourceSpec: DragSourceSpec<SortablePiece.SortablePieceProps> = {
+  beginDrag: (props: SortablePiece.SortablePieceProps) => ({
     index: props.index,
   }),
 };
 
-let targetSpec: DropTargetSpec<AuctionPiece.AuctionPieceProps> = {
-  hover: (props: AuctionPiece.AuctionPieceProps, monitor: DropTargetMonitor, component: AuctionPiece.AuctionPiece) => {
+let targetSpec: DropTargetSpec<SortablePiece.SortablePieceProps> = {
+  hover: (props: SortablePiece.SortablePieceProps, monitor: DropTargetMonitor, component: SortablePiece.SortablePiece) => {
     let node = (monitor.getItem() as any);
     const dragIndex = node.index;
     const hoverIndex = props.index;
@@ -76,32 +76,29 @@ let targetSpec: DropTargetSpec<AuctionPiece.AuctionPieceProps> = {
   }
 }
 
-export module AuctionPiece {
-  export interface AuctionPieceProps {
+export module SortablePiece {
+  export interface SortablePieceProps {
     isDragging : boolean;
     connectDragSource: ConnectDragSource;
     connectDropTarget: ConnectDropTarget;
     piece: Pieces.Piece;
     index: number;
-    x: number;
-    y: number;
-    rotation: number;
     swapPieces: (i: number, j: number) => void;
-    setSelectedIndex: (playerName: string, pieceNames: Array<AuctionPieceData>, index: number) => void;
+    setSelectedIndex: (playerName: string, pieceNames: Array<AuctionPiece>, index: number) => void;
     player: Players.Player;
-    pieceNames: Array<AuctionPieceData>;
+    pieceNames: Array<AuctionPiece>;
   }
 
   export interface Test{}
 
-  @DragSource("auction-piece", sourceSpec, (connect: DragSourceConnector, monitor: DragSourceMonitor) => ({
+  @DragSource("sortable-piece", sourceSpec, (connect: DragSourceConnector, monitor: DragSourceMonitor) => ({
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging()
   }))
-  @DropTarget("auction-piece", targetSpec, (connect: DropTargetConnector, monitor: DropTargetMonitor) => ({
+  @DropTarget("sortable-piece", targetSpec, (connect: DropTargetConnector, monitor: DropTargetMonitor) => ({
     connectDropTarget: connect.dropTarget(),
   }))
-  export class AuctionPiece extends React.Component<AuctionPieceProps, Test> {
+  export class SortablePiece extends React.Component<SortablePieceProps, Test> {
     render(): JSX.Element | false {
       const { connectDragSource, connectDropTarget, isDragging, index, piece, setSelectedIndex, player, pieceNames } = this.props;
       let style = {

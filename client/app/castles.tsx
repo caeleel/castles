@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
             {pieceName: "Larder", juice: 0},
             {pieceName: "Secret Lair", juice: 1},
             {pieceName: "Billiards Room", juice: 0},
-            {pieceName: "Pumpkin Garden", juice: 0}
+            {pieceName: "Pumpkin Garden", juice: 0},
+            {pieceName: "Stables", juice: 2}
           ]
         }}, Redux.applyMiddleware(gameMiddleware))
       ReactDOM.render(

@@ -23,7 +23,7 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: DataProps): 
       dispatch(actions.auction.swapPieces({i: i, j: j}));
     },
     setSelectedIndex(playerName: string, pieceNames: Array<AuctionPiece>, index: number): void {
-      dispatch(actions.game.setSelectedPieceName({playerName: playerName, pieceName: pieceNames[index].pieceName}))
+      dispatch(actions.board.setSelectedPieceName({playerName: playerName, pieceName: pieceNames[index].pieceName}))
     }
   };
 }

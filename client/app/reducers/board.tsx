@@ -17,7 +17,7 @@ export const DEFAULT_BOARD_STATE: BoardState = {
 };
 
 export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: actions.Action<any>): BoardState {
-  if (actions.game.setSelectedPieceName.matches(action)) {
+  if (actions.board.setSelectedPieceName.matches(action)) {
     state = Object.assign({}, state);
     let selectedPiece = state.byPlayerName[action.payload.playerName].selectedPiece;
     state.byPlayerName[action.payload.playerName].selectedPiece = {
@@ -27,12 +27,14 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
       rotation: 0,
     }
     return state;
-  } else if (actions.game.moveSelectedPiece.matches(action)) {
+  } else if (actions.board.moveSelectedPiece.matches(action)) {
     state = Object.assign({}, state);
+    state.byPlayerName[action.payload.playerName].selectedPiece.name = action.payload.pieceName;
     state.byPlayerName[action.payload.playerName].selectedPiece.x = action.payload.x;
     state.byPlayerName[action.payload.playerName].selectedPiece.y = action.payload.y;
+    console.log(state)
     return state;
-  } else if (actions.game.placeSelectedPiece.matches(action)) {
+  } else if (actions.board.placeSelectedPiece.matches(action)) {
     state = Object.assign({}, state);
     state.byPlayerName[action.payload.playerName].pieces.push(state.byPlayerName[action.payload.playerName].selectedPiece);
     state.byPlayerName[action.payload.playerName].selectedPiece = null;
