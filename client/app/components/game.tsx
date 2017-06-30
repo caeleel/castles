@@ -16,29 +16,33 @@ export interface DataProps {
 }
 
 export interface EventHandlerProps {
-  onLoadPiecesClick: () => void;
+  onLoadPiecesClick(): void;
   onMoveActivePiece(playerName: string, x: number, y: number): void;
   onRotateActivePiece(playerName: string): void;
+  continueClick(board: BoardState, game: GameState, pieces: Pieces.PieceMap): void;
 }
 
 type GameProps = DataProps & EventHandlerProps;
 
 class Game extends React.Component<GameProps, undefined> {
   render() {
-    let gameProps = this.props;
+    let { board, game, pieceMap, onLoadPiecesClick, onMoveActivePiece, onRotateActivePiece, continueClick } = this.props;
     return (
       <div>
         {this.props.game.mode == State.Placing ? "Placing" : "Pricing"}
         <AuctionContainer />
+        <div>
+          <button className="continue" onClick={() => continueClick(board, game, pieceMap)}>Continue</button>
+        </div>
         {
           this.props.board.playerNames.map(function (playerName: string) {
             return (
               <Board
                 key={playerName}
-                pieceMap={gameProps.pieceMap}
-                player={gameProps.board.byPlayerName[playerName]}
-                onMoveActivePiece={gameProps.onMoveActivePiece}
-                onRotateActivePiece={gameProps.onRotateActivePiece}
+                pieceMap={pieceMap}
+                player={board.byPlayerName[playerName]}
+                onMoveActivePiece={onMoveActivePiece}
+                onRotateActivePiece={onRotateActivePiece}
                 connectDropTarget={null}
               />
              )

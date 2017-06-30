@@ -5,6 +5,8 @@ import Game, { DataProps, EventHandlerProps } from '../components/game'
 import { Piece } from '../components/piece'
 import Pieces from '../../../lib/pieces';
 import { AppState } from '../reducers/reducers';
+import { BoardState } from '../reducers/board';
+import { State, GameState } from '../reducers/game';
 
 function mapStateToProps(state: AppState): DataProps {
   return {
@@ -30,7 +32,20 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: DataProps): 
     },
     onRotateActivePiece(playerName: string): void {
 
-    }
+    },
+    continueClick(board: BoardState, game: GameState, pieces: Pieces.PieceMap): void {
+      switch (game.mode) {
+        case State.Placing:
+          if (!board.byPlayerName[board.playerNames[0]].selectedPiece) {
+            return;
+          }
+          dispatch(actions.auction.removeSelectedPiece({name: board.byPlayerName[board.playerNames[0]].selectedPiece.name}));
+          dispatch(actions.game.placeSelectedPiece({playerName: 'golf'}));
+        case State.Pricing:
+          console.log("did nothing");
+      }
+      dispatch(actions.game.nextState());
+    },
   };
 }
 

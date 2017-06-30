@@ -7,7 +7,7 @@ module Players {
     name: string;
     score: number;
     pieces: Pieces.PiecePlacement[];
-    selectedPiece: Pieces.PiecePlacement;
+    selectedPiece?: Pieces.PiecePlacement;
   }
 }
 

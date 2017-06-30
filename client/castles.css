@@ -70,8 +70,13 @@
     height: 0;
 }
 
+.auction .selected {
+    visibility: hidden;
+}
+
 .selected {
-    background-color: #999999;
+    background-color: #ADFF2F;
+    border: 2px solid green;
 }
 
 .draggable {

@@ -30,6 +30,10 @@ export function auctionReducer(state: AuctionState = DEFAULT_AUCTION_STATE, acti
         return {pieceName: pieceName, juice: 0};
       }),
     }
+  } else if (actions.auction.removeSelectedPiece.matches(action)) {
+    let pieceNames = state.pieceNames.slice();
+    pieceNames = pieceNames.filter((auctionPiece) => { return action.payload.name !== auctionPiece.pieceName; });
+    return {pieceNames};
   } else {
     return state;
   }

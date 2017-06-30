@@ -120,7 +120,7 @@ export module AuctionPiece {
             piece={piece}
             visible={!isDragging}
             rotation={0}
-            selected={false}
+            selected={player.selectedPiece.name === piece.name}
           />
         </div>
       ));

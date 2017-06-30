@@ -17,7 +17,6 @@ export interface DataProps {
 export interface EventHandlerProps {
   swapPieces: (i: number, j: number) => void;
   setSelectedIndex: (playerName: string, pieceNames: Array<AuctionPiece>, index: number) => void;
-  continueClick: () => void;
 }
 
 export type AuctionProps = DataProps & EventHandlerProps;
@@ -49,9 +48,6 @@ export class Auction extends React.Component<AuctionProps, undefined> {
                />
             );})
           }
-        </div>
-        <div>
-          <button className="continue" onClick={this.props.continueClick}>Continue</button>
         </div>
       </div>
     );

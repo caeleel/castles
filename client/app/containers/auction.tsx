@@ -22,9 +22,6 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: DataProps): 
     swapPieces(i: number, j: number): void {
       dispatch(actions.auction.swapPieces({i: i, j: j}));
     },
-    continueClick(): void {
-      dispatch(actions.game.nextState());
-    },
     setSelectedIndex(playerName: string, pieceNames: Array<AuctionPiece>, index: number): void {
       dispatch(actions.game.setSelectedPieceName({playerName: playerName, pieceName: pieceNames[index].pieceName}))
     }

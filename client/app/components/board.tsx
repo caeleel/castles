@@ -5,19 +5,11 @@ import Players from '../../../lib/players';
 import { Piece } from "./Piece";
 import { ActivePiece } from "./active-piece";
 import {
-  ConnectDragSource,
   DragDropContext,
-  DragSource,
-  DragSourceSpec,
-  DragSourceCollector,
-  DragSourceConnector,
-  DragSourceMonitor,
-  DragElementWrapper,
   ConnectDropTarget,
   DropTarget,
   DropTargetConnector,
   DropTargetMonitor,
-  ClientOffset,
   DropTargetSpec } from 'react-dnd';
 
 export interface DataProps {
@@ -69,7 +61,7 @@ export class Board extends React.Component<BoardProps, undefined> {
               </div>
           );})
         }
-        {player.selectedPiece.name != "" &&
+        {player.selectedPiece &&
           <ActivePiece.ActivePiece
             piece={pieceMap[player.selectedPiece.name]}
             x={player.selectedPiece.x}

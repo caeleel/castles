@@ -54,7 +54,7 @@ export module ActivePiece {
             piece={piece}
             visible={!isDragging}
             rotation={0}
-            selected={false}
+            selected={true}
           />
         </div>
       );
