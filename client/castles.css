@@ -13,6 +13,11 @@
     height: 300px;
     display: flex;
     align-items: center;
+    background-color: #444444;
+}
+
+.auction .selected {
+    visibility: hidden;
 }
 
 .board {
@@ -70,13 +75,9 @@
     height: 0;
 }
 
-.auction .selected {
-    visibility: hidden;
-}
-
 .selected {
-    background-color: #ADFF2F;
-    border: 2px solid green;
+    background-color: #999999;
+    outline: 5px solid green;
 }
 
 .draggable {

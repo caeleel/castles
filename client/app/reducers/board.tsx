@@ -19,9 +19,10 @@ export const DEFAULT_BOARD_STATE: BoardState = {
 export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: actions.Action<any>): BoardState {
   if (actions.game.setSelectedPieceName.matches(action)) {
     state = Object.assign({}, state);
+    let selectedPiece = state.byPlayerName[action.payload.playerName].selectedPiece;
     state.byPlayerName[action.payload.playerName].selectedPiece = {
-      x: 0,
-      y: 0,
+      x: selectedPiece ? selectedPiece.x : 0,
+      y: selectedPiece ? selectedPiece.y : 0,
       name: action.payload.pieceName,
       rotation: 0,
     }

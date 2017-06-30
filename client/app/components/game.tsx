@@ -25,11 +25,20 @@ export interface EventHandlerProps {
 type GameProps = DataProps & EventHandlerProps;
 
 class Game extends React.Component<GameProps, undefined> {
+
+  stateTooltip = function () {
+    switch (this.props.game.mode) {
+      case State.Placing:
+        return "Please pick a piece to add to your castle.";
+      case State.Pricing:
+        return "Drag pieces around to decide on a pricing";
+    }
+  }
   render() {
     let { board, game, pieceMap, onLoadPiecesClick, onMoveActivePiece, onRotateActivePiece, continueClick } = this.props;
     return (
       <div>
-        {this.props.game.mode == State.Placing ? "Placing" : "Pricing"}
+        {this.stateTooltip()}
         <AuctionContainer />
         <div>
           <button className="continue" onClick={() => continueClick(board, game, pieceMap)}>Continue</button>
