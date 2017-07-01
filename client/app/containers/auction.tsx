@@ -20,10 +20,10 @@ function mapStateToProps(state: AppState): DataProps {
 function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: DataProps): EventHandlerProps {
   return {
     swapPieces(i: number, j: number): void {
-      dispatch(actions.auction.swapPieces({i: i, j: j}));
+      dispatch(actions.auction.swapPieces({i, j}));
     },
     setSelectedIndex(playerName: string, pieceNames: Array<AuctionPiece>, index: number): void {
-      dispatch(actions.board.setSelectedPieceName({playerName: playerName, pieceName: pieceNames[index].pieceName}))
+      dispatch(actions.board.setSelectedPieceName({playerName, pieceName: pieceNames[index].pieceName}))
     }
   };
 }

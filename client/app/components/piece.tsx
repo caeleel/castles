@@ -25,6 +25,8 @@ export module Piece {
       let innerStyle = {
         backgroundImage: 'url("' + backgroundImageName + '")',
         backgroundSize: "cover",
+        transform: "rotate(" + this.props.rotation + "deg)",
+        transition: "rotate 0.5s ease",
       }
 
       return (

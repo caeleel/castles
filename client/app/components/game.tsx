@@ -44,8 +44,9 @@ class Game extends React.Component<GameProps, undefined> {
 
         {
           this.props.board.playerNames.map(function (playerName: string) {
-            // TODO: figure out a good key that will make react rerender the board when necessary
-            return <BoardContainer key={playerName + (board.byPlayerName[playerName].selectedPiece ? board.byPlayerName[playerName].selectedPiece.name : "")} player={board.byPlayerName[playerName]} />
+            // TODO: is it necessary to hash the entire child's content in the key?
+            console.log(JSON.stringify(board.byPlayerName[playerName]));
+            return <BoardContainer key={playerName + JSON.stringify(board.byPlayerName[playerName])} player={board.byPlayerName[playerName]} />
           })
         }
       </div>

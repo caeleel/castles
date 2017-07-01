@@ -40,6 +40,22 @@
     width: 100%;
 }
 
+.rotate-left {
+    background: url("public/glyphicons-737-rotate-left.png");
+    height: 24px;
+    width: 27px;
+    cursor: pointer;
+    border: none;
+}
+
+.rotate-right {
+    background: url("public/glyphicons-736-rotate-right.png");
+    height: 24px;
+    width: 27px;
+    cursor: pointer;
+    border: none;
+}
+
 .circle {
     border-radius: 50%;
 }

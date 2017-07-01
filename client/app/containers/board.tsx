@@ -23,13 +23,10 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
   return {
     movePiece(pieceName: string, playerName: string, x: number, y: number): void {
       // TODO: if mode is pricing, prevent this action
-      dispatch(actions.board.moveSelectedPiece({pieceName: pieceName, playerName: playerName, x: x, y: y}));
+      dispatch(actions.board.movePiece({pieceName, playerName, x, y}));
     },
-    rotateSelectedLeft(playerName: string): void {
-      dispatch(actions.board.rotateSelectedLeft({playerName: playerName}));
-    },
-    rotateSelectedRight(playerName: string): void {
-      dispatch(actions.board.rotateSelectedRight({playerName: playerName}));
+    rotateSelected(playerName: string, increment: number): void {
+      dispatch(actions.board.rotateSelected({playerName, increment}));
     },
   };
 }

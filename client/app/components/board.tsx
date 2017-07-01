@@ -19,8 +19,7 @@ export interface DataProps {
 
 export interface EventHandlerProps {
   movePiece: (pieceName: string, playerName: string, x: number, y: number) => void;
-  rotateSelectedLeft(playerName: string): void;
-  rotateSelectedRight(playerName: string): void;
+  rotateSelected(playerName: string, increment: number): void;
 }
 
 interface DragAndDropHandlerProps {
@@ -50,7 +49,7 @@ let targetSpec: DropTargetSpec<BoardProps> = {
 }))
 export class Board extends React.Component<BoardProps, undefined> {
   render(): JSX.Element | false {
-    let { pieceMap, player, connectDropTarget, rotateSelectedLeft, rotateSelectedRight } = this.props;
+    let { pieceMap, player, connectDropTarget, rotateSelected } = this.props;
     return connectDropTarget(
       <div className="board">
         {
@@ -73,16 +72,16 @@ export class Board extends React.Component<BoardProps, undefined> {
 
         {this.props.player.selectedPiece && (
           <div>
-            <button onClick={() => { rotateSelectedLeft(player.name); }}>Rotate left</button>
+            <button className="rotate-left" onClick={() => { rotateSelected(player.name, -90); }}></button>
             <MovablePiece.MovablePiece
               piece={pieceMap[player.selectedPiece.name]}
               x={player.selectedPiece.x}
               y={player.selectedPiece.y}
-              rotation={0}
+              rotation={player.selectedPiece.rotation}
               isDragging={false}
               connectDragSource={null}
             />
-            <button onClick={() => { rotateSelectedRight(this.props.player.name); }}>Rotate right</button>
+            <button className="rotate-right" onClick={() => { rotateSelected(player.name, 90); }}></button>
           </div>
         )}
       </div>
