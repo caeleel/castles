@@ -80,6 +80,7 @@ export class Board extends React.Component<BoardProps, undefined> {
               rotation={player.selectedPiece.rotation}
               isDragging={false}
               connectDragSource={null}
+              selected={true}
             />
             <button className="rotate-right" onClick={() => { rotateSelected(player.name, 90); }}></button>
           </div>

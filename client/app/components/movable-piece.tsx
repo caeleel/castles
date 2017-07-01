@@ -29,6 +29,7 @@ interface MovablePieceProps {
   x: number;
   y: number;
   rotation: number;
+  selected: boolean;
 }
 
 export module MovablePiece {
@@ -43,7 +44,7 @@ export module MovablePiece {
       super(props);
     }
     render(): false | JSX.Element {
-      const { x, y, rotation, connectDragSource, isDragging, piece } = this.props;
+      const { x, y, rotation, selected, connectDragSource, isDragging, piece } = this.props;
       let style = {
         left: x,
         top: y,
@@ -55,7 +56,7 @@ export module MovablePiece {
             piece={piece}
             visible={!isDragging}
             rotation={rotation}
-            selected={false}
+            selected={selected}
           />
         </div>
       );

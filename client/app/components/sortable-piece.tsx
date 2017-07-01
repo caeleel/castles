@@ -109,7 +109,7 @@ export module SortablePiece {
       return connectDragSource(connectDropTarget(
         <div
           className="slot"
-          onClick={() => setSelectedIndex(player.name, pieceNames, index)}
+          // onClick={() => setSelectedIndex(player.name, pieceNames, index)}
           style={style}
         >
           <Piece.Piece
@@ -117,7 +117,7 @@ export module SortablePiece {
             piece={piece}
             visible={!isDragging}
             rotation={0}
-            selected={player.selectedPiece.name === piece.name}
+            selected={false}
           />
         </div>
       ));

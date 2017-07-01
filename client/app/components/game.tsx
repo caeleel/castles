@@ -39,13 +39,12 @@ class Game extends React.Component<GameProps, undefined> {
         <AuctionContainer />
 
         <div>
-          <button className="continue" onClick={() => continueClick(board, game, pieceMap)}>Continue</button>
+          <button className="continue" onClick={() => { continueClick(board, game, pieceMap) } }>Continue</button>
         </div>
 
         {
           this.props.board.playerNames.map(function (playerName: string) {
             // TODO: is it necessary to hash the entire child's content in the key?
-            console.log(JSON.stringify(board.byPlayerName[playerName]));
             return <BoardContainer key={playerName + JSON.stringify(board.byPlayerName[playerName])} player={board.byPlayerName[playerName]} />
           })
         }

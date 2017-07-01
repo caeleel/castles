@@ -11,6 +11,7 @@
 
 .auction .slot {
     height: 300px;
+    width: 200px;
     display: flex;
     align-items: center;
     background-color: #444444;
@@ -31,8 +32,8 @@
 
 .continue {
     position: absolute;
-    top: 300px;
-    left: 100px;
+    top: 100px;
+    left: 50px;
 }
 
 .piece {

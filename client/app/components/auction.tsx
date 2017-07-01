@@ -45,7 +45,7 @@ export class Auction extends React.Component<AuctionProps, undefined> {
       )
     } else {
       return (
-        this.props.pieceNames.map(function(piece, i: number) {return (
+        this.props.pieceNames.map(function(piece, i: number) { return (
           <MovablePiece.MovablePiece
             key={piece.pieceName}
             piece={pieceMap[piece.pieceName]}
@@ -54,6 +54,7 @@ export class Auction extends React.Component<AuctionProps, undefined> {
             y={0}
             rotation={0}
             connectDragSource={null}
+            selected={player.selectedPiece && player.selectedPiece.name === piece.pieceName}
            />
         );})
       )

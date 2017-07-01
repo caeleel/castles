@@ -13,11 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
     Pieces.loadPieces().then((pieceMap : Pieces.PieceMap) => {
       let store = Redux.createStore(castlesApp, {
         board: {
-          byPlayerName: {"golf": {
-            name: "golf",
-            score: 0,
-            pieces: [{name: "Anteroom", x: 150, y: 150, rotation: 0}],
-            selectedPiece: {name: "Pumpkin Garden", x: 0, y: 0, rotation: 0}}
+          byPlayerName: {
+            "golf": {
+              name: "golf",
+              score: 0,
+              pieces: [{name: "Anteroom", x: 150, y: 150, rotation: 0}],
+              selectedPiece: null
+            }
           },
           playerNames: ["golf"],
         },

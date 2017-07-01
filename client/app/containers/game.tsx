@@ -35,7 +35,6 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
           dispatch(actions.auction.removeSelectedPiece({name: board.byPlayerName[board.playerNames[0]].selectedPiece.name}));
           dispatch(actions.board.placeSelectedPiece({playerName: 'golf'}));
         case State.Pricing:
-          console.log("did nothing");
       }
       dispatch(actions.game.nextState());
     },
