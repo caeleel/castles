@@ -34,7 +34,6 @@ interface MovablePieceProps {
 
 export module MovablePiece {
 
-
   @DragSource("movable-piece", sourceSpec, (connect: DragSourceConnector, monitor: DragSourceMonitor) => ({
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging()

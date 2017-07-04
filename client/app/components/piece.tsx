@@ -2,7 +2,7 @@ import * as React from "react";
 
 import Pieces from '../../../lib/pieces';
 
-const SCALE = 15;
+export const SCALE = 20
 
 export module Piece {
   export interface PieceProps {

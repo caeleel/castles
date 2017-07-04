@@ -120,7 +120,7 @@ export module SortablePiece {
             selected={false}
           />
         </div>
-      ));
+      ), {dropEffect: 'move'});
     }
   }
 

@@ -2,7 +2,7 @@ import * as React from "react";
 import { findDOMNode } from 'react-dom';
 import Pieces from '../../../lib/pieces';
 import Players from '../../../lib/players';
-import { Piece } from "./Piece";
+import { Piece, SCALE } from "./Piece";
 import { MovablePiece } from "./movable-piece";
 import {
   DragDropContext,
@@ -28,6 +28,13 @@ interface DragAndDropHandlerProps {
 
 export type BoardProps = DataProps & EventHandlerProps & DragAndDropHandlerProps;
 
+function snapToGrid(x: number, y: number) {
+  const snappedX = Math.round(x / SCALE) * SCALE;
+  const snappedY = Math.round(y / SCALE) * SCALE;
+
+  return [snappedX, snappedY];
+}
+
 let targetSpec: DropTargetSpec<BoardProps> = {
   drop: (props: BoardProps, monitor: DropTargetMonitor, component: Board) => {
     let item = (monitor.getItem() as any);
@@ -37,8 +44,10 @@ let targetSpec: DropTargetSpec<BoardProps> = {
     const xOffset = monitor.getInitialSourceClientOffset().x - boardBoundingRect.left;
     const yOffset = monitor.getInitialSourceClientOffset().y - boardBoundingRect.top;
 
-    const left = Math.round(delta.x + xOffset);
-    const top = Math.round(delta.y + yOffset);
+    let left = Math.round(delta.x + xOffset);
+    let top = Math.round(delta.y + yOffset);
+
+    [left, top] = snapToGrid(left, top);
 
     props.movePiece(item.name, props.player.name, left, top);
   }

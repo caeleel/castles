@@ -17,10 +17,6 @@
     background-color: #444444;
 }
 
-.auction .selected {
-    visibility: hidden;
-}
-
 .board {
     position: relative;
     height: 500px;
