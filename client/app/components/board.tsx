@@ -28,13 +28,6 @@ interface DragAndDropHandlerProps {
 
 export type BoardProps = DataProps & EventHandlerProps & DragAndDropHandlerProps;
 
-function snapToGrid(x: number, y: number) {
-  const snappedX = Math.round(x / SCALE) * SCALE;
-  const snappedY = Math.round(y / SCALE) * SCALE;
-
-  return [snappedX, snappedY];
-}
-
 let targetSpec: DropTargetSpec<BoardProps> = {
   drop: (props: BoardProps, monitor: DropTargetMonitor, component: Board) => {
     let item = (monitor.getItem() as any);
@@ -44,10 +37,8 @@ let targetSpec: DropTargetSpec<BoardProps> = {
     const xOffset = monitor.getInitialSourceClientOffset().x - boardBoundingRect.left;
     const yOffset = monitor.getInitialSourceClientOffset().y - boardBoundingRect.top;
 
-    let left = Math.round(delta.x + xOffset);
-    let top = Math.round(delta.y + yOffset);
-
-    [left, top] = snapToGrid(left, top);
+    let left = Math.round((delta.x + xOffset) / SCALE);
+    let top = Math.round((delta.y + yOffset) / SCALE);
 
     props.movePiece(item.name, props.player.name, left, top);
   }
@@ -64,8 +55,8 @@ export class Board extends React.Component<BoardProps, undefined> {
         {
           this.props.player.pieces.map(function(piece: Pieces.PiecePlacement){
             let style = {
-              left: piece.x,
-              top: piece.y,
+              left: piece.x * SCALE,
+              top: piece.y * SCALE,
             };
             return (
               <div key={piece.name} className="piece-position" style={style}>

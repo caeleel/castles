@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "golf": {
               name: "golf",
               score: 0,
-              pieces: [{name: "Anteroom", x: 150, y: 150, rotation: 0}],
+              pieces: [{name: "Anteroom", x: 20, y: 10, rotation: 0}],
               selectedPiece: null
             }
           },

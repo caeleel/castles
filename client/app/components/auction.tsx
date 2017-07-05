@@ -37,7 +37,6 @@ export class Auction extends React.Component<AuctionProps, undefined> {
             isDragging={false}
             connectDragSource={null}
             connectDropTarget={null}
-            // TODO: learn how to pass props into reducers via ownProps and stop passing these to the child
             player={player}
             pieceNames={pieceNames}
            />

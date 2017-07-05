@@ -31,6 +31,16 @@ export module Piece {
 
       return (
         <div style={style}>
+          {this.props.piece.exits.map((exit: number[], i: number) => {
+            let [x, y] = exit
+            let style = {
+              left: x * SCALE,
+              top: y * SCALE,
+            }
+            return <div className="exit" key={x + "-" + y} style={style} />
+            }
+          )}
+
           <div className={classNames} style={innerStyle} />
         </div>
       );

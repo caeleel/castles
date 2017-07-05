@@ -9,9 +9,8 @@ import {
   DragSourceMonitor,
   DragElementWrapper,
   ClientOffset } from 'react-dnd';
-import { findDOMNode } from 'react-dom';
 import Pieces from '../../../lib/pieces';
-import { Piece } from './Piece'
+import { SCALE, Piece } from './Piece'
 
 // Spec: drag events to handle.
 let sourceSpec: DragSourceSpec<MovablePieceProps> = {
@@ -45,8 +44,8 @@ export module MovablePiece {
     render(): false | JSX.Element {
       const { x, y, rotation, selected, connectDragSource, isDragging, piece } = this.props;
       let style = {
-        left: x,
-        top: y,
+        left: x * SCALE,
+        top: y * SCALE,
       }
       return connectDragSource(
         <div className="piece-position" style={style}>

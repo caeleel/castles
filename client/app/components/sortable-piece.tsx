@@ -89,8 +89,6 @@ export module SortablePiece {
     pieceNames: Array<AuctionPiece>;
   }
 
-  export interface Test{}
-
   @DragSource("sortable-piece", sourceSpec, (connect: DragSourceConnector, monitor: DragSourceMonitor) => ({
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging()
@@ -98,7 +96,7 @@ export module SortablePiece {
   @DropTarget("sortable-piece", targetSpec, (connect: DropTargetConnector, monitor: DropTargetMonitor) => ({
     connectDropTarget: connect.dropTarget(),
   }))
-  export class SortablePiece extends React.Component<SortablePieceProps, Test> {
+  export class SortablePiece extends React.Component<SortablePieceProps, {}> {
     render(): JSX.Element | false {
       const { connectDragSource, connectDropTarget, isDragging, index, piece, setSelectedIndex, player, pieceNames } = this.props;
       let style = {

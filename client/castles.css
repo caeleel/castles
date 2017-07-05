@@ -63,6 +63,14 @@
     outline: 5px solid green;
 }
 
+.exit {
+    position: absolute;
+    height: 4px;
+    width: 4px;
+    z-index: 1;
+    background-color: black;
+}
+
 .draggable {
     cursor: move;
 }
