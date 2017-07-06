@@ -1,7 +1,7 @@
 {
   "75": {
     "type": "rectangle",
-    "dimensions": [2, 6],
+    "dimensions": [6, 2],
     "rooms": {
       "corridor": {
         "instances": {
@@ -19,16 +19,7 @@
     "rooms": {
       "corridor": {
         "instances": {
-          "Foyer (Blue)": {
-            "exits": [[3, 0], [3, 6], [6, 3]]
-          },
-          "Foyer (Green)": {
-            "exits": [[3, 0], [3, 6], [6, 3]]
-          },
-          "Foyer (Red)": {
-            "exits": [[3, 0], [3, 6], [6, 3]]
-          },
-          "Foyer (Yellow)": {
+          "Foyer": {
             "exits": [[3, 0], [3, 6], [6, 3]]
           }
         }

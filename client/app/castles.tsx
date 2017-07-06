@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let store = Redux.createStore(castlesApp, {
         board: {
           score: 0,
-          pieces: [{name: "Foyer (Blue)", x: 20, y: 10, rotation: 0}, {name: "Anteroom", x: 20, y: 16, rotation: 0}],
+          pieces: [{name: "Foyer", x: 20, y: 10, rotation: 0}, {name: "Anteroom", x: 20, y: 16, rotation: 0}],
           selectedPieceName: ""
         },
         pieces: {

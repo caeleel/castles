@@ -1,5 +1,5 @@
 .react-autosuggest__suggestions-list {
-    list-style: none;
+  list-style: none;
 }
 
 .suggestion-content {
@@ -8,61 +8,63 @@
   background-repeat: no-repeat;
   border: 1px solid gray;
   width: 300px;
+  height: 60px;
 }
 
 .suggestion-content img {
-    height: 60px;
-    width: 60px;
+  height: auto;
+  width: 50px;
 }
+
 .board {
-    position: relative;
-    height: 500px;
+  position: relative;
+  height: 500px;
 }
 
 .board .piece-position {
-    position: absolute;
+  position: absolute;
 }
 
 .continue {
-    position: absolute;
-    top: 100px;
-    left: 50px;
+  position: absolute;
+  top: 100px;
+  left: 50px;
 }
 
 .piece {
-    height: 100%;
-    width: 100%;
-    background-color: #999999;
+  height: 100%;
+  width: 100%;
+  background-color: #999999;
 }
 
 .rotate-left {
-    background: url("public/glyphicons-737-rotate-left.png");
-    height: 24px;
-    width: 27px;
-    cursor: pointer;
-    border: none;
+  background: url("public/glyphicons-737-rotate-left.png");
+  height: 24px;
+  width: 27px;
+  cursor: pointer;
+  border: none;
 }
 
 .rotate-right {
-    background: url("public/glyphicons-736-rotate-right.png");
-    height: 24px;
-    width: 27px;
-    cursor: pointer;
-    border: none;
+  background: url("public/glyphicons-736-rotate-right.png");
+  height: 24px;
+  width: 27px;
+  cursor: pointer;
+  border: none;
 }
 
 .circle {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .exit {
-    position: absolute;
-    height: 4px;
-    width: 4px;
-    z-index: 1;
-    background-color: black;
+  position: absolute;
+  height: 4px;
+  width: 4px;
+  z-index: 1;
+  background-color: black;
 }
 
 .draggable {
-    cursor: move;
+  cursor: move;
 }
