@@ -25,6 +25,7 @@ interface PieceProps {
   isDragging : boolean;
   connectDragSource: ConnectDragSource;
   rotatePiece(name: string, increment: number): void;
+  selectPiece(name: string): void;
   piece: Pieces.Piece;
   x: number;
   y: number;
@@ -41,6 +42,7 @@ export module Piece {
     constructor(props: PieceProps) {
       super(props);
     }
+
     render(): false | JSX.Element {
       const { x, y, rotation, selected, connectDragSource, isDragging, piece, rotatePiece } = this.props;
       let style = {
@@ -59,6 +61,21 @@ export module Piece {
         transition: "rotate 0.5s ease",
       }
 
+      let rotateLeft = (e: Event): void => {
+        e.stopPropagation();
+        this.props.rotatePiece(this.props.piece.name, -90);
+      }
+
+      let rotateRight = (e: Event): void => {
+        e.stopPropagation();
+        this.props.rotatePiece(this.props.piece.name, 90);
+      }
+
+      let selectPiece = (e: Event): void => {
+        e.stopPropagation();
+        this.props.selectPiece(this.props.piece.name);
+      }
+
       return connectDragSource(
         <div className="piece-position" style={style}>
           {piece.exits.map((exit: number[], i: number) => {
@@ -71,9 +88,9 @@ export module Piece {
             }
           )}
 
-          {selected && (<button className="rotate-left" onClick={() => { rotatePiece(piece.name, -90); }}></button>)}
-          <div className={classNames} style={innerStyle} />
-          {selected && (<button className="rotate-right" onClick={() => { rotatePiece(piece.name, 90); }}></button>)}
+          {selected && (<button className="rotate rotate-left" style={{left: -5 - 27}} onClick={rotateLeft.bind(this)}></button>)}
+          {selected && (<button className="rotate rotate-right" style={{left: piece.width * SCALE + 5}} onClick={rotateRight.bind(this)}></button>)}
+          <div className={classNames} style={innerStyle} onClick={selectPiece.bind(this)} />
         </div>
       );
     }

@@ -51,9 +51,9 @@ let targetSpec: DropTargetSpec<BoardProps> = {
 }))
 export class Board extends React.Component<BoardProps, undefined> {
   render(): JSX.Element | false {
-    let { pieceMap, pieces, connectDropTarget, rotatePiece, selectedPieceName } = this.props;
+    let { pieceMap, pieces, connectDropTarget, rotatePiece, selectedPieceName, selectPiece } = this.props;
     return connectDropTarget(
-      <div className="board">
+      <div className="board" onClick={() => { selectPiece("") }}>
         {
           pieces.map(function(piece: Pieces.PiecePlacement){
             let style = {
@@ -70,6 +70,7 @@ export class Board extends React.Component<BoardProps, undefined> {
                 isDragging={false}
                 connectDragSource={null}
                 rotatePiece={rotatePiece}
+                selectPiece={selectPiece}
                 selected={selectedPieceName == piece.name}
               />
           );})

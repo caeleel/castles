@@ -25,32 +25,27 @@
   position: absolute;
 }
 
-.continue {
-  position: absolute;
-  top: 100px;
-  left: 50px;
-}
-
 .piece {
   height: 100%;
   width: 100%;
   background-color: #999999;
+  position: absolute;
+}
+
+.rotate {
+  position: absolute;
+  height: 24px;
+  width: 27px;
+  cursor: pointer;
+  border: none;
 }
 
 .rotate-left {
   background: url("public/glyphicons-737-rotate-left.png");
-  height: 24px;
-  width: 27px;
-  cursor: pointer;
-  border: none;
 }
 
 .rotate-right {
   background: url("public/glyphicons-736-rotate-right.png");
-  height: 24px;
-  width: 27px;
-  cursor: pointer;
-  border: none;
 }
 
 .circle {
