@@ -1,26 +1,56 @@
 import * as React from "react";
-
+import {
+  ConnectDragSource,
+  DragDropContext,
+  DragSource,
+  DragSourceSpec,
+  DragSourceCollector,
+  DragSourceConnector,
+  DragSourceMonitor,
+  DragElementWrapper,
+  ClientOffset } from 'react-dnd';
 import Pieces from '../../../lib/pieces';
 
-export const SCALE = 20
+export const SCALE = 20;
+// Spec: drag events to handle.
+let sourceSpec: DragSourceSpec<PieceProps> = {
+  beginDrag: (props: PieceProps) => ({
+    name: props.piece.name,
+    x: props.x,
+    y: props.y,
+  }),
+};
+
+interface PieceProps {
+  isDragging : boolean;
+  connectDragSource: ConnectDragSource;
+  rotatePiece(name: string, increment: number): void;
+  piece: Pieces.Piece;
+  x: number;
+  y: number;
+  rotation: number;
+  selected: boolean;
+}
 
 export module Piece {
-  export interface PieceProps {
-    piece: Pieces.Piece;
-    rotation: number;
-    selected: boolean;
-    visible: boolean;
-  }
-
-  export class Piece extends React.Component<PieceProps, null> {
+  @DragSource("piece", sourceSpec, (connect: DragSourceConnector, monitor: DragSourceMonitor) => ({
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
+  }))
+  export class Piece extends React.Component<PieceProps, {}> {
+    constructor(props: PieceProps) {
+      super(props);
+    }
     render(): false | JSX.Element {
-      let classNames = "piece " + (this.props.piece.type) + " " + (this.props.selected ? "selected" : "");
-      let backgroundImageName = "/public/" + this.props.piece.name + ".png";
+      const { x, y, rotation, selected, connectDragSource, isDragging, piece, rotatePiece } = this.props;
       let style = {
-        height: this.props.piece.height * SCALE,
-        width: this.props.piece.width * SCALE,
-        visibility: this.props.visible ? "visible" : "hidden",
-      };
+        left: x * SCALE,
+        top: y * SCALE,
+        height: piece.height * SCALE,
+        width: piece.width * SCALE,
+      }
+      let classNames = "piece " + (piece.type) + " " + (selected ? "selected" : "");
+      let backgroundImageName = "/public/" + piece.name + ".png";
 
       let innerStyle = {
         backgroundImage: 'url("' + backgroundImageName + '")',
@@ -29,9 +59,9 @@ export module Piece {
         transition: "rotate 0.5s ease",
       }
 
-      return (
-        <div style={style}>
-          {this.props.piece.exits.map((exit: number[], i: number) => {
+      return connectDragSource(
+        <div className="piece-position" style={style}>
+          {piece.exits.map((exit: number[], i: number) => {
             let [x, y] = exit
             let style = {
               left: x * SCALE,
@@ -41,10 +71,11 @@ export module Piece {
             }
           )}
 
+          {selected && (<button className="rotate-left" onClick={() => { rotatePiece(piece.name, -90); }}></button>)}
           <div className={classNames} style={innerStyle} />
+          {selected && (<button className="rotate-right" onClick={() => { rotatePiece(piece.name, 90); }}></button>)}
         </div>
       );
     }
   }
-
 }

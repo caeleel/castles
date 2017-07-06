@@ -6,12 +6,10 @@ import { Piece } from '../components/piece'
 import Pieces from '../../../lib/pieces';
 import { AppState } from '../reducers/reducers';
 import { BoardState } from '../reducers/board';
-import { State, GameState } from '../reducers/game';
 
 function mapStateToProps(state: AppState): DataProps {
   return {
     board: state.board,
-    game: state.game,
     pieceMap: state.pieces.pieceMap,
   };
 }
@@ -24,19 +22,10 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
       }).catch(err => {
         console.log(err);
       })
-
     },
-    continueClick(board: BoardState, game: GameState, pieces: Pieces.PieceMap): void {
-      switch (game.mode) {
-        case State.Placing:
-          if (!board.byPlayerName[board.playerNames[0]].selectedPiece) {
-            return;
-          }
-          dispatch(actions.auction.removeSelectedPiece({name: board.byPlayerName[board.playerNames[0]].selectedPiece.name}));
-          dispatch(actions.board.placeSelectedPiece({playerName: 'golf'}));
-        case State.Pricing:
-      }
-      dispatch(actions.game.nextState());
+    //addClick(name: string, board: BoardState, pieces: Pieces.PieceMap): void {
+    addClick(name: string): void {
+      dispatch(actions.board.addPiece({name: name}));
     },
   };
 }

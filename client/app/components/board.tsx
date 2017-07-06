@@ -1,9 +1,7 @@
 import * as React from "react";
 import { findDOMNode } from 'react-dom';
 import Pieces from '../../../lib/pieces';
-import Players from '../../../lib/players';
 import { Piece, SCALE } from "./Piece";
-import { MovablePiece } from "./movable-piece";
 import {
   DragDropContext,
   ConnectDropTarget,
@@ -14,12 +12,14 @@ import {
 
 export interface DataProps {
   pieceMap: Pieces.PieceMap;
-  player: Players.Player;
+  pieces: Pieces.PiecePlacement[];
+  selectedPieceName: string;
 }
 
 export interface EventHandlerProps {
-  movePiece: (pieceName: string, playerName: string, x: number, y: number) => void;
-  rotateSelected(playerName: string, increment: number): void;
+  movePiece: (pieceName: string, x: number, y: number) => void;
+  rotatePiece(name: string, increment: number): void;
+  selectPiece(name: string): void;
 }
 
 interface DragAndDropHandlerProps {
@@ -40,51 +40,40 @@ let targetSpec: DropTargetSpec<BoardProps> = {
     let left = Math.round((delta.x + xOffset) / SCALE);
     let top = Math.round((delta.y + yOffset) / SCALE);
 
-    props.movePiece(item.name, props.player.name, left, top);
+    props.movePiece(item.name, left, top);
+    props.selectPiece(item.name);
+
   }
 }
 
-@DropTarget('movable-piece', targetSpec, (connect: DropTargetConnector, monitor: DropTargetMonitor) => ({
+@DropTarget('piece', targetSpec, (connect: DropTargetConnector, monitor: DropTargetMonitor) => ({
   connectDropTarget: connect.dropTarget(),
 }))
 export class Board extends React.Component<BoardProps, undefined> {
   render(): JSX.Element | false {
-    let { pieceMap, player, connectDropTarget, rotateSelected } = this.props;
+    let { pieceMap, pieces, connectDropTarget, rotatePiece, selectedPieceName } = this.props;
     return connectDropTarget(
       <div className="board">
         {
-          this.props.player.pieces.map(function(piece: Pieces.PiecePlacement){
+          pieces.map(function(piece: Pieces.PiecePlacement){
             let style = {
               left: piece.x * SCALE,
               top: piece.y * SCALE,
             };
             return (
-              <div key={piece.name} className="piece-position" style={style}>
-                <Piece.Piece
-                  piece={pieceMap[piece.name]}
-                  selected={false}
-                  rotation={piece.rotation}
-                  visible={true}
-                />
-              </div>
+              <Piece.Piece
+                key={piece.name}
+                piece={pieceMap[piece.name]}
+                x={piece.x}
+                y={piece.y}
+                rotation={piece.rotation}
+                isDragging={false}
+                connectDragSource={null}
+                rotatePiece={rotatePiece}
+                selected={selectedPieceName == piece.name}
+              />
           );})
         }
-
-        {this.props.player.selectedPiece && (
-          <div>
-            <button className="rotate-left" onClick={() => { rotateSelected(player.name, -90); }}></button>
-            <MovablePiece.MovablePiece
-              piece={pieceMap[player.selectedPiece.name]}
-              x={player.selectedPiece.x}
-              y={player.selectedPiece.y}
-              rotation={player.selectedPiece.rotation}
-              isDragging={false}
-              connectDragSource={null}
-              selected={true}
-            />
-            <button className="rotate-right" onClick={() => { rotateSelected(player.name, 90); }}></button>
-          </div>
-        )}
       </div>
     );
   }

@@ -4,34 +4,32 @@ import { Dispatch } from 'redux';
 import { Board, DataProps, EventHandlerProps } from '../components/board'
 import { Piece } from '../components/piece'
 import Pieces from '../../../lib/pieces';
-import Players from '../../../lib/players';
 import { AppState } from '../reducers/reducers';
 import { BoardState } from '../reducers/board';
 
-interface BoardContainerProps {
-  player: Players.Player;
-}
-
-function mapStateToProps(state: AppState, ownProps: BoardContainerProps): DataProps {
+function mapStateToProps(state: AppState): DataProps {
   return {
-    player: ownProps.player,
+    pieces: state.board.pieces,
+    selectedPieceName: state.board.selectedPieceName,
     pieceMap: state.pieces.pieceMap,
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
   return {
-    movePiece(pieceName: string, playerName: string, x: number, y: number): void {
-      // TODO: if mode is pricing, prevent this action
-      dispatch(actions.board.movePiece({pieceName, playerName, x, y}));
+    movePiece(name: string, x: number, y: number): void {
+      dispatch(actions.board.movePiece({name, x, y}));
     },
-    rotateSelected(playerName: string, increment: number): void {
-      dispatch(actions.board.rotateSelected({playerName, increment}));
+    rotatePiece(name: string, increment: number): void {
+      dispatch(actions.board.rotatePiece({name, increment}));
     },
+    selectPiece(name: string): void {
+      dispatch(actions.board.setSelectedPieceName({name}));
+    }
   };
 }
 
-export const BoardContainer = connect<DataProps, EventHandlerProps, BoardContainerProps>(
+export const BoardContainer = connect<DataProps, EventHandlerProps, {}>(
   mapStateToProps,
   mapDispatchToProps,
 )(Board);

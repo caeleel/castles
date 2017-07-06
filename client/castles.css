@@ -1,22 +1,19 @@
-.auction .pieces {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    border: 1px solid #AAAAAA;
+.react-autosuggest__suggestions-list {
+    list-style: none;
 }
 
-.auction .pieces div {
-    margin: 10px;
+.suggestion-content {
+  display: flex;
+  align-items: center;
+  background-repeat: no-repeat;
+  border: 1px solid gray;
+  width: 300px;
 }
 
-.auction .slot {
-    height: 300px;
-    width: 200px;
-    display: flex;
-    align-items: center;
-    background-color: #444444;
+.suggestion-content img {
+    height: 60px;
+    width: 60px;
 }
-
 .board {
     position: relative;
     height: 500px;
@@ -35,6 +32,7 @@
 .piece {
     height: 100%;
     width: 100%;
+    background-color: #999999;
 }
 
 .rotate-left {
@@ -55,12 +53,6 @@
 
 .circle {
     border-radius: 50%;
-}
-
-
-.selected {
-    background-color: #999999;
-    outline: 5px solid green;
 }
 
 .exit {
