@@ -17,7 +17,12 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
   if (actions.board.addPiece.matches(action)) {
     return {
       ...state,
-      pieces: [...state.pieces, {name: action.payload.name, x: 0, y: 0, rotation: 0}]
+      pieces: [...state.pieces, {
+        name: action.payload.name,
+        x: state.pieces.length, // set x coord to length to stagger multiple incoming pieces
+        y: state.pieces.length, // set y coord to length to stagger multiple incoming pieces
+        rotation: 0
+      }]
     };
   } else if (actions.board.movePiece.matches(action)) {
     return {

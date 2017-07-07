@@ -89,9 +89,9 @@ export module Piece {
             }
           )}
 
+          <div className={classNames} style={innerStyle} onClick={selectPiece.bind(this)} />
           {selected && (<button className="rotate rotate-left" style={{left: -5 - 27}} onClick={rotateLeft.bind(this)}></button>)}
           {selected && (<button className="rotate rotate-right" style={{left: piece.width * SCALE + 5}} onClick={rotateRight.bind(this)}></button>)}
-          <div className={classNames} style={innerStyle} onClick={selectPiece.bind(this)} />
         </div>
       );
     }

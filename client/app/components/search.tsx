@@ -61,7 +61,7 @@ export class Search extends React.Component<SearchProps, State> {
 
     return this.props.pieceNames.filter((name: string) =>
       name.toLowerCase().slice(0, inputLength) === inputValue
-    ).slice(0, 5);
+    );
   };
 
   // Autosuggest will call this function every time you need to update suggestions.
@@ -84,6 +84,7 @@ export class Search extends React.Component<SearchProps, State> {
     for (let name of this.props.pieceNames) {
       if (name == this.state.value) {
         this.props.onSubmit(this.state.value);
+        this.setState({value: ""});
         return;
       }
     }
@@ -110,6 +111,7 @@ export class Search extends React.Component<SearchProps, State> {
           renderSuggestion={renderSuggestion}
           inputProps={inputProps}
           shouldRenderSuggestions={this.shouldRenderSuggestions}
+          highlightFirstSuggestion={true}
         />
       </form>
     );

@@ -26,7 +26,7 @@ class Game extends React.Component<GameProps, {}> {
     return (
       <div>
         <Garbage isOver={false} canDrop={false} deletePiece={deletePiece} connectDropTarget={null} />
-        <Search onSubmit={addClick} pieceNames={Object.keys(pieceMap)}/>
+        <Search onSubmit={addClick} pieceNames={Object.keys(pieceMap).sort()}/>
         <h2>Score: {board.score}</h2>
         <BoardContainer />
       </div>

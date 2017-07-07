@@ -16,10 +16,18 @@ input[type="text"] {
 .react-autosuggest__suggestions-container {
   position: absolute;
   background: white;
+  z-index: 2;
+  overflow: scroll;
+  max-height: 500px;
 }
 
 .react-autosuggest__suggestions-list {
   list-style: none;
+  padding-left: 0px;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  background-color: #FFFFCC;
 }
 
 .suggestion-content {

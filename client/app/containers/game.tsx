@@ -17,6 +17,7 @@ function mapStateToProps(state: AppState): DataProps {
 function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
   return {
     deletePiece(id: number): void {
+      dispatch(actions.board.setSelectedPieceId({id: -1}));
       dispatch(actions.board.deletePiece({id: id}));
     },
     addClick(name: string): void {
