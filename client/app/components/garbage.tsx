@@ -7,7 +7,7 @@ import {
   DropTargetSpec } from 'react-dnd';
 
 export interface EventHandlerProps {
-  deletePiece(name: string): void;
+  deletePiece(id: number): void;
 }
 
 interface DragAndDropHandlerProps {
@@ -22,7 +22,7 @@ let targetSpec: DropTargetSpec<GarbageProps> = {
   drop: (props: GarbageProps, monitor: DropTargetMonitor, component: Garbage) => {
     let item = (monitor.getItem() as any);
 
-    props.deletePiece(item.name);
+    props.deletePiece(item.id);
   }
 }
 

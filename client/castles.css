@@ -2,7 +2,7 @@ body {
   font-family: "Verdana", sans-serif;
 }
 
-h1 {
+h1, h2 {
   text-align: center;
 }
 
@@ -38,11 +38,11 @@ input[type="text"] {
 
 .garbage {
   position: absolute;
-  margin-top: -10px;
-  height: 50px;
-  width: 250px;
+  margin-top: -5px;
+  height: 40px;
+  width: 240px;
   background: white url("public/glyphicons-17-bin.png") no-repeat center center;
-  border: 2px dashed #CCCCCC;
+  border: 2px dashed #DDDDDD;
   visibility: hidden;
 }
 
@@ -51,7 +51,7 @@ input[type="text"] {
 }
 
 .garbage.hovered {
-  background-color: #CCCCCC;
+  background-color: #DDDDDD;
 }
 
 .board {

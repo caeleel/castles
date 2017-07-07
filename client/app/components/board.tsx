@@ -13,13 +13,13 @@ import {
 export interface DataProps {
   pieceMap: Pieces.PieceMap;
   pieces: Pieces.PiecePlacement[];
-  selectedPieceName: string;
+  selectedPieceId: number;
 }
 
 export interface EventHandlerProps {
-  movePiece: (pieceName: string, x: number, y: number) => void;
-  rotatePiece(name: string, increment: number): void;
-  selectPiece(name: string): void;
+  movePiece(id: number, x: number, y: number): void;
+  rotatePiece(id: number, increment: number): void;
+  selectPiece(id: number): void;
 }
 
 interface DragAndDropHandlerProps {
@@ -40,9 +40,8 @@ let targetSpec: DropTargetSpec<BoardProps> = {
     let left = Math.round((delta.x + xOffset) / SCALE);
     let top = Math.round((delta.y + yOffset) / SCALE);
 
-    props.movePiece(item.name, left, top);
-    props.selectPiece(item.name);
-
+    props.movePiece(item.id, left, top);
+    props.selectPiece(item.id);
   }
 }
 
@@ -51,18 +50,19 @@ let targetSpec: DropTargetSpec<BoardProps> = {
 }))
 export class Board extends React.Component<BoardProps, {}> {
   render(): JSX.Element | false {
-    let { pieceMap, pieces, connectDropTarget, rotatePiece, selectedPieceName, selectPiece } = this.props;
+    let { pieceMap, pieces, connectDropTarget, rotatePiece, selectedPieceId, selectPiece } = this.props;
     return connectDropTarget(
-      <div className="board" onClick={() => { selectPiece("") }}>
+      <div className="board" onClick={() => { selectPiece(-1) }}>
         {
-          pieces.map(function(piece: Pieces.PiecePlacement, index: number){
+          pieces.map(function(piece: Pieces.PiecePlacement, index: number) {
             let style = {
               left: piece.x * SCALE,
               top: piece.y * SCALE,
             };
             return (
               <Piece.Piece
-                key={piece.name + "-" + index}
+                key={index}
+                id={index}
                 piece={pieceMap[piece.name]}
                 x={piece.x}
                 y={piece.y}
@@ -71,7 +71,7 @@ export class Board extends React.Component<BoardProps, {}> {
                 connectDragSource={null}
                 rotatePiece={rotatePiece}
                 selectPiece={selectPiece}
-                selected={selectedPieceName == piece.name}
+                selected={selectedPieceId == index}
               />
           );})
         }

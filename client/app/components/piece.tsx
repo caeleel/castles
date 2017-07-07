@@ -15,17 +15,18 @@ export const SCALE = 20;
 // Spec: drag events to handle.
 let sourceSpec: DragSourceSpec<PieceProps> = {
   beginDrag: (props: PieceProps) => ({
-    name: props.piece.name,
+    id: props.id,
     x: props.x,
     y: props.y,
   }),
 };
 
 interface PieceProps {
+  id: number;
   isDragging: boolean;
   connectDragSource: ConnectDragSource;
-  rotatePiece(name: string, increment: number): void;
-  selectPiece(name: string): void;
+  rotatePiece(id: number, increment: number): void;
+  selectPiece(id: number): void;
   piece: Pieces.Piece;
   x: number;
   y: number;
@@ -63,17 +64,17 @@ export module Piece {
 
       let rotateLeft = (e: Event): void => {
         e.stopPropagation();
-        this.props.rotatePiece(this.props.piece.name, -90);
+        this.props.rotatePiece(this.props.id, -90);
       }
 
       let rotateRight = (e: Event): void => {
         e.stopPropagation();
-        this.props.rotatePiece(this.props.piece.name, 90);
+        this.props.rotatePiece(this.props.id, 90);
       }
 
       let selectPiece = (e: Event): void => {
         e.stopPropagation();
-        this.props.selectPiece(this.props.piece.name);
+        this.props.selectPiece(this.props.id);
       }
 
       return connectDragSource(

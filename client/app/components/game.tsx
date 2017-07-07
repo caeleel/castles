@@ -14,7 +14,7 @@ export interface DataProps {
 }
 
 export interface EventHandlerProps {
-  deletePiece(name: string): void;
+  deletePiece(id: number): void;
   addClick(name: string): void;
 }
 

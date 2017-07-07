@@ -10,21 +10,21 @@ import { BoardState } from '../reducers/board';
 function mapStateToProps(state: AppState): DataProps {
   return {
     pieces: state.board.pieces,
-    selectedPieceName: state.board.selectedPieceName,
+    selectedPieceId: state.board.selectedPieceId,
     pieceMap: state.pieces.pieceMap,
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
   return {
-    movePiece(name: string, x: number, y: number): void {
-      dispatch(actions.board.movePiece({name, x, y}));
+    movePiece(id: number, x: number, y: number): void {
+      dispatch(actions.board.movePiece({id, x, y}));
     },
-    rotatePiece(name: string, increment: number): void {
-      dispatch(actions.board.rotatePiece({name, increment}));
+    rotatePiece(id: number, increment: number): void {
+      dispatch(actions.board.rotatePiece({id, increment}));
     },
-    selectPiece(name: string): void {
-      dispatch(actions.board.setSelectedPieceName({name}));
+    selectPiece(id: number): void {
+      dispatch(actions.board.setSelectedPieceId({id}));
     }
   };
 }

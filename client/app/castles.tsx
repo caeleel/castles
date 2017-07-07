@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         board: {
           score: 0,
           pieces: [{name: "Foyer", x: 20, y: 10, rotation: 0}, {name: "Anteroom", x: 20, y: 16, rotation: 0}],
-          selectedPieceName: ""
+          selectedPieceId: -1
         },
         pieces: {
           pieceMap: pieceMap
