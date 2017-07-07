@@ -50,14 +50,18 @@ export class Search extends React.Component<SearchProps, State> {
     });
   };
 
+  shouldRenderSuggestions = () => {
+    return true;
+  };
+
   // Teach Autosuggest how to calculate suggestions for any given input value.
   getSuggestions = (value: string) => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    return inputLength === 0 ? [] : this.props.pieceNames.filter((name: string) =>
+    return this.props.pieceNames.filter((name: string) =>
       name.toLowerCase().slice(0, inputLength) === inputValue
-    );
+    ).slice(0, 5);
   };
 
   // Autosuggest will call this function every time you need to update suggestions.
@@ -90,7 +94,7 @@ export class Search extends React.Component<SearchProps, State> {
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
-      placeholder: 'Search for a piece in your castle',
+      placeholder: 'Search for a castle piece',
       value,
       onChange: this.onChange
     };
@@ -105,8 +109,8 @@ export class Search extends React.Component<SearchProps, State> {
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
           inputProps={inputProps}
+          shouldRenderSuggestions={this.shouldRenderSuggestions}
         />
-        <input type="submit" value="Add" />
       </form>
     );
   }

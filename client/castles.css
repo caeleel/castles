@@ -1,3 +1,23 @@
+body {
+  font-family: "Verdana", sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+input[type="text"] {
+  background: url("public/search.png") no-repeat 2px center;
+  padding: 6px;
+  padding-left: 24px;
+  width: 200px;
+}
+
+.react-autosuggest__suggestions-container {
+  position: absolute;
+  background: white;
+}
+
 .react-autosuggest__suggestions-list {
   list-style: none;
 }
@@ -14,6 +34,24 @@
 .suggestion-content img {
   height: auto;
   width: 50px;
+}
+
+.garbage {
+  position: absolute;
+  margin-top: -10px;
+  height: 50px;
+  width: 250px;
+  background: white url("public/glyphicons-17-bin.png") no-repeat center center;
+  border: 2px dashed #CCCCCC;
+  visibility: hidden;
+}
+
+.garbage.visible {
+  visibility: visible;
+}
+
+.garbage.hovered {
+  background-color: #CCCCCC;
 }
 
 .board {

@@ -35,6 +35,13 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
       ...state,
       pieces: [...state.pieces, {name: action.payload.name, x: 0, y: 0, rotation: 0}]
     };
+  } else if (actions.board.deletePiece.matches(action)) {
+    return {
+      ...state,
+      pieces: state.pieces.filter((piece: Pieces.PiecePlacement) => {
+        return piece.name != action.payload.name;
+      })
+    };
   } else if (actions.board.rotatePiece.matches(action)) {
     return {
       ...state,

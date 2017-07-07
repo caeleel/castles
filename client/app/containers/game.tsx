@@ -16,14 +16,9 @@ function mapStateToProps(state: AppState): DataProps {
 
 function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
   return {
-    onLoadPiecesClick(): void {
-      Pieces.loadPieces().then((pieceMap : Pieces.PieceMap) => {
-        dispatch(actions.piece.setPieces({pieceMap: pieceMap}));
-      }).catch(err => {
-        console.log(err);
-      })
+    deletePiece(name: string): void {
+      dispatch(actions.board.deletePiece({name: name}));
     },
-    //addClick(name: string, board: BoardState, pieces: Pieces.PieceMap): void {
     addClick(name: string): void {
       dispatch(actions.board.addPiece({name: name}));
     },

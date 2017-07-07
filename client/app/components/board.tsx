@@ -49,20 +49,20 @@ let targetSpec: DropTargetSpec<BoardProps> = {
 @DropTarget('piece', targetSpec, (connect: DropTargetConnector, monitor: DropTargetMonitor) => ({
   connectDropTarget: connect.dropTarget(),
 }))
-export class Board extends React.Component<BoardProps, undefined> {
+export class Board extends React.Component<BoardProps, {}> {
   render(): JSX.Element | false {
     let { pieceMap, pieces, connectDropTarget, rotatePiece, selectedPieceName, selectPiece } = this.props;
     return connectDropTarget(
       <div className="board" onClick={() => { selectPiece("") }}>
         {
-          pieces.map(function(piece: Pieces.PiecePlacement){
+          pieces.map(function(piece: Pieces.PiecePlacement, index: number){
             let style = {
               left: piece.x * SCALE,
               top: piece.y * SCALE,
             };
             return (
               <Piece.Piece
-                key={piece.name}
+                key={piece.name + "-" + index}
                 piece={pieceMap[piece.name]}
                 x={piece.x}
                 y={piece.y}

@@ -4,7 +4,7 @@ import * as ReactRedux from 'react-redux';
 import * as Redux from 'redux';
 
 import GameContainer from './containers/game';
-import { gameMiddleware } from './middleware/game';
+import { boardMiddleware } from './middleware/board';
 import castlesApp from './reducers/reducers';
 import Pieces from '../../lib/pieces';
 
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pieces: {
           pieceMap: pieceMap
         },
-      }, Redux.applyMiddleware(gameMiddleware))
+      }, Redux.applyMiddleware(boardMiddleware))
       ReactDOM.render(
         <ReactRedux.Provider store={store}>
           <GameContainer />

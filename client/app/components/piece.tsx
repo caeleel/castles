@@ -22,7 +22,7 @@ let sourceSpec: DragSourceSpec<PieceProps> = {
 };
 
 interface PieceProps {
-  isDragging : boolean;
+  isDragging: boolean;
   connectDragSource: ConnectDragSource;
   rotatePiece(name: string, increment: number): void;
   selectPiece(name: string): void;
