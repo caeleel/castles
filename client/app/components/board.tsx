@@ -1,6 +1,7 @@
 import * as React from "react";
 import { findDOMNode } from 'react-dom';
 import Pieces from '../../../lib/pieces';
+import { Score } from '../../../lib/score';
 import { Piece, SCALE } from "./Piece";
 import {
   DragDropContext,
@@ -20,6 +21,7 @@ export interface EventHandlerProps {
   movePiece(id: number, x: number, y: number): void;
   rotatePiece(id: number, increment: number): void;
   selectPiece(id: number): void;
+  setScore(score: number): void;
 }
 
 interface DragAndDropHandlerProps {
@@ -42,6 +44,8 @@ let targetSpec: DropTargetSpec<BoardProps> = {
 
     props.movePiece(item.id, left, top);
     props.selectPiece(item.id);
+
+    props.setScore(Score.score(props.pieces, props.pieceMap));
   }
 }
 
@@ -50,30 +54,28 @@ let targetSpec: DropTargetSpec<BoardProps> = {
 }))
 export class Board extends React.Component<BoardProps, {}> {
   render(): JSX.Element | false {
-    let { pieceMap, pieces, connectDropTarget, rotatePiece, selectedPieceId, selectPiece } = this.props;
+    let { pieceMap, pieces, connectDropTarget, rotatePiece, selectedPieceId, selectPiece, setScore } = this.props;
     return connectDropTarget(
       <div className="board" onClick={() => { selectPiece(-1) }}>
         {
-          pieces.map(function(piece: Pieces.PiecePlacement, index: number) {
-            let style = {
-              left: piece.x * SCALE,
-              top: piece.y * SCALE,
-            };
-            return (
-              <Piece.Piece
-                key={index}
-                id={index}
-                piece={pieceMap[piece.name]}
-                x={piece.x}
-                y={piece.y}
-                rotation={piece.rotation}
-                isDragging={false}
-                connectDragSource={null}
-                rotatePiece={rotatePiece}
-                selectPiece={selectPiece}
-                selected={selectedPieceId == index}
-              />
-          );})
+          pieces.map((piece: Pieces.PiecePlacement, index: number) => (
+            <Piece.Piece
+              key={index}
+              id={index}
+              piece={pieceMap[piece.name]}
+              x={piece.x}
+              y={piece.y}
+              rotation={piece.rotation}
+              isDragging={false}
+              connectDragSource={null}
+              rotatePiece={(id: number, increment: number) => {
+                rotatePiece(id, increment);
+                setScore(Score.score(pieces, pieceMap));
+              }}
+              selectPiece={selectPiece}
+              selected={selectedPieceId == index}
+            />
+          ))
         }
       </div>
     );

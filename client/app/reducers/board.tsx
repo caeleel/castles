@@ -19,7 +19,7 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
       ...state,
       pieces: [...state.pieces, {
         name: action.payload.name,
-        x: state.pieces.length, // set x coord to length to stagger multiple incoming pieces
+        x: 10 + state.pieces.length, // set x coord to length to stagger multiple incoming pieces
         y: state.pieces.length, // set y coord to length to stagger multiple incoming pieces
         rotation: 0
       }]
@@ -57,6 +57,11 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
           return piece;
         }
       })
+    };
+  } else if (actions.board.setScore.matches(action)) {
+    return {
+      ...state,
+      score: action.payload.score,
     };
   } else {
     return state;

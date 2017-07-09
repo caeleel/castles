@@ -6,4 +6,5 @@ export namespace board {
   export const setSelectedPieceId = actionCreator<{ id: number }>('BOARD_SET_SELECTED_PIECE_ID');
   export const deletePiece = actionCreator<{ id: number }>('BOARD_DELETE_PIECE');
   export const rotatePiece = actionCreator<{ id: number, increment: number }>('BOARD_ROTATE_SELECTED');
+  export const setScore = actionCreator<{ score: number }>('BOARD_SET_SCORE');
 }

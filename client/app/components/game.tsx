@@ -21,13 +21,24 @@ export interface EventHandlerProps {
 type GameProps = DataProps & EventHandlerProps;
 
 class Game extends React.Component<GameProps, {}> {
+
+  title() {
+    if (this.props.board.score > 0) {
+      return "Score: " + this.props.board.score;
+    } else {
+      return "Castles Score Checker";
+    }
+  }
   render() {
     let { board, pieceMap, deletePiece, addClick } = this.props;
     return (
       <div>
+        <h1>{this.title()}</h1>
+        <p className="tooltip" style={{visibility: board.score > 0 ? "visible" : "hidden"}}>
+          Also add your starting points and any underground room re-scores
+        </p>
         <Garbage isOver={false} canDrop={false} deletePiece={deletePiece} connectDropTarget={null} />
         <Search onSubmit={addClick} pieceNames={Object.keys(pieceMap).sort()}/>
-        <h2>Score: {board.score}</h2>
         <BoardContainer />
       </div>
     );
