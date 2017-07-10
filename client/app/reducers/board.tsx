@@ -28,10 +28,8 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
       ...state,
       pieces: state.pieces.map((piece: Pieces.Piece, index: number) => {
         if (index == action.payload.id) {
-          piece = {...piece}
-          piece.moveTo(action.payload.x, action.payload.y); // I don't get why this doesn't work
-          piece.x = action.payload.x;
-          piece.y = action.payload.y;
+          piece = piece.copy();
+          piece.moveTo(action.payload.x, action.payload.y);
           return piece;
         } else {
           return piece;
@@ -55,13 +53,13 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
       ...state,
       pieces: state.pieces.map((piece: Pieces.Piece, index: number) => {
         if (index == action.payload.id) {
-          piece = {...piece}
+          piece = piece.copy();
           piece.rotate();
           if (action.payload.increment == -1) {
             piece.rotate();
             piece.rotate();
           }
-          return {...piece};
+          return piece;
         } else {
           return piece;
         }

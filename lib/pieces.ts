@@ -179,6 +179,22 @@ module Pieces {
       this.height = newHeight;
     }
 
+    public copy = () => {
+      return new Piece(
+        this.width,
+        this.height,
+        this.sqft,
+        this.points,
+        this.modifier,
+        this.all_modifier,
+        this.combo,
+        this.exits,
+        this.type,
+        this.rType,
+        this.name,
+      )
+    }
+
     constructor(
       public width: number,
       public height: number,
