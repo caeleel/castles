@@ -36,10 +36,6 @@ module Pieces {
     [sqft: string]: RoomSize;
   }
 
-  export interface PieceMap {
-    [name: string]: Piece
-  }
-
   interface overlapFunction {
     (p: Piece): number;
   }
@@ -50,13 +46,6 @@ module Pieces {
 
   interface moveFunction {
     (x: number, y: number): void;
-  }
-
-  export interface PiecePlacement {
-    name: string;
-    x: number;
-    y: number;
-    rotation: number;
   }
 
   export class Piece {
@@ -175,6 +164,8 @@ module Pieces {
 
       if (this.orientation != null) {
         this.orientation = [-this.orientation[1], this.orientation[0]];
+      } else {
+        this.orientation = [1, 0];
       }
 
       this.exits.forEach((exit: number[]) => {
@@ -227,7 +218,7 @@ module Pieces {
       .then(resp => {
         return resp.json();
       }).then((pieces: PieceFile) => {
-        let pieceMap: PieceMap = {};
+        let rooms: Piece[] = [];
 
         Object.keys(pieces).forEach((sqft: string) => {
           let roomSize: RoomSize = pieces[sqft];
@@ -242,7 +233,7 @@ module Pieces {
                     instance.exits[j] = instance.exits[j].slice(0);
                   }
                 }
-                pieceMap[name] = new Piece(
+                rooms.push(new Piece(
                   roomSize.dimensions[0],
                   roomSize.dimensions[1],
                   sqft === '150-H' ? 150 : Number(sqft),
@@ -254,13 +245,13 @@ module Pieces {
                   roomSize.type,
                   roomType,
                   name
-                );
+                ));
               }
             });
           });
         });
 
-        return pieceMap;
+        return rooms;
       });
   }
 }

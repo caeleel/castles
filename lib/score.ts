@@ -2,42 +2,68 @@ import Pieces from './pieces';
 
 export module Score {
 
-  interface exitMap {
-    [coordinate: string]: string[]
-  }
-
-  export function score(pieces: Pieces.PiecePlacement[], pieceMap: Pieces.PieceMap) {
+  export function score(pieces: Pieces.Piece[], pieceIds: number[]) {
     let sum = 0;
-
-    pieces.map((piece: Pieces.PiecePlacement) => {
-      // let neighbors = getNeighbors(piece, pieces, pieceMap);
-      let neighbors: Pieces.Piece[];
-      sum += scorePiece(piece, pieceMap, neighbors);
-
+    pieceIds.map((id: number) => {
+      sum += scorePiece(id, pieceIds, pieces);
     })
     return sum;
   }
 
-  function scorePiece(piece: Pieces.PiecePlacement, pieceMap: Pieces.PieceMap, neighbors: Pieces.Piece[]) {
-    return pieceMap[piece.name].points;
+  function scorePiece(id: number, pieceIds: number[], pieces: Pieces.Piece[]) {
+    let piece = pieces[id];
+    let score = piece.points;
+    let neighbors = getNeighbors(id, pieceIds, pieces)
+    score += scoreCombos(piece, neighbors);
+    if (piece.rType == "downstairs") {
+      score += scoreGlobalCombos(piece, pieceIds, pieces);
+    }
+
+    if (piece.rType == "living" && neighbors.length == piece.exits.length) {
+      score *= 2;
+    }
+    return score;
   }
 
-  // function getNeighbors(piece: Pieces.PiecePlacement, pieces: Pieces.PiecePlacement[], pieceMap: Pieces.PieceMap) {
+  function getNeighbors(id: number, pieceIds: number[], pieces: Pieces.Piece[]) {
+    let piece = pieces[id]
+    let neighbors: Pieces.Piece[] = [];
+    for (let potentialNeighborId of pieceIds) {
+      if (id != potentialNeighborId) {
+        for (let potentialNeighborExit of pieces[potentialNeighborId].exits) {
+          for (let exit of piece.exits) {
+            if (exit[0] == potentialNeighborExit[0] && exit[1] == potentialNeighborExit[1]) {
+              neighbors.push(pieces[id]);
+            }
+          }
+        }
+      }
+    }
+    console.log(neighbors)
+    return neighbors;
+  }
 
+  function scoreCombos(piece: Pieces.Piece, neighbors: Pieces.Piece[]) {
+    let score = 0;
+    for (let neighbor of neighbors) {
+      for (let c of piece.combo) {
+        if (neighbor.rType == c) {
+          score += piece.modifier;
+        }
+      }
+    }
+    return score;
+  }
 
-  //   pieces.map((potentialNeighbor: Pieces.PiecePlacement) => {
-  //     pieceMap[potentialNeighbor.name].exits.map((exit: number[]) => {
-  //     if (potentialNeighbor)
-  //       pieceMap[piece.name].exits.map((exit: number[]) => {
-  //   let neighbors: Pieces.Piece[] = [];
-  //   pieceMap[piece.name].exits.map((exit: number[]) => {
-  //     exitMap[exit[0] + "," + exit[1]].map((neighborName: string) => {
-  //       if (neighborName != piece.name) {
-  //         neighbors.push(pieceMap[neighborName]);
-  //       }
-  //     });
-  //   });
-
-  //   return neighbors;
-  // }
+  function scoreGlobalCombos(piece: Pieces.Piece, pieceIds: number[], pieces: Pieces.Piece[]) {
+    let score = 0;
+    for (let id of pieceIds) {
+      for (let c of piece.combo) {
+        if (pieces[id].rType == c) {
+          score += piece.all_modifier;
+        }
+      }
+    }
+    return score;
+  }
 }

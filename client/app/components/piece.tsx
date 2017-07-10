@@ -16,22 +16,26 @@ export const SCALE = 20;
 let sourceSpec: DragSourceSpec<PieceProps> = {
   beginDrag: (props: PieceProps) => ({
     id: props.id,
-    x: props.x,
-    y: props.y,
+    x: props.piece.x,
+    y: props.piece.y,
   }),
 };
 
 interface PieceProps {
   id: number;
+  piece: Pieces.Piece;
   isDragging: boolean;
   connectDragSource: ConnectDragSource;
   rotatePiece(id: number, increment: number): void;
   selectPiece(id: number): void;
-  piece: Pieces.Piece;
-  x: number;
-  y: number;
-  rotation: number;
   selected: boolean;
+}
+
+function getRotation(orientation: number[]) {
+  if (!orientation) {
+    return 0;
+  }
+  return orientation[0] * 180 + orientation[1] * 90;
 }
 
 export module Piece {
@@ -45,20 +49,20 @@ export module Piece {
     }
 
     render(): false | JSX.Element {
-      const { x, y, rotation, selected, connectDragSource, isDragging, piece, rotatePiece } = this.props;
+      const { selected, connectDragSource, isDragging, piece, rotatePiece } = this.props;
       let style = {
-        left: x * SCALE,
-        top: y * SCALE,
+        left: piece.x * SCALE,
+        top: piece.y * SCALE,
         height: piece.height * SCALE,
         width: piece.width * SCALE,
       }
       let classNames = "piece " + (piece.type) + " " + (selected ? "selected" : "");
       let backgroundImageName = "/public/" + piece.name + ".png";
-
+      let rotation = getRotation(piece.orientation);
       let innerStyle = {
         backgroundImage: 'url("' + backgroundImageName + '")',
         backgroundSize: "cover",
-        transform: "rotate(" + this.props.rotation + "deg)",
+        transform: "rotate(" + rotation + "deg)",
         transition: "rotate 0.5s ease",
       }
 

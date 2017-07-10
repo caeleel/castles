@@ -1,16 +1,12 @@
 import { connect } from 'react-redux'
 import * as actions from '../actions/actions';
 import { Dispatch } from 'redux';
-import Game, { DataProps, EventHandlerProps } from '../components/game'
-import { Piece } from '../components/piece'
-import Pieces from '../../../lib/pieces';
+import { Search, DataProps, EventHandlerProps } from '../components/search';
 import { AppState } from '../reducers/reducers';
-import { BoardState } from '../reducers/board';
 
 function mapStateToProps(state: AppState): DataProps {
   return {
     board: state.board,
-    pieceMap: state.pieces.pieceMap,
   };
 }
 
@@ -20,15 +16,13 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
       dispatch(actions.board.setSelectedPieceId({id: -1}));
       dispatch(actions.board.deletePiece({id: id}));
     },
-    addClick(name: string): void {
-      dispatch(actions.board.addPiece({name: name}));
+    addPiece(id: number): void {
+      dispatch(actions.board.addPiece({id}));
     },
   };
 }
 
-const GameContainer = connect<DataProps, EventHandlerProps, {}>(
+export const SearchContainer = connect<DataProps, EventHandlerProps, {}>(
   mapStateToProps,
   mapDispatchToProps,
-)(Game);
-
-export default GameContainer
+)(Search);

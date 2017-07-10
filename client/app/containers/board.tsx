@@ -2,16 +2,11 @@ import { connect } from 'react-redux'
 import * as actions from '../actions/actions';
 import { Dispatch } from 'redux';
 import { Board, DataProps, EventHandlerProps } from '../components/board'
-import { Piece } from '../components/piece'
-import Pieces from '../../../lib/pieces';
 import { AppState } from '../reducers/reducers';
-import { BoardState } from '../reducers/board';
 
 function mapStateToProps(state: AppState): DataProps {
   return {
-    pieces: state.board.pieces,
-    selectedPieceId: state.board.selectedPieceId,
-    pieceMap: state.pieces.pieceMap,
+    board: state.board,
   };
 }
 

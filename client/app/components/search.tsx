@@ -1,4 +1,7 @@
 import * as React from "react";
+import Pieces from '../../../lib/pieces';
+import { Garbage } from './garbage';
+import { BoardState } from '../reducers/board';
 var Autosuggest = require("react-autosuggest")
 
 // When suggestion is clicked, Autosuggest needs to populate the input
@@ -14,12 +17,13 @@ const renderSuggestion = (suggestion: string) => (
   </div>
 );
 
-interface DataProps {
-  pieceNames: string[];
+export interface DataProps {
+  board: BoardState;
 }
 
-interface EventHandlerProps {
-  onSubmit: (name: string) => void;
+export interface EventHandlerProps {
+  addPiece: (id: number) => void;
+  deletePiece: (id: number) => void;
 }
 
 type SearchProps = DataProps & EventHandlerProps;
@@ -50,18 +54,16 @@ export class Search extends React.Component<SearchProps, State> {
     });
   };
 
-  shouldRenderSuggestions = () => {
-    return true;
-  };
-
   // Teach Autosuggest how to calculate suggestions for any given input value.
   getSuggestions = (value: string) => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    return this.props.pieceNames.filter((name: string) =>
-      name.toLowerCase().slice(0, inputLength) === inputValue
-    );
+    return this.props.board.pieces.map((piece: Pieces.Piece, index: number) => {
+      return piece.name;
+    }).filter((suggestion: string) => {
+      return suggestion.toLowerCase().slice(0, inputLength) === inputValue
+    });
   };
 
   // Autosuggest will call this function every time you need to update suggestions.
@@ -79,18 +81,31 @@ export class Search extends React.Component<SearchProps, State> {
     });
   };
 
+  pieceNames = () => {
+    return this.props.board.pieces.map((piece: Pieces.Piece) => { return piece.name });
+  }
+
   submit = (e: any) => {
+    let { value } = this.state;
     e.preventDefault();
-    for (let name of this.props.pieceNames) {
-      if (name == this.state.value) {
-        this.props.onSubmit(this.state.value);
-        this.setState({value: ""});
-        return;
+
+    this.props.board.pieces.map((piece: Pieces.Piece, newId: number) => {
+      if (piece.name == value) {
+        for (let existingId of this.props.board.pieceIds) {
+          if (existingId == newId) {
+            return;
+          }
+
+          this.props.addPiece(newId);
+          this.setState({value: ""});
+          return;
+        };
       }
-    }
+    });
   }
 
   render() {
+    const { deletePiece, board } = this.props;
     const { value, suggestions } = this.state;
 
     // Autosuggest will pass through all these props to the input.
@@ -100,20 +115,22 @@ export class Search extends React.Component<SearchProps, State> {
       onChange: this.onChange
     };
 
-    // Finally, render it!
     return (
-      <form onSubmit={this.submit}>
-        <Autosuggest
-          suggestions={suggestions}
-          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          inputProps={inputProps}
-          shouldRenderSuggestions={this.shouldRenderSuggestions}
-          highlightFirstSuggestion={true}
-        />
-      </form>
+      <div>
+        <Garbage isOver={false} canDrop={false} deletePiece={deletePiece} connectDropTarget={null} />
+        <form onSubmit={this.submit}>
+          <Autosuggest
+            suggestions={suggestions}
+            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+            getSuggestionValue={getSuggestionValue}
+            renderSuggestion={renderSuggestion}
+            inputProps={inputProps}
+            shouldRenderSuggestions={() => true}
+            highlightFirstSuggestion={true}
+          />
+        </form>
+      </div>
     );
   }
 }

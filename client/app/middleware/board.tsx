@@ -9,7 +9,7 @@ export const boardMiddleware: Middleware = (store: any) => (next: any) => (actio
       ws.onmessage = (message: any) => {
         console.log(message.data);
       };
-      ws.send(action.payload.name);
+      ws.send(action.payload.id);
     };
   }
 

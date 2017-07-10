@@ -3,6 +3,7 @@ import { findDOMNode } from 'react-dom';
 import Pieces from '../../../lib/pieces';
 import { Score } from '../../../lib/score';
 import { Piece, SCALE } from "./Piece";
+import { BoardState } from '../reducers/board';
 import {
   DragDropContext,
   ConnectDropTarget,
@@ -12,9 +13,7 @@ import {
   DropTargetSpec } from 'react-dnd';
 
 export interface DataProps {
-  pieceMap: Pieces.PieceMap;
-  pieces: Pieces.PiecePlacement[];
-  selectedPieceId: number;
+  board: BoardState;
 }
 
 export interface EventHandlerProps {
@@ -45,7 +44,7 @@ let targetSpec: DropTargetSpec<BoardProps> = {
     props.movePiece(item.id, left, top);
     props.selectPiece(item.id);
 
-    props.setScore(Score.score(props.pieces, props.pieceMap));
+    props.setScore(Score.score(props.board.pieces, props.board.pieceIds));
   }
 }
 
@@ -54,26 +53,23 @@ let targetSpec: DropTargetSpec<BoardProps> = {
 }))
 export class Board extends React.Component<BoardProps, {}> {
   render(): JSX.Element | false {
-    let { pieceMap, pieces, connectDropTarget, rotatePiece, selectedPieceId, selectPiece, setScore } = this.props;
+    let { board, connectDropTarget, rotatePiece, selectPiece, setScore } = this.props;
     return connectDropTarget(
       <div className="board" onClick={() => { selectPiece(-1) }}>
         {
-          pieces.map((piece: Pieces.PiecePlacement, index: number) => (
+          board.pieceIds.map((index: number) => (
             <Piece.Piece
-              key={index}
+              key={index + JSON.stringify(board.pieces[index])}
               id={index}
-              piece={pieceMap[piece.name]}
-              x={piece.x}
-              y={piece.y}
-              rotation={piece.rotation}
+              piece={board.pieces[index]}
               isDragging={false}
               connectDragSource={null}
               rotatePiece={(id: number, increment: number) => {
                 rotatePiece(id, increment);
-                setScore(Score.score(pieces, pieceMap));
+                setScore(Score.score(board.pieces, board.pieceIds));
               }}
               selectPiece={selectPiece}
-              selected={selectedPieceId == index}
+              selected={board.selectedPieceId == index}
             />
           ))
         }

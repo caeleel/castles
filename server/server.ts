@@ -34,7 +34,7 @@ wss.on('connection', (ws: WebSocket) => {
 
 console.log('Server running...');
 
-Pieces.loadPieces().then((pieces : Pieces.PieceMap) => {
+Pieces.loadPieces().then((pieces : Pieces.Piece[]) => {
   console.log(pieces);
 }).catch(err => {
   console.log(err);

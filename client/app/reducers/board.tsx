@@ -3,33 +3,36 @@ import Pieces from '../../../lib/pieces';
 
 export interface BoardState {
   score: number;
-  pieces: Pieces.PiecePlacement[];
+  pieces: Pieces.Piece[];
+  pieceIds: number[];
   selectedPieceId: number;
 }
 
 export const DEFAULT_BOARD_STATE: BoardState = {
   score: 0,
-  pieces: [{name: "test", x: 1, y: 1, rotation: 0}],
+  pieceIds: [],
+  pieces: [],
   selectedPieceId: 0
 };
 
 export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: actions.Action<any>): BoardState {
   if (actions.board.addPiece.matches(action)) {
+    // newPiece.x = 10 + state.pieceIds.length; // set x coord to length to stagger multiple incoming pieces
+    // newPiece.y = state.pieceIds.length; // set y coord to length to stagger multiple incoming pieces
     return {
       ...state,
-      pieces: [...state.pieces, {
-        name: action.payload.name,
-        x: 10 + state.pieces.length, // set x coord to length to stagger multiple incoming pieces
-        y: state.pieces.length, // set y coord to length to stagger multiple incoming pieces
-        rotation: 0
-      }]
+      pieceIds: [...state.pieceIds, action.payload.id]
     };
   } else if (actions.board.movePiece.matches(action)) {
     return {
       ...state,
-      pieces: state.pieces.map((piece: Pieces.PiecePlacement, index: number) => {
+      pieces: state.pieces.map((piece: Pieces.Piece, index: number) => {
         if (index == action.payload.id) {
-          return {...piece, x: action.payload.x, y: action.payload.y};
+          piece = {...piece}
+          piece.moveTo(action.payload.x, action.payload.y); // I don't get why this doesn't work
+          piece.x = action.payload.x;
+          piece.y = action.payload.y;
+          return piece;
         } else {
           return piece;
         }
@@ -43,16 +46,22 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
   } else if (actions.board.deletePiece.matches(action)) {
     return {
       ...state,
-      pieces: state.pieces.filter((piece: Pieces.PiecePlacement, index: number) => {
+      pieceIds: state.pieceIds.filter((index: number) => {
         return index != action.payload.id;
       })
     };
   } else if (actions.board.rotatePiece.matches(action)) {
     return {
       ...state,
-      pieces: state.pieces.map((piece: Pieces.PiecePlacement, index: number) => {
+      pieces: state.pieces.map((piece: Pieces.Piece, index: number) => {
         if (index == action.payload.id) {
-          return {...piece, rotation: piece.rotation + action.payload.increment};
+          piece = {...piece}
+          piece.rotate();
+          if (action.payload.increment == -1) {
+            piece.rotate();
+            piece.rotate();
+          }
+          return {...piece};
         } else {
           return piece;
         }
@@ -63,6 +72,11 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
       ...state,
       score: action.payload.score,
     };
+  } else if (actions.piece.setPieces.matches(action)) {
+    return {
+      ...state,
+      pieces: action.payload.pieces,
+    }
   } else {
     return state;
   }
