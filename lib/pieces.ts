@@ -88,23 +88,33 @@ module Pieces {
 
     public fenceTouches: overlapsFunction = (p) => {
       if (this.rType != 'outdoor') return false;
+      return this.touchesSide(p, this.orientation);
+    }
 
+    public touches: overlapsFunction = (p) => {
+      return this.touchesSide(p, [1, 0]) ||
+             this.touchesSide(p, [0, 1]) ||
+             this.touchesSide(p, [-1, 0]) ||
+             this.touchesSide(p, [0, -1]);
+    }
+
+    public touchesSide = (p: Piece, orientation: number[]) => {
       let tester = new Piece(0, 0, 0, 0, 0, 0, [], [], 'rectangle', null, 'tester');
       if (this.type === 'rectangle') {
-        tester.x = this.x + (this.orientation[0] == 1? this.width : cellLen*this.orientation[0]);
-        tester.y = this.y + (this.orientation[1] == 1? this.height : cellLen*this.orientation[1]);
-        tester.width = this.orientation[1] != 0? this.width : cellLen;
-        tester.height = this.orientation[0] != 0? this.height : cellLen;
+        tester.x = this.x + (orientation[0] == 1? this.width : cellLen*orientation[0]);
+        tester.y = this.y + (orientation[1] == 1? this.height : cellLen*orientation[1]);
+        tester.width = orientation[1] != 0? this.width : cellLen;
+        tester.height = orientation[0] != 0? this.height : cellLen;
       } else if (this.type == 'octagon') {
-        tester.x = this.x + (this.orientation[0] == 1? this.width : (this.orientation[0]*2 + 1)*cellLen);
-        tester.y = this.y + (this.orientation[1] == 1? this.height : (this.orientation[1]*2 + 1)*cellLen);
-        tester.width = this.orientation[1] != 0? this.width - 2*cellLen : cellLen;
-        tester.height = this.orientation[0] != 0? this.height - 2*cellLen : cellLen;
+        tester.x = this.x + (orientation[0] == 1? this.width : (orientation[0]*2 + 1)*cellLen);
+        tester.y = this.y + (orientation[1] == 1? this.height : (orientation[1]*2 + 1)*cellLen);
+        tester.width = orientation[1] != 0? this.width - 2*cellLen : cellLen;
+        tester.height = orientation[0] != 0? this.height - 2*cellLen : cellLen;
       } else if (this.type == 'circle') {
         tester.width = cellLen;
         tester.height = cellLen;
-        tester.x = this.x + this.orientation[0]*cellLen*(p.type === 'rectangle'? 3 : 4) + cellLen*2;
-        tester.y = this.y + this.orientation[1]*cellLen*(p.type === 'rectangle'? 3 : 4)  + cellLen*2;
+        tester.x = this.x + orientation[0]*cellLen*(p.type === 'rectangle'? 3 : 4) + cellLen*2;
+        tester.y = this.y + orientation[1]*cellLen*(p.type === 'rectangle'? 3 : 4)  + cellLen*2;
 
         return tester.overlap(p) > 0;
       }
@@ -162,11 +172,7 @@ module Pieces {
         this.subrect.moveRelative(yLocal - xLocal, 2*cellLen - xLocal - yLocal);
       }
 
-      if (this.orientation != null) {
-        this.orientation = [-this.orientation[1], this.orientation[0]];
-      } else {
-        this.orientation = [1, 0];
-      }
+      this.orientation = [-this.orientation[1], this.orientation[0]];
 
       this.exits.forEach((exit: number[]) => {
         let newY: number = this.width - exit[0];
