@@ -18,6 +18,7 @@ module Pieces {
   interface Room {
     points?: number;
     modifier?: number;
+    touches_modifier?: number;
     all_modifier?: number;
     instances: RoomInstances;
   }
@@ -99,7 +100,7 @@ module Pieces {
     }
 
     public touchesSide = (p: Piece, orientation: number[]) => {
-      let tester = new Piece(0, 0, 0, 0, 0, 0, [], [], 'rectangle', null, 'tester');
+      let tester = new Piece(0, 0, 0, 0, 0, 0, 0, [], [], 'rectangle', null, 'tester');
       if (this.type === 'rectangle') {
         tester.x = this.x + (orientation[0] == 1? this.width : cellLen*orientation[0]);
         tester.y = this.y + (orientation[1] == 1? this.height : cellLen*orientation[1]);
@@ -192,6 +193,7 @@ module Pieces {
         this.sqft,
         this.points,
         this.modifier,
+        this.touches_modifier,
         this.all_modifier,
         this.combo,
         this.exits,
@@ -211,6 +213,7 @@ module Pieces {
       public sqft: number,
       public points: number,
       public modifier: number,
+      public touches_modifier: number,
       public all_modifier: number,
       public combo: string[],
       public exits: number[][],
@@ -226,6 +229,7 @@ module Pieces {
           this.width / 2,
           this.height / 2,
           this.sqft / 4,
+          0,
           0,
           0,
           0,
@@ -266,6 +270,7 @@ module Pieces {
                   sqft === '150-H' ? 150 : Number(sqft),
                   room.points || 0,
                   room.modifier || 0,
+                  room.touches_modifier || 0,
                   room.all_modifier || 0,
                   instance.combo? instance.combo.slice(0) : [],
                   instance.exits? instance.exits.slice(0) : [],
