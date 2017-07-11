@@ -48,7 +48,7 @@
     "rooms": {
       "activity": {
         "points": 3,
-        "modifier": -1,
+        "touches_modifier": -1,
         "instances": {
           "Piano Room": {
             "combo": ["living", "sleep"],
@@ -251,7 +251,7 @@
       },
       "activity": {
         "points": 4,
-        "modifier": -1,
+        "touches_modifier": -1,
         "instances": {
           "Billiards Room": {
             "combo": ["food", "living", "sleep"],
@@ -361,7 +361,7 @@
       },
       "activity": {
         "points": 5,
-        "modifier": -1,
+        "touches_modifier": -1,
         "instances": {
           "Train Room": {
             "combo": ["corridor", "living", "sleep", "downstairs"],
@@ -477,7 +477,7 @@
     "rooms": {
       "activity": {
         "points": 6,
-        "modifier": -2,
+        "touches_modifier": -2,
         "instances": {
           "Forum": {
             "combo": ["food", "downstairs", "living", "sleep"],
@@ -558,7 +558,7 @@
       },
       "activity": {
         "points": 7,
-        "modifier": -2,
+        "touches_modifier": -2,
         "instances": {
           "Singer's Chamber": {
             "combo": ["food", "downstairs", "utility", "corridor", "living", "sleep"],
