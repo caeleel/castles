@@ -15,14 +15,11 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
     movePiece(id: number, x: number, y: number): void {
       dispatch(actions.board.movePiece({id, x, y}));
     },
-    rotatePiece(id: number, increment: number): void {
-      dispatch(actions.board.rotatePiece({id, increment}));
+    rotatePiece(id: number): void {
+      dispatch(actions.board.rotatePiece({id}));
     },
     selectPiece(id: number): void {
       dispatch(actions.board.setSelectedPieceId({id}));
-    },
-    setScore(score: number): void {
-      dispatch(actions.board.setScore({score}));
     }
   };
 }

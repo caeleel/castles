@@ -1,7 +1,6 @@
 import * as React from "react";
 import { findDOMNode } from 'react-dom';
 import Pieces from '../../../lib/pieces';
-import { Score } from '../../../lib/score';
 import { Piece, SCALE } from "./Piece";
 import { BoardState } from '../reducers/board';
 import {
@@ -18,9 +17,8 @@ export interface DataProps {
 
 export interface EventHandlerProps {
   movePiece(id: number, x: number, y: number): void;
-  rotatePiece(id: number, increment: number): void;
+  rotatePiece(id: number): void;
   selectPiece(id: number): void;
-  setScore(score: number): void;
 }
 
 interface DragAndDropHandlerProps {
@@ -43,8 +41,6 @@ let targetSpec: DropTargetSpec<BoardProps> = {
 
     props.movePiece(item.id, left, top);
     props.selectPiece(item.id);
-
-    props.setScore(Score.score(props.board.pieces, props.board.pieceIds));
   }
 }
 
@@ -53,7 +49,7 @@ let targetSpec: DropTargetSpec<BoardProps> = {
 }))
 export class Board extends React.Component<BoardProps, {}> {
   render(): JSX.Element | false {
-    let { board, connectDropTarget, rotatePiece, selectPiece, setScore } = this.props;
+    let { board, connectDropTarget, rotatePiece, selectPiece } = this.props;
     return connectDropTarget(
       <div className="board" onClick={() => { selectPiece(-1) }}>
         {
@@ -64,10 +60,7 @@ export class Board extends React.Component<BoardProps, {}> {
               piece={board.pieces[index]}
               isDragging={false}
               connectDragSource={null}
-              rotatePiece={(id: number, increment: number) => {
-                rotatePiece(id, increment);
-                setScore(Score.score(board.pieces, board.pieceIds));
-              }}
+              rotatePiece={rotatePiece}
               selectPiece={selectPiece}
               selected={board.selectedPieceId == index}
             />

@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
 import App, { Props } from '../components/app'
 import { AppState } from '../reducers/reducers';
+import { Score } from '../../../lib/score';
 
 function mapStateToProps(state: AppState): Props {
   return {
-    score: state.board.score
+    score: Score.score(state.board.pieces, state.board.pieceIds)
   };
 }
 

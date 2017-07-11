@@ -186,7 +186,7 @@ module Pieces {
     }
 
     public copy = () => {
-      return new Piece(
+      let newPiece: Piece = new Piece(
         this.width,
         this.height,
         this.sqft,
@@ -198,7 +198,11 @@ module Pieces {
         this.type,
         this.rType,
         this.name,
-      )
+      );
+      newPiece.x = this.x;
+      newPiece.y = this.y;
+      newPiece.orientation = this.orientation;
+      return newPiece;
     }
 
     constructor(
@@ -214,6 +218,7 @@ module Pieces {
       public rType: string,
       public name: string
     ) {
+      this.orientation = [1, 0];
       if (this.type === 'circle') {
         this.radius = width / 2;
       } else if (this.type === 'L') {

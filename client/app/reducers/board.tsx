@@ -2,14 +2,12 @@ import * as actions from '../actions/actions';
 import Pieces from '../../../lib/pieces';
 
 export interface BoardState {
-  score: number;
   pieces: Pieces.Piece[];
   pieceIds: number[];
   selectedPieceId: number;
 }
 
 export const DEFAULT_BOARD_STATE: BoardState = {
-  score: 0,
   pieceIds: [],
   pieces: [],
   selectedPieceId: 0
@@ -55,20 +53,11 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
         if (index == action.payload.id) {
           piece = piece.copy();
           piece.rotate();
-          if (action.payload.increment == -1) {
-            piece.rotate();
-            piece.rotate();
-          }
           return piece;
         } else {
           return piece;
         }
       })
-    };
-  } else if (actions.board.setScore.matches(action)) {
-    return {
-      ...state,
-      score: action.payload.score,
     };
   } else if (actions.piece.setPieces.matches(action)) {
     return {

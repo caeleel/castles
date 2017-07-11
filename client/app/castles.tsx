@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
   Pieces.loadPieces().then((pieces : Pieces.Piece[]) => {
     let store = Redux.createStore(castlesApp, {
       board: {
-        score: 0,
         pieceIds: [20],
         pieces: pieces,
         selectedPieceId: -1

@@ -26,16 +26,13 @@ interface PieceProps {
   piece: Pieces.Piece;
   isDragging: boolean;
   connectDragSource: ConnectDragSource;
-  rotatePiece(id: number, increment: number): void;
+  rotatePiece(id: number): void;
   selectPiece(id: number): void;
   selected: boolean;
 }
 
 function getRotation(orientation: number[]) {
-  if (!orientation) {
-    return 0;
-  }
-  return orientation[0] * 180 + orientation[1] * 90;
+  return Math.atan2(orientation[1], orientation[0]);
 }
 
 export module Piece {
@@ -62,18 +59,21 @@ export module Piece {
       let innerStyle = {
         backgroundImage: 'url("' + backgroundImageName + '")',
         backgroundSize: "cover",
-        transform: "rotate(" + rotation + "deg)",
+        backgroundColor: "transparent",
+        transform: "rotate(" + rotation + "rad)",
         transition: "rotate 0.5s ease",
       }
 
       let rotateLeft = (e: Event): void => {
         e.stopPropagation();
-        this.props.rotatePiece(this.props.id, -90);
+        this.props.rotatePiece(this.props.id);
+        this.props.rotatePiece(this.props.id);
+        this.props.rotatePiece(this.props.id);
       }
 
       let rotateRight = (e: Event): void => {
         e.stopPropagation();
-        this.props.rotatePiece(this.props.id, 90);
+        this.props.rotatePiece(this.props.id);
       }
 
       let selectPiece = (e: Event): void => {
