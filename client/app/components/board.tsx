@@ -36,8 +36,8 @@ let targetSpec: DropTargetSpec<BoardProps> = {
     const xOffset = monitor.getInitialSourceClientOffset().x - boardBoundingRect.left;
     const yOffset = monitor.getInitialSourceClientOffset().y - boardBoundingRect.top;
 
-    let left = Math.round((delta.x + xOffset) / SCALE);
-    let top = Math.round((delta.y + yOffset) / SCALE);
+    let left = Math.round((delta.x + xOffset) / SCALE / 2) * 2;
+    let top = Math.round((delta.y + yOffset) / SCALE / 2) * 2;
 
     props.movePiece(item.id, left, top);
     props.selectPiece(item.id);

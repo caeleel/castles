@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   Pieces.loadPieces().then((pieces : Pieces.Piece[]) => {
     let store = Redux.createStore(castlesApp, {
       board: {
-        pieceIds: [20],
+        pieceIds: [15],
         pieces: pieces,
         selectedPieceId: -1
       }

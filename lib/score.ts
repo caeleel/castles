@@ -29,17 +29,19 @@ export module Score {
     let piece = pieces[id]
     let neighbors: Pieces.Piece[] = [];
     for (let potentialNeighborId of pieceIds) {
+      let potentialNeighbor = pieces[potentialNeighborId];
       if (id != potentialNeighborId) {
         for (let potentialNeighborExit of pieces[potentialNeighborId].exits) {
           for (let exit of piece.exits) {
-            if (exit[0] == potentialNeighborExit[0] && exit[1] == potentialNeighborExit[1]) {
-              neighbors.push(pieces[id]);
+            if (piece.x + exit[0] == potentialNeighbor.x + potentialNeighborExit[0] &&
+                piece.y + exit[1] == potentialNeighbor.y + potentialNeighborExit[1]) {
+              neighbors.push(pieces[potentialNeighborId]);
             }
           }
         }
       }
     }
-    console.log(neighbors)
+    console.log(piece.name + " has neighbors " + neighbors.map((piece: Pieces.Piece) => piece.name))
     return neighbors;
   }
 

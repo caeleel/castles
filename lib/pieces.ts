@@ -175,9 +175,9 @@ module Pieces {
       this.orientation = [-this.orientation[1], this.orientation[0]];
 
       this.exits.forEach((exit: number[]) => {
-        let newY: number = this.width - exit[0];
-        exit[0] = exit[1];
-        exit[1] = newY;
+        let newX: number = this.height - exit[1];
+        exit[1] = exit[0];
+        exit[0] = newX;
       });
 
       let newHeight: number = this.width;
