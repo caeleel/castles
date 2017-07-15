@@ -54,7 +54,7 @@ export module Piece {
         width: piece.width * SCALE,
       }
       let classNames = "piece " + (piece.type) + " " + (selected ? "selected" : "");
-      let backgroundImageName = "/public/" + piece.name + ".png";
+      let backgroundImageName = "public/" + piece.name.toLowerCase() + ".png";
       let rotation = getRotation(piece.orientation);
       let innerStyle = {
         backgroundImage: 'url("' + backgroundImageName + '")',

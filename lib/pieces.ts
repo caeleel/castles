@@ -245,7 +245,7 @@ module Pieces {
   }
 
   export function loadPieces() {
-    return fetch('http://localhost:1337/static/pieces.json')
+    return fetch('pieces.json')
       .then(resp => {
         return resp.json();
       }).then((pieces: PieceFile) => {

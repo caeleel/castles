@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pieces: pieces,
         selectedPieceId: -1
       }
-    }, Redux.applyMiddleware(boardMiddleware))
+    })
     ReactDOM.render(
       <ReactRedux.Provider store={store}>
         <AppContainer />
