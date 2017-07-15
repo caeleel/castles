@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
 import * as actions from '../actions/actions';
 import { Dispatch } from 'redux';
-import { Board, DataProps, EventHandlerProps } from '../components/board'
+import { Board, PublicProps, DataProps, EventHandlerProps } from '../components/board'
 import { AppState } from '../reducers/reducers';
 
-function mapStateToProps(state: AppState): DataProps {
+function mapStateToProps(state: AppState, ownProps: PublicProps): DataProps | PublicProps {
   return {
+    scorablePieceMap: ownProps.scorablePieceMap,
     board: state.board,
   };
 }
@@ -24,7 +25,7 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
   };
 }
 
-export const BoardContainer = connect<DataProps, EventHandlerProps, {}>(
+export const BoardContainer = connect<DataProps | PublicProps, EventHandlerProps, PublicProps>(
   mapStateToProps,
   mapDispatchToProps,
 )(Board);

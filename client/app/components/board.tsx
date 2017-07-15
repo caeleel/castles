@@ -11,6 +11,10 @@ import {
   DropTargetMonitor,
   DropTargetSpec } from 'react-dnd';
 
+export interface PublicProps {
+  scorablePieceMap: Pieces.PieceMap;
+}
+
 export interface DataProps {
   board: BoardState;
 }
@@ -25,7 +29,7 @@ interface DragAndDropHandlerProps {
   connectDropTarget: ConnectDropTarget;
 }
 
-export type BoardProps = DataProps & EventHandlerProps & DragAndDropHandlerProps;
+export type BoardProps = PublicProps & DataProps & EventHandlerProps & DragAndDropHandlerProps;
 
 let targetSpec: DropTargetSpec<BoardProps> = {
   drop: (props: BoardProps, monitor: DropTargetMonitor, component: Board) => {
@@ -49,7 +53,7 @@ let targetSpec: DropTargetSpec<BoardProps> = {
 }))
 export class Board extends React.Component<BoardProps, {}> {
   render(): JSX.Element | false {
-    let { board, connectDropTarget, rotatePiece, selectPiece } = this.props;
+    let { board, connectDropTarget, rotatePiece, selectPiece, scorablePieceMap } = this.props;
     return connectDropTarget(
       <div className="board" onClick={() => { selectPiece(-1) }}>
         {
@@ -63,6 +67,7 @@ export class Board extends React.Component<BoardProps, {}> {
               rotatePiece={rotatePiece}
               selectPiece={selectPiece}
               selected={board.selectedPieceId == index}
+              scorable={!!scorablePieceMap[index]}
             />
           ))
         }

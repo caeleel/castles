@@ -49,6 +49,10 @@ module Pieces {
     (x: number, y: number): void;
   }
 
+  export interface PieceMap {
+    [id: number]: Pieces.Piece;
+  }
+
   export class Piece {
     public x?: number;
     public y?: number;

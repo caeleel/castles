@@ -2,6 +2,21 @@ import Pieces from './pieces';
 
 export module Score {
 
+  export function getScorablePieceMap(pieces: Pieces.Piece[], pieceIds: number[]) {
+    let scorablePieceMap: Pieces.PieceMap = {15: pieces[15]};
+    let pieceIdsToTest = [15];
+
+    while (pieceIdsToTest.length > 0) {
+      let neighbors = getNeighbors(pieceIdsToTest.pop(), pieceIds, pieces);
+      for (let id in neighbors) {
+        if (!scorablePieceMap[id]) {
+          scorablePieceMap[id] = pieces[id];
+        }
+      }
+    }
+    return scorablePieceMap;
+  }
+
   export function score(pieces: Pieces.Piece[], pieceIds: number[]) {
     let sum = 0;
     pieceIds.map((id: number) => {
@@ -18,10 +33,10 @@ export module Score {
     score += scoreTouchesCombos(piece, pieceIds, pieces);
     score += scoreGlobalCombos(piece, pieceIds, pieces);
 
-    if (piece.rType == "living" && neighbors.length == piece.exits.length) {
+    if (piece.rType == "living" && Object.keys(neighbors).length == piece.exits.length) {
       score *= 2;
     }
-    if (piece.rType == "activity" && neighbors.length == piece.exits.length) {
+    if (piece.rType == "activity" && Object.keys(neighbors).length == piece.exits.length) {
       score += 5;
     }
     return score;
@@ -29,7 +44,7 @@ export module Score {
 
   function getNeighbors(id: number, pieceIds: number[], pieces: Pieces.Piece[]) {
     let piece = pieces[id]
-    let neighbors: Pieces.Piece[] = [];
+    let neighbors: Pieces.PieceMap = {};
     for (let potentialNeighborId of pieceIds) {
       let potentialNeighbor = pieces[potentialNeighborId];
       if (id != potentialNeighborId) {
@@ -37,7 +52,7 @@ export module Score {
           for (let exit of piece.exits) {
             if (piece.x + exit[0] == potentialNeighbor.x + potentialNeighborExit[0] &&
                 piece.y + exit[1] == potentialNeighbor.y + potentialNeighborExit[1]) {
-              neighbors.push(pieces[potentialNeighborId]);
+              neighbors[potentialNeighborId] = pieces[potentialNeighborId];
             }
           }
         }
@@ -46,12 +61,12 @@ export module Score {
     return neighbors;
   }
 
-  function scoreCombos(piece: Pieces.Piece, neighbors: Pieces.Piece[]) {
+  function scoreCombos(piece: Pieces.Piece, neighbors: Pieces.PieceMap) {
     let score = 0;
     if (piece.modifier == 0) { return score; }
-    for (let neighbor of neighbors) {
+    for (let id in neighbors) {
       for (let c of piece.combo) {
-        if (neighbor.rType == c) {
+        if (neighbors[id].rType == c) {
           score += piece.modifier;
         }
       }

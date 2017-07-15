@@ -29,6 +29,7 @@ interface PieceProps {
   rotatePiece(id: number): void;
   selectPiece(id: number): void;
   selected: boolean;
+  scorable: boolean;
 }
 
 function getRotation(orientation: number[]) {
@@ -46,14 +47,14 @@ export module Piece {
     }
 
     render(): false | JSX.Element {
-      const { selected, connectDragSource, isDragging, piece, rotatePiece } = this.props;
+      const { selected, connectDragSource, isDragging, piece, rotatePiece, scorable } = this.props;
       let style = {
         left: piece.x * SCALE,
         top: piece.y * SCALE,
         height: piece.height * SCALE,
         width: piece.width * SCALE,
       }
-      let classNames = "piece " + (piece.type) + " " + (selected ? "selected" : "");
+      let classNames = "piece " + (piece.type) + " " + (selected ? "selected" : "") + " " + (scorable ? "scorable" : "");
       let backgroundImageName = "public/" + piece.name.toLowerCase() + ".png";
       let rotation = getRotation(piece.orientation);
       let innerStyle = {

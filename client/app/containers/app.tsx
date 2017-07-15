@@ -4,8 +4,14 @@ import { AppState } from '../reducers/reducers';
 import { Score } from '../../../lib/score';
 
 function mapStateToProps(state: AppState): Props {
+  let scorablePieceMap = Score.getScorablePieceMap(state.board.pieces, state.board.pieceIds);
+  let keys: number[] = [];
+  for (let i in scorablePieceMap) {
+    keys.push(+i);
+  }
   return {
-    score: Score.score(state.board.pieces, state.board.pieceIds)
+    scorablePieceMap: scorablePieceMap,
+    score: Score.score(state.board.pieces, keys),
   };
 }
 

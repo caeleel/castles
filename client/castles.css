@@ -120,3 +120,9 @@ input[type="text"] {
 .draggable {
   cursor: move;
 }
+
+.scorable {
+    outline: none;
+    border-color: #7CFC00;
+    box-shadow: 0 0 10px #7CFC00;
+}

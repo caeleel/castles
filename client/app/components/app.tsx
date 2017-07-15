@@ -3,9 +3,11 @@ import { SearchContainer } from '../containers/search';
 import { BoardContainer } from '../containers/board';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import Pieces from '../../../lib/pieces';
 
 export interface Props {
   score: number;
+  scorablePieceMap: Pieces.PieceMap;
 }
 
 class App extends React.Component<Props, {}> {
@@ -25,7 +27,7 @@ class App extends React.Component<Props, {}> {
           Also add your starting points and points from underground room bonuses
         </p>
         <SearchContainer />
-        <BoardContainer />
+        <BoardContainer scorablePieceMap={this.props.scorablePieceMap} />
       </div>
     );
   }
