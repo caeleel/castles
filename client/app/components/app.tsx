@@ -22,7 +22,7 @@ class App extends React.Component<Props, {}> {
       <div>
         <h1>{this.title()}</h1>
         <p className="tooltip" style={{visibility: this.props.score > 0 ? "visible" : "hidden"}}>
-          Also add your starting points and underground room re-scores
+          Also add your starting points and points from underground room bonuses
         </p>
         <SearchContainer />
         <BoardContainer />

@@ -23,6 +23,10 @@ let targetSpec: DropTargetSpec<GarbageProps> = {
     let item = (monitor.getItem() as any);
 
     props.deletePiece(item.id);
+  },
+  canDrop: (props: GarbageProps, monitor: DropTargetMonitor) => {
+    let item = (monitor.getItem() as any);
+    return item.id != 15;
   }
 }
 
