@@ -11,6 +11,7 @@ export module Score {
       for (let id in neighbors) {
         if (!scorablePieceMap[id]) {
           scorablePieceMap[id] = pieces[id];
+          pieceIdsToTest.push(+id);
         }
       }
     }

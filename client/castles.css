@@ -2,7 +2,7 @@ body {
   font-family: "Verdana", sans-serif;
 }
 
-h1, h2 {
+h1 {
   text-align: center;
 }
 
@@ -85,8 +85,15 @@ input[type="text"] {
 .piece {
   height: 100%;
   width: 100%;
-  background-color: #999999;
   position: absolute;
+  box-shadow: 0 0 3px red;
+}
+
+.scorable {
+  border: none;
+  outline: none;
+  border-color: green;
+  box-shadow: 0 0 3px green;
 }
 
 .rotate {
@@ -119,10 +126,4 @@ input[type="text"] {
 
 .draggable {
   cursor: move;
-}
-
-.scorable {
-    outline: none;
-    border-color: #7CFC00;
-    box-shadow: 0 0 10px #7CFC00;
 }
