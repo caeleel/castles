@@ -59,11 +59,16 @@ export class Search extends React.Component<SearchProps, State> {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    return this.props.board.pieces.map((piece: Pieces.Piece, index: number) => {
+    let pieceMap: Pieces.PieceMap = {};
+    for (let id of this.props.board.pieceIds) {
+      pieceMap[id] = this.props.board.pieces[id];
+    }
+
+    return this.props.board.pieces.filter((piece: Pieces.Piece, index: number) => {
+      return !pieceMap[index] && piece.name.toLowerCase().slice(0, inputLength) === inputValue;
+    }).map((piece: Pieces.Piece) => {
       return piece.name;
-    }).filter((suggestion: string) => {
-      return suggestion.toLowerCase().slice(0, inputLength) === inputValue
-    });
+    }).sort();
   };
 
   // Autosuggest will call this function every time you need to update suggestions.
@@ -83,10 +88,6 @@ export class Search extends React.Component<SearchProps, State> {
 
   // Autosuggest will call this function every time suggestion is selected via mouse or keyboard.
   onSuggestionSelected = (event: Event, suggestionEventData: any) => {
-
-    // suggestionEventData.suggestion
-    // suggestionEventData.suggestionValue
-
     this.props.board.pieces.map((piece: Pieces.Piece, newId: number) => {
       if (piece.name == suggestionEventData.suggestionValue) {
         for (let existingId of this.props.board.pieceIds) {
