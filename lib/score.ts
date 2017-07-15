@@ -9,13 +9,22 @@ export module Score {
     while (pieceIdsToTest.length > 0) {
       let neighbors = getNeighbors(pieceIdsToTest.pop(), pieceIds, pieces);
       for (let id in neighbors) {
-        if (!scorablePieceMap[id]) {
+        if (!scorablePieceMap[id] && !overlapsAnotherPieceInMap(pieces[id], scorablePieceMap)) {
           scorablePieceMap[id] = pieces[id];
           pieceIdsToTest.push(+id);
         }
       }
     }
     return scorablePieceMap;
+  }
+
+  function overlapsAnotherPieceInMap(piece: Pieces.Piece, piecesToTest: Pieces.PieceMap) {
+    for (let id in piecesToTest) {
+      if (piece.overlaps(piecesToTest[id])) {
+        return true;
+      }
+    }
+    return false;
   }
 
   export function score(pieces: Pieces.Piece[], pieceIds: number[]) {
