@@ -4,7 +4,6 @@ import * as ReactRedux from 'react-redux';
 import * as Redux from 'redux';
 
 import { AppContainer } from './containers/app';
-import { boardMiddleware } from './middleware/board';
 import castlesApp from './reducers/reducers';
 import Pieces from '../../lib/pieces';
 

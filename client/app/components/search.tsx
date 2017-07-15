@@ -81,27 +81,29 @@ export class Search extends React.Component<SearchProps, State> {
     });
   };
 
-  pieceNames = () => {
-    return this.props.board.pieces.map((piece: Pieces.Piece) => { return piece.name });
-  }
+  // Autosuggest will call this function every time suggestion is selected via mouse or keyboard.
+  onSuggestionSelected = (event: Event, suggestionEventData: any) => {
 
-  submit = (e: any) => {
-    let { value } = this.state;
-    e.preventDefault();
+    // suggestionEventData.suggestion
+    // suggestionEventData.suggestionValue
 
     this.props.board.pieces.map((piece: Pieces.Piece, newId: number) => {
-      if (piece.name == value) {
+      if (piece.name == suggestionEventData.suggestionValue) {
         for (let existingId of this.props.board.pieceIds) {
           if (existingId == newId) {
             return;
           }
-
-          this.props.addPiece(newId);
-          this.setState({value: ""});
-          return;
         };
+
+        this.props.addPiece(newId);
+        this.setState({value: ""});
+        return;
       }
     });
+  };
+
+  pieceNames = () => {
+    return this.props.board.pieces.map((piece: Pieces.Piece) => { return piece.name });
   }
 
   render() {
@@ -118,11 +120,12 @@ export class Search extends React.Component<SearchProps, State> {
     return (
       <div>
         <Garbage isOver={false} canDrop={false} deletePiece={deletePiece} connectDropTarget={null} />
-        <form onSubmit={this.submit}>
+        <form onSubmit={(e: any) => {e.preventDefault();}}>
           <Autosuggest
             suggestions={suggestions}
             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
             onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+            onSuggestionSelected={this.onSuggestionSelected}
             getSuggestionValue={getSuggestionValue}
             renderSuggestion={renderSuggestion}
             inputProps={inputProps}
