@@ -86,21 +86,24 @@ input[type="text"] {
   height: 100%;
   width: 100%;
   position: absolute;
-  box-shadow: 0 0 3px red;
+  /*box-shadow: 0 0 3px red;*/
 }
-
+/*
 .scorable {
   border: none;
   outline: none;
   border-color: green;
   box-shadow: 0 0 3px green;
 }
-
+*/
 .score {
+  padding: 0px 4px;
+  margin: 6px;
+  right: 0px;
   position: absolute;
-  background-color: white;
-  font-weight: bold;
-  padding: 5px;
+  color: green;
+  background-color: rgba(255, 255, 255, .8);
+  border: 1px solid #AAAAAA;
 }
 
 .rotate {
