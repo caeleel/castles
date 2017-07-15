@@ -10,8 +10,7 @@ function mapStateToProps(state: AppState): Props {
     keys.push(+i);
   }
   return {
-    scorablePieceMap: scorablePieceMap,
-    score: Score.score(state.board.pieces, keys),
+    pieceScores: Score.score(state.board.pieces, keys),
   };
 }
 

@@ -3,17 +3,16 @@ import { SearchContainer } from '../containers/search';
 import { BoardContainer } from '../containers/board';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import Pieces from '../../../lib/pieces';
+import { Score } from '../../../lib/score';
 
 export interface Props {
-  score: number;
-  scorablePieceMap: Pieces.PieceMap;
+  pieceScores: Score.PieceScores;
 }
 
 class App extends React.Component<Props, {}> {
   title() {
-    if (this.props.score > 0) {
-      return "Score: " + this.props.score;
+    if (this.props.pieceScores.sum > 0) {
+      return "Score: " + this.props.pieceScores.sum;
     } else {
       return "Castles Score Checker";
     }
@@ -22,12 +21,12 @@ class App extends React.Component<Props, {}> {
   render() {
     return (
       <div>
-        <h1 className={this.props.score > 0 ? "score" : ""}>{this.title()}</h1>
-        <p className="tooltip" style={{visibility: this.props.score > 0 ? "visible" : "hidden"}}>
+        <h1 className={this.props.pieceScores.sum > 0 ? "" : ""}>{this.title()}</h1>
+        <p className="tooltip" style={{visibility: this.props.pieceScores.sum > 0 ? "visible" : "hidden"}}>
           Also add your starting points and points from underground room bonuses
         </p>
         <SearchContainer />
-        <BoardContainer scorablePieceMap={this.props.scorablePieceMap} />
+        <BoardContainer pieceScores={this.props.pieceScores} />
       </div>
     );
   }

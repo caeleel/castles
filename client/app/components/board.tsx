@@ -2,6 +2,7 @@ import * as React from "react";
 import { findDOMNode } from 'react-dom';
 import Pieces from '../../../lib/pieces';
 import { Piece, SCALE } from "./Piece";
+import { Score } from "../../../lib/score";
 import { BoardState } from '../reducers/board';
 import {
   DragDropContext,
@@ -12,7 +13,7 @@ import {
   DropTargetSpec } from 'react-dnd';
 
 export interface PublicProps {
-  scorablePieceMap: Pieces.PieceMap;
+  pieceScores: Score.PieceScores;
 }
 
 export interface DataProps {
@@ -53,7 +54,7 @@ let targetSpec: DropTargetSpec<BoardProps> = {
 }))
 export class Board extends React.Component<BoardProps, {}> {
   render(): JSX.Element | false {
-    let { board, connectDropTarget, rotatePiece, selectPiece, scorablePieceMap } = this.props;
+    let { board, connectDropTarget, rotatePiece, selectPiece, pieceScores } = this.props;
     return connectDropTarget(
       <div className="board" onClick={() => { selectPiece(-1) }}>
         {
@@ -67,7 +68,8 @@ export class Board extends React.Component<BoardProps, {}> {
               rotatePiece={rotatePiece}
               selectPiece={selectPiece}
               selected={board.selectedPieceId == index}
-              scorable={!!scorablePieceMap[index]}
+              scorable={typeof pieceScores[index] === 'number'}
+              score={pieceScores[index]}
             />
           ))
         }

@@ -27,12 +27,19 @@ export module Score {
     return false;
   }
 
+  export interface PieceScores {
+    [index: number]: number;
+    sum: number;
+  }
+
   export function score(pieces: Pieces.Piece[], pieceIds: number[]) {
-    let sum = 0;
+    let pieceScores:PieceScores = {"sum": 0}
     pieceIds.map((id: number) => {
-      sum += scorePiece(id, pieceIds, pieces);
+      let score = scorePiece(id, pieceIds, pieces);
+      pieceScores[id] = score;
+      pieceScores.sum += score;
     })
-    return sum;
+    return pieceScores;
   }
 
   function scorePiece(id: number, pieceIds: number[], pieces: Pieces.Piece[]) {

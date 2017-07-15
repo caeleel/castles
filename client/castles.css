@@ -96,6 +96,13 @@ input[type="text"] {
   box-shadow: 0 0 3px green;
 }
 
+.score {
+  position: absolute;
+  background-color: white;
+  font-weight: bold;
+  padding: 5px;
+}
+
 .rotate {
   position: absolute;
   height: 24px;

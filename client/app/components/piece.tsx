@@ -30,6 +30,7 @@ interface PieceProps {
   selectPiece(id: number): void;
   selected: boolean;
   scorable: boolean;
+  score: number;
 }
 
 function getRotation(orientation: number[]) {
@@ -95,6 +96,9 @@ export module Piece {
           )}
 
           <div className={classNames} style={innerStyle} onClick={selectPiece.bind(this)} />
+          {this.props.scorable && (
+            <div className="score">{this.props.score}</div>
+          )}
           {selected && (<button className="rotate rotate-left" style={{left: -5 - 27}} onClick={rotateLeft.bind(this)}></button>)}
           {selected && (<button className="rotate rotate-right" style={{left: piece.width * SCALE + 5}} onClick={rotateRight.bind(this)}></button>)}
         </div>

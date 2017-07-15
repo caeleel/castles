@@ -6,7 +6,7 @@ import { AppState } from '../reducers/reducers';
 
 function mapStateToProps(state: AppState, ownProps: PublicProps): DataProps | PublicProps {
   return {
-    scorablePieceMap: ownProps.scorablePieceMap,
+    pieceScores: ownProps.pieceScores,
     board: state.board,
   };
 }

@@ -88,19 +88,18 @@ export class Search extends React.Component<SearchProps, State> {
 
   // Autosuggest will call this function every time suggestion is selected via mouse or keyboard.
   onSuggestionSelected = (event: Event, suggestionEventData: any) => {
-    this.props.board.pieces.map((piece: Pieces.Piece, newId: number) => {
-      if (piece.name == suggestionEventData.suggestionValue) {
-        for (let existingId of this.props.board.pieceIds) {
-          if (existingId == newId) {
-            return;
-          }
-        };
+    let pieceMap: Pieces.PieceMap = {};
+    for (let id of this.props.board.pieceIds) {
+      pieceMap[id] = this.props.board.pieces[id];
+    }
 
-        this.props.addPiece(newId);
+    for (let index in this.props.board.pieces) {
+      if (this.props.board.pieces[index].name == suggestionEventData.suggestionValue && !pieceMap[index]) {
+        this.props.addPiece(+index);
         this.setState({value: ""});
         return;
       }
-    });
+    }
   };
 
   pieceNames = () => {
