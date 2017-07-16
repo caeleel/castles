@@ -107,6 +107,7 @@ input[type="text"] {
 }
 
 .rotate {
+  z-index: 1;
   position: absolute;
   height: 24px;
   width: 27px;
