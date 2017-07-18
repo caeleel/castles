@@ -109,13 +109,18 @@ input[type="text"] {
 .rotate {
   z-index: 1;
   position: absolute;
-  height: 200px;
-  width: 200px;
+  height: 100px;
+  width: 100px;
   top: 600px;
-  background-image: url("public/glyphicons-736-rotate-right.png");
-/*  height: 24px;
-  width: 27px;*/
+  background: url("public/glyphicons-736-rotate-right.png") white center center no-repeat;
+  border-radius: 50%;
   border: none;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.rotate:active {
+  background-color: #EEEEEE;
 }
 
 .circle {

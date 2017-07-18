@@ -12,7 +12,6 @@ export interface EventHandlerProps {
 export type RotateButtonProps = DataProps & EventHandlerProps;
 
 export class RotateButton extends React.Component<RotateButtonProps, {}> {
-
   classNames() {
     if (this.props.board.selectedPieceId < 0) {
       return "rotate disabled";
@@ -24,7 +23,12 @@ export class RotateButton extends React.Component<RotateButtonProps, {}> {
   click() {
     this.props.rotatePiece(this.props.board.selectedPieceId);
   }
+
   render() {
+    if (this.props.board.selectedPieceId < 0) {
+      return null;
+    }
+
     return (
       <button className={this.classNames()} onClick={this.click.bind(this)}></button>
     )
