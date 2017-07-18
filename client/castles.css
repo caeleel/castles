@@ -104,6 +104,7 @@ input[type="text"] {
   color: green;
   background-color: rgba(255, 255, 255, .8);
   border: 1px solid #AAAAAA;
+  border-radius: 50%;
 }
 
 .rotate {

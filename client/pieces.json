@@ -74,7 +74,7 @@
           },
           "Fungus Room": {
             "combo": ["food"],
-            "exits": [[3, 0]]
+            "exits": [[3, 0], [0, 3]]
           },
           "The Hole": {
             "combo": ["sleep"],
