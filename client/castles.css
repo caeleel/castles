@@ -85,7 +85,7 @@ input[type="text"] {
 .piece {
   height: 100%;
   width: 100%;
-  position: absolute;
+  position: relative;
   /*box-shadow: 0 0 3px red;*/
 }
 /*
@@ -99,7 +99,6 @@ input[type="text"] {
 .score {
   padding: 0px 4px;
   margin: 6px;
-  right: 0px;
   position: absolute;
   color: green;
   background-color: rgba(255, 255, 255, .8);
@@ -125,10 +124,10 @@ input[type="text"] {
 
 .exit {
   position: absolute;
-  height: 4px;
-  width: 4px;
+  border: 1px solid #AAAAAA;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, .8);
   z-index: 1;
-  background-color: black;
 }
 
 .draggable {

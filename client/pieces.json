@@ -297,7 +297,7 @@
           },
           "Dining Room": {
             "combo": ["living"],
-            "exits": [[0, 3], [8, 4]]
+            "exits": [[0, 3], [8, 5]]
           },
           "Kitchen": {
             "combo": ["food"],

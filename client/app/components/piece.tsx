@@ -52,30 +52,43 @@ export module Piece {
       let style = {
         left: piece.x * SCALE,
         top: piece.y * SCALE,
-        height: piece.height * SCALE,
-        width: piece.width * SCALE,
+        height: 0,
+        width: 0,
       }
+
+      let width = piece.width;
+      let height = piece.height;
+      let x = 0;
+      let y = 0;
+
+      if (piece.orientation[0] == 0) {
+        width = piece.height;
+        height = piece.width;
+      }
+      if (piece.orientation[1] - piece.orientation[0] == 1) {
+        x += piece.width;
+      }
+
+      if (piece.orientation[0] + piece.orientation[1] == -1) {
+        y += piece.height;
+      }
+
+
+      // [1, 0] do nothing
+      // [0, 1] x += piece.width
+      // [-1, 0] y += piece.height; x += piece.width
+      // [0, -1] y += piece.height
+
       let classNames = "piece " + (piece.type) + " " + (selected ? "selected" : "") + " " + (scorable ? "scorable" : "");
       let backgroundImageName = "public/" + piece.name.toLowerCase() + ".png";
       let rotation = getRotation(piece.orientation);
       let innerStyle = {
-        backgroundImage: 'url("' + backgroundImageName + '")',
-        backgroundSize: "cover",
-        backgroundColor: "transparent",
+        left: x * SCALE,
+        top: y * SCALE,
         transform: "rotate(" + rotation + "rad)",
-        transition: "rotate 0.5s ease",
-      }
-
-      let rotateLeft = (e: Event): void => {
-        e.stopPropagation();
-        this.props.rotatePiece(this.props.id);
-        this.props.rotatePiece(this.props.id);
-        this.props.rotatePiece(this.props.id);
-      }
-
-      let rotateRight = (e: Event): void => {
-        e.stopPropagation();
-        this.props.rotatePiece(this.props.id);
+        transformOrigin: "top left",
+        height: height * SCALE,
+        width: width * SCALE,
       }
 
       let selectPiece = (e: Event): void => {

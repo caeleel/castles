@@ -170,6 +170,8 @@ module Pieces {
     }
 
     public rotate = () => {
+      this.moveRelative((this.width -  this.height)/ 2, (this.height - this.width) / 2);
+
       if (this.subrect != null) {
         let xLocal = this.subrect.x - this.x;
         let yLocal = this.subrect.y - this.y;
