@@ -22,7 +22,6 @@ export interface DataProps {
 
 export interface EventHandlerProps {
   movePiece(id: number, x: number, y: number): void;
-  rotatePiece(id: number): void;
   selectPiece(id: number): void;
 }
 
@@ -54,7 +53,7 @@ let targetSpec: DropTargetSpec<BoardProps> = {
 }))
 export class Board extends React.Component<BoardProps, {}> {
   render(): JSX.Element | false {
-    let { board, connectDropTarget, rotatePiece, selectPiece, pieceScores } = this.props;
+    let { board, connectDropTarget, selectPiece, pieceScores } = this.props;
     return connectDropTarget(
       <div className="board" onClick={() => { selectPiece(-1) }}>
         {
@@ -65,7 +64,6 @@ export class Board extends React.Component<BoardProps, {}> {
               piece={board.pieces[index]}
               isDragging={false}
               connectDragSource={null}
-              rotatePiece={rotatePiece}
               selectPiece={selectPiece}
               selected={board.selectedPieceId == index}
               scorable={typeof pieceScores[index] === 'number'}

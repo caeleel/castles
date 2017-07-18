@@ -26,7 +26,6 @@ interface PieceProps {
   piece: Pieces.Piece;
   isDragging: boolean;
   connectDragSource: ConnectDragSource;
-  rotatePiece(id: number): void;
   selectPiece(id: number): void;
   selected: boolean;
   scorable: boolean;
@@ -48,7 +47,8 @@ export module Piece {
     }
 
     render(): false | JSX.Element {
-      const { selected, connectDragSource, isDragging, piece, rotatePiece, scorable } = this.props;
+      const { selected, connectDragSource, isDragging, piece, scorable } = this.props;
+
       let style = {
         left: piece.x * SCALE,
         top: piece.y * SCALE,
@@ -85,22 +85,24 @@ export module Piece {
 
       return connectDragSource(
         <div className="piece-position" style={style}>
-          {piece.exits.map((exit: number[], i: number) => {
+          {piece.exits.map((exit: number[]) => {
+            let height = 8;
+            let width = 8;
             let [x, y] = exit
             let style = {
-              left: x * SCALE,
-              top: y * SCALE,
+              height,
+              width,
+              left: x * SCALE - width / 2 - 1,
+              top: y * SCALE - height / 2 - 1,
             }
             return <div className="exit" key={x + "-" + y} style={style} />
             }
           )}
 
-          <div className={classNames} style={innerStyle} onClick={selectPiece.bind(this)} />
           {this.props.scorable && (
             <div className="score">{this.props.score}</div>
           )}
-          {selected && (<button className="rotate rotate-left" style={{left: -5 - 27}} onClick={rotateLeft.bind(this)}></button>)}
-          {selected && (<button className="rotate rotate-right" style={{left: piece.width * SCALE + 5}} onClick={rotateRight.bind(this)}></button>)}
+          <img src={backgroundImageName} className={classNames} style={innerStyle} onClick={selectPiece.bind(this)} />
         </div>
       );
     }

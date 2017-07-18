@@ -1,6 +1,7 @@
 import * as React from "react";
 import { SearchContainer } from '../containers/search';
 import { BoardContainer } from '../containers/board';
+import { RotateButtonContainer } from '../containers/rotate-button';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { Score } from '../../../lib/score';
@@ -27,6 +28,7 @@ class App extends React.Component<Props, {}> {
         </p>
         <SearchContainer />
         <BoardContainer pieceScores={this.props.pieceScores} />
+        <RotateButtonContainer />
       </div>
     );
   }
