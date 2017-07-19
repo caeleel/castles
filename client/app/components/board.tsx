@@ -32,7 +32,7 @@ interface DragAndDropHandlerProps {
 export type BoardProps = PublicProps & DataProps & EventHandlerProps & DragAndDropHandlerProps;
 
 let targetSpec: DropTargetSpec<BoardProps> = {
-  drop: (props: BoardProps, monitor: DropTargetMonitor, component: Board) => {
+  hover: (props: BoardProps, monitor: DropTargetMonitor, component: Board) => {
     let item = (monitor.getItem() as any);
     const delta = monitor.getDifferenceFromInitialOffset();
 
@@ -64,6 +64,7 @@ export class Board extends React.Component<BoardProps, {}> {
               piece={board.pieces[index]}
               isDragging={false}
               connectDragSource={null}
+              connectDragPreview={null}
               selectPiece={selectPiece}
               selected={board.selectedPieceId == index}
               scorable={typeof pieceScores[index] === 'number'}

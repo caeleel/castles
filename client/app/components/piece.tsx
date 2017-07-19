@@ -1,6 +1,7 @@
 import * as React from "react";
 import {
   ConnectDragSource,
+  ConnectDragPreview,
   DragDropContext,
   DragSource,
   DragSourceSpec,
@@ -9,6 +10,8 @@ import {
   DragSourceMonitor,
   DragElementWrapper,
   ClientOffset } from 'react-dnd';
+import { getEmptyImage } from 'react-dnd-html5-backend';
+
 import Pieces from '../../../lib/pieces';
 
 export const SCALE = 20;
@@ -26,6 +29,7 @@ interface PieceProps {
   piece: Pieces.Piece;
   isDragging: boolean;
   connectDragSource: ConnectDragSource;
+  connectDragPreview: ConnectDragPreview;
   selectPiece(id: number): void;
   selected: boolean;
   scorable: boolean;
@@ -39,14 +43,16 @@ function getRotation(orientation: number[]) {
 export module Piece {
   @DragSource("piece", sourceSpec, (connect: DragSourceConnector, monitor: DragSourceMonitor) => ({
     connectDragSource: connect.dragSource(),
+    connectDragPreview: connect.dragPreview(),
     isDragging: monitor.isDragging()
   }))
   export class Piece extends React.Component<PieceProps, {}> {
-    constructor(props: PieceProps) {
-      super(props);
-    }
-
     render(): false | JSX.Element {
+          this.props.connectDragPreview(getEmptyImage(), {
+      // IE fallback: specify that we'd rather screenshot the node
+      // when it already knows it's being dragged so we can hide it with CSS.
+      captureDraggingState: true,
+    });
       const { selected, connectDragSource, isDragging, piece, scorable } = this.props;
 
       let style = {
