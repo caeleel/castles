@@ -141,6 +141,18 @@ input[type="text"] {
   background-color: #EEEEEE;
 }
 
+@media (max-width: 600px) {
+  form {
+    width: ;
+  }
+  .rotate {
+    bottom: 20px;
+    right: 20px;
+    height: 60px;
+    width: 60px;
+  }
+}
+
 .circle {
   border-radius: 50%;
 }

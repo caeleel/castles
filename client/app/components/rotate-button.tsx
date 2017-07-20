@@ -20,7 +20,8 @@ export class RotateButton extends React.Component<RotateButtonProps, {}> {
     }
   }
 
-  click() {
+  click(e: any) {
+    // TODO: figure out how to prevent double click zoom on mobile
     this.props.rotatePiece(this.props.board.selectedPieceId);
   }
 
