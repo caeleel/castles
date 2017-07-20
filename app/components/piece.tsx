@@ -12,7 +12,7 @@ import {
   ClientOffset } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
-import Pieces from '../../../lib/pieces';
+import Pieces from '../lib/pieces';
 
 export const SCALE = 20;
 // Spec: drag events to handle.

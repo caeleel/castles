@@ -1,8 +1,8 @@
 import * as React from "react";
 import { findDOMNode } from 'react-dom';
-import Pieces from '../../../lib/pieces';
+import Pieces from '../lib/pieces';
 import { Piece, SCALE } from "./Piece";
-import { Score } from "../../../lib/score";
+import { Score } from "../lib/score";
 import { BoardState } from '../reducers/board';
 import {
   DragDropContext,

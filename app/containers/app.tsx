@@ -3,7 +3,7 @@ import * as actions from '../actions/actions';
 import { Dispatch } from 'redux';
 import App, { DataProps, EventHandlerProps } from '../components/app'
 import { AppState } from '../reducers/reducers';
-import { Score } from '../../../lib/score';
+import { Score } from '../lib/score';
 
 function mapStateToProps(state: AppState): DataProps {
   let scorablePieceMap = Score.getScorablePieceMap(state.board.pieces, state.board.pieceIds);

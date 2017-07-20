@@ -1,9 +1,15 @@
 Score validator for the board game [Castles of Mad King Ludwig](https://beziergames.com/collections/all-games/products/castles)
-## Building the client
+
+## Install dependencies
 ```
 brew install yarn # or install yarn some other way
-cd client
-yarn install
+yarn
+```
+
+## Running the dev server
+
+Local dev server will watch local Typescript files and auto-compiles when they change
+```
 yarn s
 Visit localhost:8080
 ```

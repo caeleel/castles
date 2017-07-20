@@ -6,7 +6,7 @@ import { DragDropContext } from 'react-dnd';
 import { BoardState } from '../reducers/board';
 import TouchBackend from 'react-dnd-touch-backend';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { Score } from '../../../lib/score';
+import { Score } from '../lib/score';
 
 export interface DataProps {
   pieceScores: Score.PieceScores;

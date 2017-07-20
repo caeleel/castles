@@ -1,5 +1,5 @@
 import * as actions from '../actions/actions';
-import Pieces from '../../../lib/pieces';
+import Pieces from '../lib/pieces';
 
 export interface BoardState {
   pieces: Pieces.Piece[];

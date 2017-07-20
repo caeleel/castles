@@ -5,7 +5,7 @@ import * as Redux from 'redux';
 
 import { AppContainer } from './containers/app';
 import castlesApp from './reducers/reducers';
-import Pieces from '../../lib/pieces';
+import Pieces from './lib/pieces';
 
 document.addEventListener('DOMContentLoaded', () => {
   Pieces.loadPieces().then((pieces : Pieces.Piece[]) => {

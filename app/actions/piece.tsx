@@ -1,4 +1,4 @@
-import Pieces from '../../../lib/pieces';
+import Pieces from '../lib/pieces';
 import { actionCreator } from './helpers'
 
 export namespace piece {

@@ -1,5 +1,5 @@
 import { actionCreator } from './helpers'
-import Pieces from '../../../lib/pieces';
+import Pieces from '../lib/pieces';
 
 export namespace board {
   export const addPiece = actionCreator<{ id: number }>('BOARD_ADD_PIECE');

@@ -1,5 +1,5 @@
 import * as React from "react";
-import Pieces from '../../../lib/pieces';
+import Pieces from '../lib/pieces';
 import { Garbage } from './garbage';
 import { BoardState } from '../reducers/board';
 var Autosuggest = require("react-autosuggest")
