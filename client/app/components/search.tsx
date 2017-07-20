@@ -64,7 +64,12 @@ export class Search extends React.Component<SearchProps, State> {
       pieceMap[id] = this.props.board.pieces[id];
     }
 
+    let prevPieceName = '';
     return this.props.board.pieces.filter((piece: Pieces.Piece, index: number) => {
+      if (prevPieceName == piece.name) {
+        return false;
+      }
+      prevPieceName = piece.name;
       return !pieceMap[index] && piece.name.toLowerCase().slice(0, inputLength) === inputValue;
     }).map((piece: Pieces.Piece) => {
       return piece.name;
