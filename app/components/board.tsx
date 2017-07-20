@@ -55,7 +55,19 @@ let sourceSpec: DragSourceSpec<BoardProps> = {
 let targetSpec: DropTargetSpec<BoardProps> = {
   hover: (props: BoardProps, monitor: DropTargetMonitor, component: Board) => {
     let item = (monitor.getItem() as any);
-    if (item.id) {
+    console.log(Number(item.id))
+
+    if (isNaN(item.id)) { // Board dragging
+      const delta = monitor.getDifferenceFromInitialOffset();
+
+      const offsetX = component.state.initialOffsetX + delta.x;
+      const offsetY = component.state.initialOffsetY + delta.y;
+
+      component.setState({
+        offsetX: offsetX,
+        offsetY: offsetY,
+      })
+    } else { // Piece hover
       const delta = monitor.getDifferenceFromInitialOffset();
 
       const offsetX = monitor.getInitialSourceClientOffset().x - component.state.offsetX;
@@ -66,16 +78,6 @@ let targetSpec: DropTargetSpec<BoardProps> = {
 
       props.movePiece(item.id, left, top);
       props.selectPiece(item.id);
-    } else {
-      const delta = monitor.getDifferenceFromInitialOffset();
-
-      const offsetX = component.state.initialOffsetX + delta.x;
-      const offsetY = component.state.initialOffsetY + delta.y;
-
-      component.setState({
-        offsetX: offsetX,
-        offsetY: offsetY,
-      })
     }
   },
   drop: (props: BoardProps, monitor: DropTargetMonitor, component: Board) => {

@@ -110,7 +110,7 @@ input[type="text"] {
 }
 
 .garbage {
-  z-index: 2;
+  z-index: 3;
   position: absolute;
   top: 20px;
   left: 20px;
