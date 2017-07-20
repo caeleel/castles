@@ -15,7 +15,7 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 import Pieces from '../lib/pieces';
 
 export const SCALE = 20;
-// Spec: drag events to handle.
+
 let sourceSpec: DragSourceSpec<PieceProps> = {
   beginDrag: (props: PieceProps) => ({
     id: props.id,
@@ -88,7 +88,7 @@ export module Piece {
       // [0, -1] y += piece.height
 
       let classNames = "piece " + (piece.type) + " " + (selected ? "selected" : "") + " " + (scorable ? "scorable" : "");
-      let backgroundImageName = "public/" + piece.name.toLowerCase() + ".png";
+      let imageName = "public/" + piece.name.toLowerCase() + ".png";
       let rotation = getRotation(piece.orientation);
       let imgStyle = {
         left: x * SCALE,
@@ -97,6 +97,10 @@ export module Piece {
         transformOrigin: "top left",
         height: height * SCALE,
         width: width * SCALE,
+      }
+
+      let scoreBubbleStyle = { // Move score bubbles for rotated L pieces
+        left: (piece.type == "L" && piece.orientation[0] == 0 && piece.orientation[1] == -1) ? 80 : "auto"
       }
 
       let selectPiece = (e: Event): void => {
@@ -120,10 +124,8 @@ export module Piece {
             }
           )}
 
-          {this.props.scorable && (
-            <div className="score">{this.props.score}</div>
-          )}
-          <img src={backgroundImageName} className={classNames} style={imgStyle} onClick={selectPiece.bind(this)} />
+          {this.props.scorable && (<div className="score" style={scoreBubbleStyle}>{this.props.score}</div>)}
+          <img src={imageName} className={classNames} style={imgStyle} onClick={selectPiece.bind(this)} />
         </div>
       );
     }
