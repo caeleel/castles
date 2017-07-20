@@ -53,7 +53,11 @@ class App extends React.Component<DataProps & EventHandlerProps, {}> {
     if (this.props.pieceScores.sum > 0) {
       return (
         <div className="tooltip">
-          <p className="" style={{fontWeight: "bold"}}><span style={{color: "green"}}>{this.props.pieceScores.sum}</span> points</p>
+          <p className="" style={{fontWeight: "bold"}}>
+            <span style={{color: "green"}}>
+              {this.props.pieceScores.sum}
+            </span> point{this.props.pieceScores.sum > 1 ? "s" : ""}
+          </p>
           <p style={{fontSize: ".6em", lineHeight: "1.5em"}}>
             Also add your starting points and points from underground room bonuses
           </p>

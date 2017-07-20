@@ -3,7 +3,7 @@ import { findDOMNode } from 'react-dom';
 import Pieces from '../../../lib/pieces';
 import { Piece, SCALE } from "./Piece";
 import { Score } from "../../../lib/score";
-import { BoardState as BoardReducerState } from '../reducers/board';
+import { BoardState } from '../reducers/board';
 import {
   DragDropContext,
   ConnectDropTarget,
@@ -25,7 +25,7 @@ export interface PublicProps {
 }
 
 export interface DataProps {
-  board: BoardReducerState;
+  board: BoardState;
 }
 
 export interface EventHandlerProps {
@@ -41,7 +41,7 @@ interface DragAndDropHandlerProps {
 
 export type BoardProps = PublicProps & DataProps & EventHandlerProps & DragAndDropHandlerProps;
 
-interface BoardState {
+interface State {
   offsetX: number;
   offsetY: number;
   initialOffsetX: number;
@@ -92,7 +92,7 @@ let targetSpec: DropTargetSpec<BoardProps> = {
 @DropTarget(['board', 'piece'], targetSpec, (connect: DropTargetConnector, monitor: DropTargetMonitor) => ({
   connectDropTarget: connect.dropTarget(),
 }))
-export class Board extends React.Component<BoardProps, BoardState> {
+export class Board extends React.Component<BoardProps, State> {
   constructor() {
     super();
     let x = document.body.clientWidth / 2 - 30;

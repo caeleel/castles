@@ -16,6 +16,7 @@ form {
   position: absolute;
   top: 20px;
   left: 20px;
+  z-index: 2;
 }
 
 .tooltip {
@@ -42,16 +43,21 @@ ol {
   width: 100%;
   position: relative;
   cursor: move;
-  /*box-shadow: 0 0 3px red;*/
+  box-shadow: 0 0 3px red;
 }
-/*
+
 .scorable {
   border: none;
   outline: none;
   border-color: green;
   box-shadow: 0 0 3px green;
 }
-*/
+
+.scorable.octagon {
+  box-shadow: none;
+  border: none;
+}
+
 .score {
   padding: 0px 4px;
   margin: 6px;
@@ -73,7 +79,6 @@ input[type="text"] {
 .react-autosuggest__suggestions-container {
   position: absolute;
   background: white;
-  z-index: 2;
   overflow-y: scroll;
   max-height: 500px;
   font-size: .8em;
@@ -125,7 +130,7 @@ input[type="text"] {
 }
 
 .rotate {
-  z-index: 1;
+  z-index: 2;
   position: fixed;
   height: 100px;
   width: 100px;
