@@ -55,7 +55,6 @@ let sourceSpec: DragSourceSpec<BoardProps> = {
 let targetSpec: DropTargetSpec<BoardProps> = {
   hover: (props: BoardProps, monitor: DropTargetMonitor, component: Board) => {
     let item = (monitor.getItem() as any);
-    console.log(Number(item.id))
 
     if (isNaN(item.id)) { // Board dragging
       const delta = monitor.getDifferenceFromInitialOffset();
@@ -97,8 +96,8 @@ let targetSpec: DropTargetSpec<BoardProps> = {
 export class Board extends React.Component<BoardProps, State> {
   constructor() {
     super();
-    let x = document.body.clientWidth / 2 - 30;
-    let y = document.body.clientHeight / 2 - 30;
+    let x = document.body.clientWidth / 2 - 60;
+    let y = document.body.clientHeight / 2 - 60;
     this.state = {
       offsetX: x,
       offsetY: y,

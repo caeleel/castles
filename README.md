@@ -8,8 +8,14 @@ yarn
 
 ## Running the dev server
 
-Local dev server will watch local Typescript files and auto-compiles when they change
+Local dev server will watch local Typescript files and auto-compile when they change
 ```
 yarn s
 Visit localhost:8080
+```
+
+## Deployment
+
+```
+make deploy
 ```

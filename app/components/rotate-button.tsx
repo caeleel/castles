@@ -20,18 +20,22 @@ export class RotateButton extends React.Component<RotateButtonProps, {}> {
     }
   }
 
-  click(e: any) {
-    // TODO: figure out how to prevent double click zoom on mobile
-    this.props.rotatePiece(this.props.board.selectedPieceId);
-  }
-
   render() {
-    if (this.props.board.selectedPieceId < 0) {
+    let { selectedPieceId } = this.props.board;
+    if (selectedPieceId < 0) {
       return null;
     }
 
     return (
-      <button className={this.classNames()} onClick={this.click.bind(this)}></button>
+      <button
+        className={this.classNames()}
+        onClick={() => { this.props.rotatePiece(selectedPieceId) }}
+        onTouchStart={(e: any) => {
+          this.props.rotatePiece(selectedPieceId);
+          e.preventDefault(); // Prevent double click from zooming the page in on mobile
+        }}
+      />
+
     )
   }
 }
