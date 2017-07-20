@@ -18,18 +18,19 @@ form {
   left: 20px;
 }
 
-.sum-score {
-  position: absolute;
-  top: 60px;
-  left: 20px;
-}
-
 .tooltip {
-  font-size: .6em;
+  font-size: .8em;
   position: absolute;
   width: 200px;
-  top: 80px;
+  top: 60px;
   left: 20px;
+  line-height: 2em;
+  color: #555555;
+  z-index: -1;
+}
+
+ol {
+  padding-left: 20px;
 }
 
 .piece-position {

@@ -49,14 +49,31 @@ class App extends React.Component<DataProps & EventHandlerProps, {}> {
     e.preventDefault();
   }
 
+  tooltip() {
+    if (this.props.pieceScores.sum > 0) {
+      return (
+        <div className="tooltip">
+          <p className="" style={{fontWeight: "bold"}}><span style={{color: "green"}}>{this.props.pieceScores.sum}</span> points</p>
+          <p style={{fontSize: ".6em", lineHeight: "1.5em"}}>
+            Also add your starting points and points from underground room bonuses
+          </p>
+        </div>
+      );
+    } else {
+      return (
+        <ol className="tooltip">
+          <li>Search for your castle pieces</li>
+          <li>Drag them into place</li>
+        </ol>
+      )
+    }
+  }
   render() {
     return (
       <div id="flex">
         <BoardContainer pieceScores={this.props.pieceScores} />
-        <div className="sum-score">Score: {this.props.pieceScores.sum}</div>
-        <p className="tooltip" style={{visibility: this.props.pieceScores.sum > 0 ? "visible" : "hidden"}}>
-          Also add your starting points and points from underground room bonuses
-        </p>
+        {this.tooltip()}
+
         <SearchContainer />
         <RotateButtonContainer />
       </div>
