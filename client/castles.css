@@ -1,23 +1,72 @@
-body {
+html, body, #flex {
   font-family: "Verdana", sans-serif;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
 }
 
-h1 {
-  text-align: center;
+#flex, .board {
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 
-input[type="text"] {
-  background: url("public/search.png") no-repeat 2px center;
-  padding: 6px;
-  padding-left: 24px;
-  width: 200px;
+form {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.sum-score {
+  position: absolute;
+  top: 60px;
+  left: 20px;
 }
 
 .tooltip {
   font-size: .6em;
-  text-align: center;
+  position: absolute;
   width: 200px;
-  margin: 0px auto;
+  top: 80px;
+  left: 20px;
+}
+
+.piece-position {
+  position: absolute;
+}
+
+.piece {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  cursor: move;
+  /*box-shadow: 0 0 3px red;*/
+}
+/*
+.scorable {
+  border: none;
+  outline: none;
+  border-color: green;
+  box-shadow: 0 0 3px green;
+}
+*/
+.score {
+  padding: 0px 4px;
+  margin: 6px;
+  position: absolute;
+  color: green;
+  background-color: rgba(255, 255, 255, .8);
+  border: 1px solid #AAAAAA;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+input[type="text"] {
+  background: url("public/search.png") #FFFFFF no-repeat 2px center;
+  padding: 6px;
+  padding-left: 24px;
+  width: 200px;
 }
 
 .react-autosuggest__suggestions-container {
@@ -45,6 +94,7 @@ input[type="text"] {
   border-top: 1px solid #AAAAAA;
   width: 230px;
   height: 50px;
+  cursor: pointer;
 }
 
 .suggestion-content img {
@@ -54,8 +104,10 @@ input[type="text"] {
 }
 
 .garbage {
+  z-index: 2;
   position: absolute;
-  margin-top: -5px;
+  top: 20px;
+  left: 20px;
   height: 40px;
   width: 240px;
   background: white url("public/glyphicons-17-bin.png") no-repeat center center;
@@ -71,47 +123,13 @@ input[type="text"] {
   background-color: #DDDDDD;
 }
 
-.board {
-  margin-top: 10px;
-  position: relative;
-  height: 1000px;
-  border: 1px solid #DDDDDD;
-}
-
-.board .piece-position {
-  position: absolute;
-}
-
-.piece {
-  height: 100%;
-  width: 100%;
-  position: relative;
-  /*box-shadow: 0 0 3px red;*/
-}
-/*
-.scorable {
-  border: none;
-  outline: none;
-  border-color: green;
-  box-shadow: 0 0 3px green;
-}
-*/
-.score {
-  padding: 0px 4px;
-  margin: 6px;
-  position: absolute;
-  color: green;
-  background-color: rgba(255, 255, 255, .8);
-  border: 1px solid #AAAAAA;
-  border-radius: 50%;
-}
-
 .rotate {
   z-index: 1;
-  position: absolute;
+  position: fixed;
   height: 100px;
   width: 100px;
-  top: 600px;
+  bottom: 100px;
+  right: 100px;
   background: url("public/glyphicons-736-rotate-right.png") white center center no-repeat;
   border-radius: 50%;
   border: none;

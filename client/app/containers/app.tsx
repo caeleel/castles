@@ -1,9 +1,11 @@
 import { connect } from 'react-redux'
-import App, { Props } from '../components/app'
+import * as actions from '../actions/actions';
+import { Dispatch } from 'redux';
+import App, { DataProps, EventHandlerProps } from '../components/app'
 import { AppState } from '../reducers/reducers';
 import { Score } from '../../../lib/score';
 
-function mapStateToProps(state: AppState): Props {
+function mapStateToProps(state: AppState): DataProps {
   let scorablePieceMap = Score.getScorablePieceMap(state.board.pieces, state.board.pieceIds);
   let keys: number[] = [];
   for (let i in scorablePieceMap) {
@@ -11,10 +13,20 @@ function mapStateToProps(state: AppState): Props {
   }
   return {
     pieceScores: Score.score(state.board.pieces, keys),
+    board: state.board,
   };
 }
 
-export const AppContainer = connect<Props, {}, {}>(
+function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
+  return {
+    movePiece(id: number, x: number, y: number): void {
+      dispatch(actions.board.movePiece({id, x, y}));
+    }
+  };
+}
+
+export const AppContainer = connect<DataProps, EventHandlerProps, {}>(
   mapStateToProps,
-  {},
+  mapDispatchToProps,
 )(App);
+

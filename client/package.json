@@ -21,6 +21,7 @@
     "react-autosuggest": "^9.3.1",
     "react-dnd": "^2.4.0",
     "react-dnd-html5-backend": "^2.4.1",
+    "react-dnd-touch-backend": "^0.3.12",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
     "redux": "^3.6.0",

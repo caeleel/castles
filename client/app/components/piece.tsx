@@ -27,6 +27,8 @@ let sourceSpec: DragSourceSpec<PieceProps> = {
 interface PieceProps {
   id: number;
   piece: Pieces.Piece;
+  offsetX: number;
+  offsetY: number;
   isDragging: boolean;
   connectDragSource: ConnectDragSource;
   connectDragPreview: ConnectDragPreview;
@@ -48,16 +50,16 @@ export module Piece {
   }))
   export class Piece extends React.Component<PieceProps, {}> {
     render(): false | JSX.Element {
-          this.props.connectDragPreview(getEmptyImage(), {
-      // IE fallback: specify that we'd rather screenshot the node
-      // when it already knows it's being dragged so we can hide it with CSS.
-      captureDraggingState: true,
-    });
-      const { selected, connectDragSource, isDragging, piece, scorable } = this.props;
+      this.props.connectDragPreview(getEmptyImage(), {
+        // IE fallback: specify that we'd rather screenshot the node
+        // when it already knows it's being dragged so we can hide it with CSS.
+        captureDraggingState: true,
+      });
+      const { offsetX, offsetY, selected, connectDragSource, isDragging, piece, scorable } = this.props;
 
-      let style = {
-        left: piece.x * SCALE,
-        top: piece.y * SCALE,
+      let piecePositionStyle = {
+        left: piece.x * SCALE + offsetX,
+        top: piece.y * SCALE + offsetY,
         height: 0,
         width: 0,
       }
@@ -88,7 +90,7 @@ export module Piece {
       let classNames = "piece " + (piece.type) + " " + (selected ? "selected" : "") + " " + (scorable ? "scorable" : "");
       let backgroundImageName = "public/" + piece.name.toLowerCase() + ".png";
       let rotation = getRotation(piece.orientation);
-      let innerStyle = {
+      let imgStyle = {
         left: x * SCALE,
         top: y * SCALE,
         transform: "rotate(" + rotation + "rad)",
@@ -103,25 +105,25 @@ export module Piece {
       }
 
       return connectDragSource(
-        <div className="piece-position" style={style}>
+        <div className="piece-position" style={piecePositionStyle}>
           {piece.exits.map((exit: number[]) => {
             let height = 8;
             let width = 8;
             let [x, y] = exit
-            let style = {
+            let exitStyle = {
               height,
               width,
               left: x * SCALE - width / 2 - 1,
               top: y * SCALE - height / 2 - 1,
             }
-            return <div className="exit" key={x + "-" + y} style={style} />
+            return <div className="exit" key={x + "-" + y} style={exitStyle} />
             }
           )}
 
           {this.props.scorable && (
             <div className="score">{this.props.score}</div>
           )}
-          <img src={backgroundImageName} className={classNames} style={innerStyle} onClick={selectPiece.bind(this)} />
+          <img src={backgroundImageName} className={classNames} style={imgStyle} onClick={selectPiece.bind(this)} />
         </div>
       );
     }
