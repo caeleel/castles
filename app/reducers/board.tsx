@@ -43,7 +43,7 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
     return {
       ...state,
       pieceIds: state.pieceIds.filter((index: number) => {
-        return index != action.payload.id;
+        return index == 15 || index != action.payload.id;
       })
     };
   } else if (actions.board.rotatePiece.matches(action)) {

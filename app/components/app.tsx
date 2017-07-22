@@ -16,6 +16,7 @@ export interface DataProps {
 export interface EventHandlerProps {
   movePiece(id: number, x: number, y: number): void;
   rotatePiece(id: number): void;
+  deletePiece(id: number): void;
 }
 
 let isMobile = () => {
@@ -45,6 +46,7 @@ class App extends React.Component<DataProps & EventHandlerProps, {}> {
       case 37: x = Math.ceil((x - 2) / 2) * 2; break; // left
       case 39: x = Math.floor((x + 2) / 2) * 2; break; // right
       case 32: this.props.rotatePiece(this.props.board.selectedPieceId); return; // spacebar
+      case 8: this.props.deletePiece(this.props.board.selectedPieceId); return; // backspace
       default: return;
     }
     this.props.movePiece(this.props.board.selectedPieceId, x, y)
