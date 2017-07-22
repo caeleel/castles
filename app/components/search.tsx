@@ -24,6 +24,7 @@ export interface DataProps {
 export interface EventHandlerProps {
   addPiece: (id: number) => void;
   deletePiece: (id: number) => void;
+  selectPiece: (id: number) => void;
 }
 
 type SearchProps = DataProps & EventHandlerProps;
@@ -79,6 +80,7 @@ export class Search extends React.Component<SearchProps, State> {
   // Autosuggest will call this function every time you need to update suggestions.
   // You already implemented this logic above, so just use it.
   onSuggestionsFetchRequested = ({ value }: {value: string}) => {
+    this.props.selectPiece(-1);
     this.setState({
       suggestions: this.getSuggestions(value)
     });

@@ -34,7 +34,7 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
         }
       })
     };
-  } else if (actions.board.setSelectedPieceId.matches(action)) {
+  } else if (actions.board.selectPiece.matches(action)) {
     return {
       ...state,
       selectedPieceId: action.payload.id,

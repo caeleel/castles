@@ -17,7 +17,7 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
       dispatch(actions.board.movePiece({id, x, y}));
     },
     selectPiece(id: number): void {
-      dispatch(actions.board.setSelectedPieceId({id}));
+      dispatch(actions.board.selectPiece({id}));
     }
   };
 }
