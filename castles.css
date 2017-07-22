@@ -13,11 +13,103 @@ html, body, #flex {
 }
 
 form {
+  position: fixed;
+  width: 100%;
+  padding: 5px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+input[type="text"] {
+  font-size: .85em;
+  background: url("public/search.png") #FFFFFF no-repeat 8px center;
+  width: 234px;
+  height: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 34px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.react-autosuggest__suggestions-container--open {
+  background: white;
+  overflow-y: scroll;
+  max-height: 500px;
+  font-size: .8em;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 234px;
+  border: 1px solid #AAAAAA;
+}
+
+
+@media (max-width: 360px) {
+  input[type="text"] {
+    width: 100%;
+  }
+
+  .react-autosuggest__suggestions-container--open {
+    width: 100%;
+  }
+}
+
+.react-autosuggest__suggestions-list {
+  list-style: none;
+  padding-left: 0px;
+  margin: 0px;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  background-color: #FFFFCC;
+}
+
+.suggestion-content {
+  display: flex;
+  align-items: center;
+  background-repeat: no-repeat;
+  height: 50px;
+  cursor: pointer;
+}
+
+.react-autosuggest__suggestion {
+  border-top: 1px solid #AAAAAA;
+}
+
+.react-autosuggest__suggestion--first {
+  border-top: none;
+}
+
+.suggestion-content img {
+  height: auto;
+  width: 40px;
+  padding: 10px;
+}
+
+.garbage {
+  z-index: 3;
   position: absolute;
   top: 20px;
   left: 20px;
-  z-index: 2;
+  height: 40px;
+  width: 240px;
+  background: white url("public/glyphicons-17-bin.png") no-repeat center center;
+  border: 2px dashed #DDDDDD;
+  visibility: hidden;
 }
+
+.garbage.visible {
+  visibility: visible;
+}
+
+.garbage.hovered {
+  background-color: #DDDDDD;
+}
+
 
 .tooltip {
   font-size: .8em;
@@ -69,66 +161,6 @@ ol {
   z-index: 1;
 }
 
-input[type="text"] {
-  background: url("public/search.png") #FFFFFF no-repeat 2px center;
-  padding: 6px;
-  padding-left: 24px;
-  width: 200px;
-}
-
-.react-autosuggest__suggestions-container {
-  position: absolute;
-  background: white;
-  overflow-y: scroll;
-  max-height: 500px;
-  font-size: .8em;
-}
-
-.react-autosuggest__suggestions-list {
-  list-style: none;
-  padding-left: 0px;
-}
-
-.react-autosuggest__suggestion--highlighted {
-  background-color: #FFFFCC;
-}
-
-.suggestion-content {
-  display: flex;
-  align-items: center;
-  background-repeat: no-repeat;
-  border-top: 1px solid #AAAAAA;
-  width: 230px;
-  height: 50px;
-  cursor: pointer;
-}
-
-.suggestion-content img {
-  height: auto;
-  width: 40px;
-  padding: 10px;
-}
-
-.garbage {
-  z-index: 3;
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  height: 40px;
-  width: 240px;
-  background: white url("public/glyphicons-17-bin.png") no-repeat center center;
-  border: 2px dashed #DDDDDD;
-  visibility: hidden;
-}
-
-.garbage.visible {
-  visibility: visible;
-}
-
-.garbage.hovered {
-  background-color: #DDDDDD;
-}
-
 .rotate {
   z-index: 2;
   position: fixed;
@@ -148,9 +180,6 @@ input[type="text"] {
 }
 
 @media (max-width: 600px) {
-  form {
-    width: ;
-  }
   .rotate {
     bottom: 20px;
     right: 20px;
