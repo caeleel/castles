@@ -155,8 +155,6 @@ export class Board extends React.Component<BoardProps, State> {
       zoom(e.clientX, e.clientY, -(e.deltaY / 100));
     }
 
-    console.log(this.state.offsetX)
-    console.log(this.state.offsetY)
     return connectDragSource(connectDropTarget(
       <div
         className="board"

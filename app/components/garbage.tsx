@@ -43,6 +43,6 @@ export class Garbage extends React.Component<GarbageProps, {}> {
     if (canDrop) { className += " visible"; }
     if (isOver) { className += " hovered"; }
 
-    return connectDropTarget(<div className={className} />);
+    return connectDropTarget(<div className={className}><div className="garbage-background-image"/></div>);
   }
 }
