@@ -144,7 +144,6 @@ export class Board extends React.Component<BoardProps, State> {
     }
 
     let zoom = (x: number, y: number, delta: number) => {
-      console.log(delta)
       this.setState({zoomScale: this.state.zoomScale * (1 + delta)});
 
       let offsetX = this.state.offsetX + (this.state.offsetX - x) * delta;
@@ -153,7 +152,7 @@ export class Board extends React.Component<BoardProps, State> {
     }
 
     let wheel = (e: WheelEvent) => {
-      zoom(e.clientX, e.clientY, e.deltaY / 100);
+      zoom(e.clientX, e.clientY, -(e.deltaY / 100));
     }
 
     console.log(this.state.offsetX)
