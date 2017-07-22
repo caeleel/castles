@@ -66,11 +66,11 @@ export class Search extends React.Component<SearchProps, State> {
 
     let prevPieceName = '';
     return this.props.board.pieces.filter((piece: Pieces.Piece, index: number) => {
-      if (prevPieceName == piece.name) {
+      if (prevPieceName == piece.name || pieceMap[index]) {
         return false;
       }
       prevPieceName = piece.name;
-      return !pieceMap[index] && piece.name.toLowerCase().slice(0, inputLength) === inputValue;
+      return piece.name.toLowerCase().slice(0, inputLength) === inputValue;
     }).map((piece: Pieces.Piece) => {
       return piece.name;
     }).sort();
