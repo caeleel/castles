@@ -21,6 +21,9 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
   return {
     movePiece(id: number, x: number, y: number): void {
       dispatch(actions.board.movePiece({id, x, y}));
+    },
+    rotatePiece(id: number): void {
+      dispatch(actions.board.rotatePiece({id}));
     }
   };
 }

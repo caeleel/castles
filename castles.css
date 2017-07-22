@@ -93,10 +93,13 @@ input[type="text"] {
 .garbage {
   z-index: 3;
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 5px;
+  left: 5px;
   height: 40px;
-  width: 240px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 234px;
   background: white url("public/glyphicons-17-bin.png") no-repeat center center;
   border: 2px dashed #DDDDDD;
   visibility: hidden;
@@ -177,6 +180,11 @@ ol {
 
 .rotate:active {
   background-color: #EEEEEE;
+}
+
+.rotate-tooltip {
+  position: relative;
+  top: 70px;
 }
 
 @media (max-width: 600px) {
