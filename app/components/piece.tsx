@@ -14,8 +14,6 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 
 import Pieces from '../lib/pieces';
 
-export const SCALE = 20;
-
 let sourceSpec: DragSourceSpec<PieceProps> = {
   beginDrag: (props: PieceProps) => ({
     id: props.id,
@@ -36,6 +34,7 @@ interface PieceProps {
   selected: boolean;
   scorable: boolean;
   score: number;
+  zoomScale: number;
 }
 
 function getRotation(orientation: number[]) {
@@ -55,11 +54,11 @@ export module Piece {
         // when it already knows it's being dragged so we can hide it with CSS.
         captureDraggingState: true,
       });
-      const { offsetX, offsetY, selected, connectDragSource, isDragging, piece, scorable } = this.props;
+      const { offsetX, offsetY, selected, connectDragSource, isDragging, piece, scorable, zoomScale } = this.props;
 
       let piecePositionStyle = {
-        left: piece.x * SCALE + offsetX,
-        top: piece.y * SCALE + offsetY,
+        left: piece.x * zoomScale + offsetX,
+        top: piece.y * zoomScale + offsetY,
         height: 0,
         width: 0,
       }
@@ -91,12 +90,12 @@ export module Piece {
       let imageName = "public/" + piece.name.toLowerCase() + ".png";
       let rotation = getRotation(piece.orientation);
       let imgStyle = {
-        left: x * SCALE,
-        top: y * SCALE,
+        left: x * zoomScale,
+        top: y * zoomScale,
         transform: "rotate(" + rotation + "rad)",
         transformOrigin: "top left",
-        height: height * SCALE,
-        width: width * SCALE,
+        height: height * zoomScale,
+        width: width * zoomScale,
       }
 
       let scoreBubbleStyle = { // Move score bubbles for rotated L pieces
@@ -117,8 +116,8 @@ export module Piece {
             let exitStyle = {
               height,
               width,
-              left: x * SCALE - width / 2 - 1,
-              top: y * SCALE - height / 2 - 1,
+              left: x * zoomScale - width / 2 - 1,
+              top: y * zoomScale - height / 2 - 1,
             }
             return <div className="exit" key={x + "-" + y} style={exitStyle} />
             }

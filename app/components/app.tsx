@@ -57,7 +57,7 @@ class App extends React.Component<DataProps & EventHandlerProps, {}> {
     if (this.props.pieceScores.sum > 0) {
       return (
         <div className="tooltip">
-          <p className="" style={{fontSize: "1.2em", fontWeight: "bold"}}>
+          <p className="" style={{fontSize: "1.6em", fontWeight: "bold"}}>
             <span style={{color: "green"}}>
               {this.props.pieceScores.sum}
             </span> point{this.props.pieceScores.sum > 1 ? "s" : ""}

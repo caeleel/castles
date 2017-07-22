@@ -1,7 +1,7 @@
 import * as React from "react";
 import { findDOMNode } from 'react-dom';
 import Pieces from '../lib/pieces';
-import { Piece, SCALE } from "./Piece";
+import { Piece } from "./Piece";
 import { Score } from "../lib/score";
 import { BoardState } from '../reducers/board';
 import {
@@ -46,6 +46,9 @@ interface State {
   offsetY: number;
   initialOffsetX: number;
   initialOffsetY: number;
+  zoomScale: number;
+  currentPinchDistance?: number;
+  currentMidpoint?: number[];
 }
 
 let sourceSpec: DragSourceSpec<BoardProps> = {
@@ -72,8 +75,8 @@ let targetSpec: DropTargetSpec<BoardProps> = {
       const offsetX = monitor.getInitialSourceClientOffset().x - component.state.offsetX;
       const offsetY = monitor.getInitialSourceClientOffset().y - component.state.offsetY;
 
-      let left = Math.round((delta.x + offsetX) / SCALE / 2) * 2;
-      let top = Math.round((delta.y + offsetY) / SCALE / 2) * 2;
+      let left = Math.round((delta.x + offsetX) / component.state.zoomScale / 2) * 2;
+      let top = Math.round((delta.y + offsetY) / component.state.zoomScale / 2) * 2;
 
       props.movePiece(item.id, left, top);
       props.selectPiece(item.id);
@@ -103,6 +106,7 @@ export class Board extends React.Component<BoardProps, State> {
       offsetY: y,
       initialOffsetX: x,
       initialOffsetY: y,
+      zoomScale: 20,
     }
   }
 
@@ -113,8 +117,55 @@ export class Board extends React.Component<BoardProps, State> {
       captureDraggingState: true,
     });
     let { board, connectDragSource, connectDropTarget, movePiece, selectPiece, pieceScores } = this.props;
+
+
+    let touchEnd = (e: TouchEvent) => {
+      this.setState({currentPinchDistance: null, currentMidpoint: null})
+    }
+
+    let touchMove = (e: TouchEvent) => {
+      if (e.touches.length != 2) {
+        return;
+      }
+      let d = Math.sqrt(
+        Math.pow(e.touches[0].clientX - e.touches[1].clientX, 2) +
+        Math.pow(e.touches[0].clientY - e.touches[1].clientY, 2)
+      )
+      let currentMidpoint = [
+        (e.touches[0].clientX + e.touches[1].clientX) / 2,
+        (e.touches[0].clientY + e.touches[1].clientY) / 2,
+      ]
+      if (this.state.currentPinchDistance && this.state.currentMidpoint) {
+        zoom(currentMidpoint[0], currentMidpoint[1], d / this.state.currentPinchDistance - 1)
+      }
+      this.setState({currentPinchDistance: d, currentMidpoint: currentMidpoint})
+
+      e.preventDefault() // prevent iOS overscrolling
+    }
+
+    let zoom = (x: number, y: number, delta: number) => {
+      console.log(delta)
+      this.setState({zoomScale: this.state.zoomScale * (1 + delta)});
+
+      let offsetX = this.state.offsetX + (this.state.offsetX - x) * delta;
+      let offsetY = this.state.offsetY + (this.state.offsetY - y) * delta;
+      this.setState({offsetX: offsetX, offsetY: offsetY});
+    }
+
+    let wheel = (e: WheelEvent) => {
+      zoom(e.clientX, e.clientY, e.deltaY / 100);
+    }
+
+    console.log(this.state.offsetX)
+    console.log(this.state.offsetY)
     return connectDragSource(connectDropTarget(
-      <div className="board" onClick={() => { selectPiece(-1) }}>
+      <div
+        className="board"
+        onClick={() => { selectPiece(-1) }}
+        onTouchEnd={touchEnd.bind(this)}
+        onTouchMove={touchMove.bind(this)}
+        onWheel={wheel.bind(this)}
+      >
         {
           board.pieceIds.map((index: number) => (
             <Piece.Piece
@@ -130,6 +181,7 @@ export class Board extends React.Component<BoardProps, State> {
               selected={board.selectedPieceId == index}
               scorable={typeof pieceScores[index] === 'number'}
               score={pieceScores[index]}
+              zoomScale={this.state.zoomScale}
             />
           ))
         }

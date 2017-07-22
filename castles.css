@@ -12,6 +12,10 @@ html, body, #flex {
   position: absolute;
 }
 
+.board {
+  overflow: hidden;
+}
+
 form {
   position: fixed;
   width: 100%;
