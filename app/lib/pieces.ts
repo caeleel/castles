@@ -5,6 +5,7 @@ module Pieces {
   const cellArea: number = cellLen * cellLen;
 
   interface RoomInstance {
+    all_modifier?: number;
     combo?: string[];
     exits?: number[][];
     fence?: boolean;
@@ -278,7 +279,7 @@ module Pieces {
                   room.points || 0,
                   room.modifier || 0,
                   room.touches_modifier || 0,
-                  room.all_modifier || 0,
+                  instance.all_modifier || room.all_modifier || 0,
                   instance.combo? instance.combo.slice(0) : [],
                   instance.exits? instance.exits.slice(0) : [],
                   roomSize.type,
