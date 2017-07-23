@@ -62,8 +62,8 @@ module Pieces {
 
     // Returns positive number if pieces overlap, 0 if they do not.
     public overlap: overlapFunction = (p) => {
-      let xOverlap: number = Math.min((this.x + this.width - p.x), (p.x + p.width - this.x));
-      let yOverlap: number = Math.min((this.y + this.height - p.y), (p.y + p.height - this.y));
+      let xOverlap: number = Math.min((this.x + this.width - p.x), (p.x + p.width - this.x), this.width, p.width);
+      let yOverlap: number = Math.min((this.y + this.height - p.y), (p.y + p.height - this.y), this.height, p.height);
 
       if (xOverlap <= 0 || yOverlap <= 0) return 0;
       if (this.type === 'circle' && p.type === 'circle') {
@@ -176,7 +176,7 @@ module Pieces {
         let xLocal = this.subrect.x - this.x;
         let yLocal = this.subrect.y - this.y;
 
-        this.subrect.moveRelative(yLocal - xLocal, 2*cellLen - xLocal - yLocal);
+        this.subrect.moveRelative(2*cellLen - yLocal - xLocal, xLocal - yLocal);
       }
 
       this.orientation = [-this.orientation[1], this.orientation[0]];
@@ -209,6 +209,7 @@ module Pieces {
       );
       newPiece.x = this.x;
       newPiece.y = this.y;
+      newPiece.subrect = this.subrect;
       newPiece.orientation = this.orientation;
       return newPiece;
     }
