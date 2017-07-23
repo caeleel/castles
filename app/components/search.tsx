@@ -58,7 +58,6 @@ export class Search extends React.Component<SearchProps, State> {
   // Teach Autosuggest how to calculate suggestions for any given input value.
   getSuggestions = (value: string) => {
     const inputValue = value.trim().toLowerCase();
-    const inputLength = inputValue.length;
 
     let pieceMap: Pieces.PieceMap = {};
     for (let id of this.props.board.pieceIds) {
@@ -71,7 +70,7 @@ export class Search extends React.Component<SearchProps, State> {
         return false;
       }
       prevPieceName = piece.name;
-      return piece.name.toLowerCase().slice(0, inputLength) === inputValue;
+      return piece.name.toLowerCase().includes(inputValue);
     }).map((piece: Pieces.Piece) => {
       return piece.name;
     }).sort();
