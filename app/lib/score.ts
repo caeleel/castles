@@ -1,7 +1,6 @@
 import Pieces from './pieces';
 
 export module Score {
-
   export function getScorablePieceMap(pieces: Pieces.Piece[], pieceIds: number[]) {
     let scorablePieceMap: Pieces.PieceMap = {15: pieces[15]};
     let pieceIdsToTest = [15];

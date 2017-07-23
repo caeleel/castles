@@ -78,8 +78,9 @@ let targetSpec: DropTargetSpec<BoardProps> = {
       let left = Math.round((delta.x + offsetX) / component.state.zoomScale / 2) * 2;
       let top = Math.round((delta.y + offsetY) / component.state.zoomScale / 2) * 2;
 
-      props.movePiece(item.id, left, top);
-      props.selectPiece(item.id);
+      const piece = props.board.pieces[item.id];
+      if (piece.x != left || piece.y != top) props.movePiece(item.id, left, top);
+      if (props.board.selectedPieceId != item.id) props.selectPiece(item.id);
     }
   },
   drop: (props: BoardProps, monitor: DropTargetMonitor, component: Board) => {
