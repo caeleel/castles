@@ -44,7 +44,8 @@ export module Score {
   function scorePiece(id: number, pieceIds: number[], pieces: Pieces.Piece[]) {
     let piece = pieces[id];
     let score = piece.points;
-    let neighbors = getNeighbors(id, pieceIds, pieces)
+    let exitMap = {}
+    let neighbors = getNeighbors(id, pieceIds, pieces, exitMap)
     score += scoreCombos(piece, neighbors);
     score += scoreTouchesCombos(piece, pieceIds, pieces);
     score += scoreGlobalCombos(piece, pieceIds, pieces);
@@ -52,23 +53,25 @@ export module Score {
     if (piece.rType == "living" && Object.keys(neighbors).length == piece.exits.length) {
       score *= 2;
     }
-    if (piece.rType == "activity" && Object.keys(neighbors).length == piece.exits.length) {
+    if (piece.rType == "activity" && Object.keys(exitMap).length == piece.exits.length) {
       score += 5;
     }
     return score;
   }
 
-  function getNeighbors(id: number, pieceIds: number[], pieces: Pieces.Piece[]) {
-    let piece = pieces[id]
-    let neighbors: Pieces.PieceMap = {};
+  function getNeighbors(id: number, pieceIds: number[], pieces: Pieces.Piece[], exitMap?: { [idx: number]: boolean }) {
+    const piece = pieces[id]
+    const neighbors: Pieces.PieceMap = {};
     for (let potentialNeighborId of pieceIds) {
-      let potentialNeighbor = pieces[potentialNeighborId];
+      const potentialNeighbor = pieces[potentialNeighborId];
       if (id != potentialNeighborId) {
         for (let potentialNeighborExit of pieces[potentialNeighborId].exits) {
-          for (let exit of piece.exits) {
+          for (let idx in piece.exits) {
+            const exit = piece.exits[idx];
             if (piece.x + exit[0] == potentialNeighbor.x + potentialNeighborExit[0] &&
                 piece.y + exit[1] == potentialNeighbor.y + potentialNeighborExit[1]) {
               neighbors[potentialNeighborId] = pieces[potentialNeighborId];
+              if (exitMap) exitMap[idx] = true;
             }
           }
         }
