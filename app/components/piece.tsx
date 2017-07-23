@@ -99,7 +99,7 @@ export module Piece {
       }
 
       let scoreBubbleStyle = { // Move score bubbles for rotated L pieces
-        left: (piece.type == "L" && piece.orientation[0] == 0 && piece.orientation[1] == -1) ? 80 : "auto"
+        left: (piece.type == "L" && piece.orientation[0] == 0 && piece.orientation[1] == -1) ? zoomScale * 4 : "auto"
       }
 
       let selectPiece = (e: Event): void => {
@@ -110,8 +110,8 @@ export module Piece {
       return connectDragSource(
         <div className="piece-position" style={piecePositionStyle}>
           {piece.exits.map((exit: number[]) => {
-            let height = 8;
-            let width = 8;
+            let height = .3 * zoomScale;
+            let width = .3 * zoomScale;
             let [x, y] = exit
             let exitStyle = {
               height,
