@@ -23,7 +23,7 @@ form {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  z-index: 2;
+  z-index: 4;
 }
 
 input[type="text"] {
@@ -84,7 +84,7 @@ input[type="text"] {
 }
 
 .garbage {
-  z-index: 3;
+  z-index: 5;
   position: absolute;
   height: 50px;
   padding: 5px;
@@ -150,6 +150,14 @@ ol {
   box-shadow: 0 0 3px red;
 }
 
+.selected {
+  z-index: 2;
+}
+
+.selected.exit, .selected.score {
+  z-index: 3;
+}
+
 .scorable {
   border: none;
   outline: none;
@@ -174,7 +182,7 @@ ol {
 }
 
 .rotate {
-  z-index: 2;
+  z-index: 4;
   position: fixed;
   height: 100px;
   width: 100px;

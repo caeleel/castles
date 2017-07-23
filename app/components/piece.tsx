@@ -119,11 +119,11 @@ export module Piece {
               left: x * zoomScale - width / 2 - 1,
               top: y * zoomScale - height / 2 - 1,
             }
-            return <div className="exit" key={x + "-" + y} style={exitStyle} />
+            return <div className={"exit " + (selected ? "selected" : "")} key={x + "-" + y} style={exitStyle} />
             }
           )}
 
-          {this.props.scorable && (<div className="score" style={scoreBubbleStyle}>{this.props.score}</div>)}
+          {this.props.scorable && (<div className={"score " + (selected ? "selected" : "")} style={scoreBubbleStyle}>{this.props.score}</div>)}
           <img src={imageName} className={classNames} style={imgStyle} onClick={selectPiece.bind(this)} />
         </div>
       );
