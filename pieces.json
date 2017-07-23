@@ -244,6 +244,7 @@
             "exits": [[0, 3], [9, 4]]
           },
           "Crypt": {
+            "all_modifier": 1,
             "combo": ["living"],
             "exits": [[0, 3], [9, 4]]
           }
