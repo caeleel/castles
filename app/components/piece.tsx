@@ -109,6 +109,7 @@ export module Piece {
 
       return connectDragSource(
         <div className="piece-position" style={piecePositionStyle}>
+          <img src={imageName} className={classNames} style={imgStyle} onClick={selectPiece.bind(this)} />
           {piece.exits.map((exit: number[]) => {
             let height = .3 * zoomScale;
             let width = .3 * zoomScale;
@@ -124,7 +125,6 @@ export module Piece {
           )}
 
           {this.props.scorable && (<div className={"score " + (selected ? "selected" : "")} style={scoreBubbleStyle}>{this.props.score}</div>)}
-          <img src={imageName} className={classNames} style={imgStyle} onClick={selectPiece.bind(this)} />
         </div>
       );
     }

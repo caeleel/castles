@@ -145,7 +145,7 @@ ol {
 .piece {
   height: 100%;
   width: 100%;
-  position: relative;
+  position: absolute;
   cursor: move;
   box-shadow: 0 0 3px red;
 }
@@ -155,7 +155,7 @@ ol {
 }
 
 .selected.exit, .selected.score {
-  z-index: 3;
+  z-index: 2;
 }
 
 .scorable {
@@ -178,7 +178,6 @@ ol {
   background-color: rgba(255, 255, 255, .8);
   border: 1px solid #AAAAAA;
   border-radius: 50%;
-  z-index: 1;
 }
 
 .rotate {
@@ -222,7 +221,6 @@ ol {
   border: 1px solid #AAAAAA;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, .8);
-  z-index: 1;
 }
 
 .draggable {
