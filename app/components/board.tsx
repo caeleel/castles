@@ -20,11 +20,8 @@ import {
   DropTargetSpec } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 
-export interface PublicProps {
-  pieceScores: Score.PieceScores;
-}
-
 export interface DataProps {
+  pieceScores: Score.PieceScores;
   board: BoardState;
 }
 
@@ -39,7 +36,7 @@ interface DragAndDropHandlerProps {
   connectDragPreview: ConnectDragPreview;
 }
 
-export type BoardProps = PublicProps & DataProps & EventHandlerProps & DragAndDropHandlerProps;
+export type BoardProps = DataProps & EventHandlerProps & DragAndDropHandlerProps;
 
 interface State {
   offsetX: number;

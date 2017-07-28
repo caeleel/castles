@@ -1,7 +1,7 @@
 import * as React from "react";
-import { SearchContainer } from '../containers/search';
-import { BoardContainer } from '../containers/board';
-import { RotateButtonContainer } from '../containers/rotate-button';
+import { Search } from './search';
+import { Board } from './board';
+import { RotateButton } from './rotate-button';
 import { DragDropContext } from 'react-dnd';
 import { BoardState } from '../reducers/board';
 import TouchBackend from 'react-dnd-touch-backend';
@@ -17,6 +17,8 @@ export interface EventHandlerProps {
   movePiece(id: number, x: number, y: number): void;
   rotatePiece(id: number): void;
   deletePiece(id: number): void;
+  addPiece(id: number): void;
+  selectPiece(id: number): void;
 }
 
 let isMobile = () => {
@@ -76,14 +78,31 @@ class App extends React.Component<DataProps & EventHandlerProps, {}> {
       )
     }
   }
+
   render() {
     return (
       <div id="flex">
-        <BoardContainer pieceScores={this.props.pieceScores} />
+        <Board
+          board={this.props.board}
+          pieceScores={this.props.pieceScores}
+          movePiece={this.props.movePiece}
+          selectPiece={this.props.selectPiece}
+          connectDropTarget={null}
+          connectDragSource={null}
+          connectDragPreview={null}
+        />
         {this.tooltip()}
 
-        <SearchContainer />
-        <RotateButtonContainer />
+        <Search
+          board={this.props.board}
+          deletePiece={this.props.deletePiece}
+          addPiece={this.props.addPiece}
+          selectPiece={this.props.selectPiece}
+        />
+        <RotateButton
+          board={this.props.board}
+          rotatePiece={this.props.rotatePiece}
+        />
       </div>
     );
   }
