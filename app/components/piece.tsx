@@ -11,6 +11,7 @@ import {
   DragElementWrapper,
   ClientOffset } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
+import { PieceGlow } from './piece-glow'
 
 import Pieces from '../lib/pieces';
 
@@ -52,7 +53,7 @@ export module Piece {
         // when it already knows it's being dragged so we can hide it with CSS.
         captureDraggingState: true,
       });
-      const { selected, connectDragSource, isDragging, piece, scorable, zoomScale } = this.props;
+      const { id, selected, connectDragSource, isDragging, piece, scorable, zoomScale } = this.props;
 
       let piecePositionStyle = {
         left: piece.x * zoomScale,
@@ -90,10 +91,9 @@ export module Piece {
       let imgStyle = {
         left: x * zoomScale,
         top: y * zoomScale,
-        transform: "rotate(" + rotation + "rad)",
-        transformOrigin: "top left",
         height: height * zoomScale,
         width: width * zoomScale,
+        transform: "rotate(" + rotation + "rad)",
       }
 
       let scoreBubbleStyle = { // Move score bubbles for rotated L pieces
@@ -107,6 +107,18 @@ export module Piece {
 
       return connectDragSource(
         <div className="piece-position" style={piecePositionStyle}>
+          <PieceGlow.PieceGlow
+            id={id}
+            type={piece.type}
+            x={x}
+            y={y}
+            height={height}
+            width={width}
+            zoomScale={zoomScale}
+            rotation={rotation}
+            orientation={piece.orientation}
+            scorable={scorable}
+          />
           <img src={imageName} className={classNames} style={imgStyle} onClick={selectPiece.bind(this)} />
           {piece.exits.map((exit: number[]) => {
             let height = .3 * zoomScale;

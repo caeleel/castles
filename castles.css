@@ -148,28 +148,20 @@ ol {
   width: 100%;
   position: absolute;
   cursor: move;
-  box-shadow: 0 0 3px red;
+  transform-origin: top left;
   -webkit-user-drag: none; /* prevent ghost drag image in safari */
 }
 
+.glow {
+  position: absolute;
+  transform-origin: top left;
+}
 .selected {
   z-index: 2;
 }
 
 .selected.exit, .selected.score {
   z-index: 2;
-}
-
-.scorable {
-  border: none;
-  outline: none;
-  border-color: green;
-  box-shadow: 0 0 3px green;
-}
-
-.scorable.octagon {
-  box-shadow: none;
-  border: none;
 }
 
 .score {
@@ -227,4 +219,16 @@ ol {
 
 .draggable {
   cursor: move;
+}
+
+rect, circle, polygon {
+  fill: #FF7777;
+}
+
+.scorable rect, .scorable circle, .scorable polygon {
+  fill: #009C00
+}
+
+.glow {
+  z-index: -1;
 }
