@@ -135,8 +135,12 @@ ol {
   padding-left: 20px;
 }
 
-.piece-position {
+.piece-offset {
   position: absolute;
+}
+
+.piece-position {
+  position: relative;
 }
 
 .piece {

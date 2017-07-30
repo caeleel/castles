@@ -161,25 +161,25 @@ export class Board extends React.Component<BoardProps, State> {
         onTouchMove={touchMove.bind(this)}
         onWheel={wheel.bind(this)}
       >
-        {
-          board.pieceIds.map((index: number) => (
-            <Piece.Piece
-              key={index + JSON.stringify(board.pieces[index])}
-              id={index}
-              piece={board.pieces[index]}
-              offsetX={this.state.offsetX}
-              offsetY={this.state.offsetY}
-              isDragging={false}
-              connectDragSource={null}
-              connectDragPreview={null}
-              selectPiece={selectPiece}
-              selected={board.selectedPieceId == index}
-              scorable={typeof pieceScores[index] === 'number'}
-              score={pieceScores[index]}
-              zoomScale={this.state.zoomScale}
-            />
-          ))
-        }
+        <div className="piece-offset" style={{left: this.state.offsetX, top: this.state.offsetY}}>
+          {
+            board.pieceIds.map((index: number) => (
+              <Piece.Piece
+                key={index + JSON.stringify(board.pieces[index])}
+                id={index}
+                piece={board.pieces[index]}
+                isDragging={false}
+                connectDragSource={null}
+                connectDragPreview={null}
+                selectPiece={selectPiece}
+                selected={board.selectedPieceId == index}
+                scorable={typeof pieceScores[index] === 'number'}
+                score={pieceScores[index]}
+                zoomScale={this.state.zoomScale}
+              />
+            ))
+          }
+         </div>
       </div>
     ));
   }

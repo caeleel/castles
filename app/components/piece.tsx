@@ -25,8 +25,6 @@ let sourceSpec: DragSourceSpec<PieceProps> = {
 interface PieceProps {
   id: number;
   piece: Pieces.Piece;
-  offsetX: number;
-  offsetY: number;
   isDragging: boolean;
   connectDragSource: ConnectDragSource;
   connectDragPreview: ConnectDragPreview;
@@ -54,11 +52,11 @@ export module Piece {
         // when it already knows it's being dragged so we can hide it with CSS.
         captureDraggingState: true,
       });
-      const { offsetX, offsetY, selected, connectDragSource, isDragging, piece, scorable, zoomScale } = this.props;
+      const { selected, connectDragSource, isDragging, piece, scorable, zoomScale } = this.props;
 
       let piecePositionStyle = {
-        left: piece.x * zoomScale + offsetX,
-        top: piece.y * zoomScale + offsetY,
+        left: piece.x * zoomScale,
+        top: piece.y * zoomScale,
         height: 0,
         width: 0,
       }
