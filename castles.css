@@ -149,6 +149,7 @@ ol {
   position: absolute;
   cursor: move;
   box-shadow: 0 0 3px red;
+  -webkit-user-drag: none; /* prevent ghost drag image in safari */
 }
 
 .selected {
