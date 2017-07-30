@@ -146,7 +146,12 @@ export class Board extends React.Component<BoardProps, State> {
 
       let offsetX = this.state.offsetX + (this.state.offsetX - x) * delta;
       let offsetY = this.state.offsetY + (this.state.offsetY - y) * delta;
-      this.setState({offsetX: offsetX, offsetY: offsetY});
+      this.setState({
+        offsetX: offsetX,
+        offsetY: offsetY,
+        initialOffsetX: offsetX,
+        initialOffsetY: offsetY,
+      });
     }
 
     let wheel = (e: WheelEvent) => {
