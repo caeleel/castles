@@ -81,7 +81,7 @@ class App extends React.Component<DataProps & EventHandlerProps, {}> {
 
   render() {
     return (
-      <div id="flex">
+      <div>
         <Board
           board={this.props.board}
           pieceScores={this.props.pieceScores}
