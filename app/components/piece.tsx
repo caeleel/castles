@@ -46,7 +46,7 @@ export module Piece {
     connectDragPreview: connect.dragPreview(),
     isDragging: monitor.isDragging()
   }))
-  export class Piece extends React.Component<PieceProps, {}> {
+  export class Piece extends React.PureComponent<PieceProps, {}> {
     render(): false | JSX.Element {
       this.props.connectDragPreview(getEmptyImage(), {
         // IE fallback: specify that we'd rather screenshot the node
@@ -116,7 +116,6 @@ export module Piece {
             width={width}
             zoomScale={zoomScale}
             rotation={rotation}
-            orientation={piece.orientation}
             scorable={scorable}
           />
           <img src={imageName} className={classNames} style={imgStyle} onClick={selectPiece.bind(this)} />

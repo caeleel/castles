@@ -9,7 +9,6 @@ interface Props {
   width: number;
   zoomScale: number;
   rotation: number;
-  orientation: number[];
   scorable: boolean;
 }
 
@@ -17,23 +16,13 @@ export module PieceGlow {
   export class PieceGlow extends React.Component<Props, {}> {
 
     glowStyle() {
-      let { x, y, height, width, zoomScale, rotation, orientation } = this.props;
-
-      let xx = -1;
-      let yy = -1;
-      if (orientation[1] - orientation[0] == 1) {
-        xx = 1;
-      }
-
-      if (orientation[0] + orientation[1] == -1) {
-        yy = 1;
-      }
+      let { x, y, height, width, zoomScale, rotation } = this.props;
 
       return {
-        left: x * zoomScale + xx,
-        top: y * zoomScale + yy,
-        height: height * zoomScale + 2,
-        width: width * zoomScale + 2,
+        left: x * zoomScale,
+        top: y * zoomScale,
+        height: height * zoomScale,
+        width: width * zoomScale,
         transform: "rotate(" + rotation + "rad)",
       }
     }

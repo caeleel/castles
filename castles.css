@@ -45,13 +45,17 @@ input[type="text"] {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   width: 234px;
-  border: 1px solid #AAAAAA;
+  border: 1px solid #dedede;
 }
 
 .react-autosuggest__suggestions-list {
   list-style: none;
   padding-left: 0px;
   margin: 0px;
+}
+
+.react-autosuggest__suggestions-list li:nth-child(even) {
+  background-color: #EEEEEE;
 }
 
 .react-autosuggest__suggestion--highlighted {
@@ -64,14 +68,6 @@ input[type="text"] {
   background-repeat: no-repeat;
   height: 50px;
   cursor: pointer;
-}
-
-.react-autosuggest__suggestion {
-  border-top: 1px solid #AAAAAA;
-}
-
-.react-autosuggest__suggestion--first {
-  border-top: none;
 }
 
 .suggestion-content img {
@@ -225,8 +221,16 @@ rect, circle, polygon {
   fill: #FF7777;
 }
 
-.scorable rect, .scorable circle, .scorable polygon {
-  fill: #009C00
+svg {
+  filter: drop-shadow(0px 0px 2px red);
+}
+
+svg rect, svg polygon, svg circle {
+  fill: #ffffff;
+}
+
+.scorable svg {
+  filter: drop-shadow(0px 0px 2px green);
 }
 
 .glow {

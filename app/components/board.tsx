@@ -94,7 +94,7 @@ let targetSpec: DropTargetSpec<BoardProps> = {
 @DropTarget(['board', 'piece'], targetSpec, (connect: DropTargetConnector, monitor: DropTargetMonitor) => ({
   connectDropTarget: connect.dropTarget(),
 }))
-export class Board extends React.Component<BoardProps, State> {
+export class Board extends React.PureComponent<BoardProps, State> {
   constructor() {
     super();
     let x = document.body.clientWidth / 2 - 60;
