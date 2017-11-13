@@ -142,20 +142,26 @@ export class Board extends React.PureComponent<BoardProps, State> {
     }
 
     let zoom = (x: number, y: number, delta: number) => {
-      this.setState({zoomScale: this.state.zoomScale * (1 + delta)});
 
-      let offsetX = this.state.offsetX + (this.state.offsetX - x) * delta;
-      let offsetY = this.state.offsetY + (this.state.offsetY - y) * delta;
+      const offsetX = this.state.offsetX + (this.state.offsetX - x) * delta;
+      const offsetY = this.state.offsetY + (this.state.offsetY - y) * delta;
+      const newZoom = this.state.zoomScale * (1 + delta);
+
+      if (newZoom < 5 || newZoom > 50) return;
+
       this.setState({
-        offsetX: offsetX,
-        offsetY: offsetY,
+        offsetX,
+        offsetY,
         initialOffsetX: offsetX,
         initialOffsetY: offsetY,
+        zoomScale: newZoom,
       });
     }
 
     let wheel = (e: WheelEvent) => {
-      zoom(e.clientX, e.clientY, -(e.deltaY / 100));
+      let dy = -e.deltaY / 100;
+      if (navigator.platform == 'Win32') dy /= 8;
+      zoom(e.clientX, e.clientY, dy);
     }
 
     return connectDragSource(connectDropTarget(
