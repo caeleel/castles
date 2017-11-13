@@ -152,7 +152,9 @@ ol {
   position: absolute;
   transform-origin: top left;
 }
-.selected {
+
+img.selected {
+  filter: brightness(.7);
   z-index: 2;
 }
 
@@ -222,7 +224,7 @@ rect, circle, polygon {
 }
 
 svg {
-  filter: drop-shadow(0px 0px 2px red);
+  filter: drop-shadow(0px 0px 3px red);
 }
 
 svg rect, svg polygon, svg circle {
@@ -230,7 +232,7 @@ svg rect, svg polygon, svg circle {
 }
 
 .scorable svg {
-  filter: drop-shadow(0px 0px 2px green);
+  filter: drop-shadow(0px 0px 3px green);
 }
 
 .glow {
