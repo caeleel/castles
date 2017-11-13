@@ -35,22 +35,6 @@ export module PieceGlow {
       }
     }
 
-    rectangle() {
-      return <rect x="0" y="0" width="100" height="100"/>
-    }
-
-    circle() {
-      return <circle cx="50" cy="50" r="50"/>
-    }
-
-    octagon() {
-      return <polygon points="14,0 86,0 100,25 100,75 86,100 14,100 0,75 0,25" />
-    }
-
-    l() {
-      return <polygon points="0,0 50,0 50,50 100,50 100,100 0,100" />
-    }
-
     render() {
       let { id, type } = this.props;
 
@@ -61,16 +45,16 @@ export module PieceGlow {
       let shapeHTML;
       switch (type) {
         case "rectangle":
-          shapeHTML = this.rectangle();
+          shapeHTML = <rect x="0" y="0" width="100" height="100"/>;
           break;
         case "circle":
-          shapeHTML = this.circle();
+          shapeHTML = <circle cx="50" cy="50" r="50"/>;
           break;
         case "octagon":
-          shapeHTML = this.octagon();
+          shapeHTML = <polygon points="14,0 86,0 100,25 100,75 86,100 14,100 0,75 0,25" />;
           break;
         case "L":
-          shapeHTML = this.l();
+          shapeHTML = <polygon points="0,0 50,0 50,50 100,50 100,100 0,100" />;
           break;
         default:
       }
