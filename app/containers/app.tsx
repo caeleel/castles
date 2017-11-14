@@ -3,6 +3,7 @@ import * as actions from '../actions/actions';
 import { Dispatch } from 'redux';
 import App, { DataProps, EventHandlerProps } from '../components/app'
 import { AppState } from '../reducers/reducers';
+import Pieces from '../lib/pieces';
 import { Score } from '../lib/score';
 
 function mapStateToProps(state: AppState): DataProps {
@@ -35,6 +36,9 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
     },
     selectPiece(id: number): void {
       dispatch(actions.board.selectPiece({id}));
+    },
+    setPieces(pieces: Pieces.Piece[]): void {
+      dispatch(actions.board.setPieces({pieces}));
     },
   };
 }

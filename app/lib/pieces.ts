@@ -54,6 +54,14 @@ module Pieces {
     [id: number]: Pieces.Piece;
   }
 
+  export interface LoadedPieceData {
+    id?: number;
+    x?: number;
+    y?: number;
+    orientation?: number[];
+    valid: boolean;
+  }
+
   export class Piece {
     public x?: number;
     public y?: number;
@@ -250,6 +258,36 @@ module Pieces {
       }
       this.moveTo(0, 0);
     }
+
+    public toString = () => {
+      return this.x + "," + this.y + ":" + this.orientation;
+    }
+
+  }
+
+  export function toLoadedPieceData(piece: string) : LoadedPieceData {
+    let parts = piece.split(":");
+    console.log(parts);
+    if (parts.length !== 3) {
+      return {valid: false};
+    }
+    let id = parts[0];
+    let coordinates = parts[1].split(",");
+    if (coordinates.length !== 2) {
+      return {valid: false};
+    }
+    let orientation = parts[2].split(",");
+    if (orientation.length !== 2) {
+      return {valid: false};
+    }
+    let loadedPieceData: LoadedPieceData = {
+      id: +id,
+      x: +coordinates[0],
+      y: +coordinates[1],
+      orientation: [+orientation[0], +orientation[1]],
+      valid: true,
+    }
+    return loadedPieceData;
   }
 
   export function loadPieces() {

@@ -7,4 +7,5 @@ export namespace board {
   export const selectPiece = actionCreator<{ id: number }>('BOARD_SELECT_PIECE');
   export const deletePiece = actionCreator<{ id: number }>('BOARD_DELETE_PIECE');
   export const rotatePiece = actionCreator<{ id: number }>('BOARD_ROTATE_SELECTED');
+  export const setPieces = actionCreator<{ pieces: Pieces.Piece[] }>('BOARD_SET_PIECES');
 }

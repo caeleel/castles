@@ -59,7 +59,7 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
         }
       })
     };
-  } else if (actions.piece.setPieces.matches(action)) {
+  } else if (actions.board.setPieces.matches(action)) {
     return {
       ...state,
       pieces: action.payload.pieces,

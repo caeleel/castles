@@ -6,6 +6,7 @@ import { DragDropContext } from 'react-dnd';
 import { BoardState } from '../reducers/board';
 import TouchBackend from 'react-dnd-touch-backend';
 import HTML5Backend from 'react-dnd-html5-backend';
+import Pieces from '../lib/pieces';
 import { Score } from '../lib/score';
 
 export interface DataProps {
@@ -19,6 +20,7 @@ export interface EventHandlerProps {
   deletePiece(id: number): void;
   addPiece(id: number): void;
   selectPiece(id: number): void;
+  setPieces(pieces: Pieces.Piece[]): void;
 }
 
 let isMobile = () => {
@@ -30,6 +32,36 @@ let isMobile = () => {
 class App extends React.Component<DataProps & EventHandlerProps, {}> {
   componentWillMount() {
     document.addEventListener("keydown", this.onKeyPressed.bind(this));
+
+    this.loadPiecesFromUrlHash();
+  }
+
+  loadPiecesFromUrlHash() {
+    if (window.location.hash[0] === "#") {
+      let piecesTextArray = window.location.hash.substring(1).split(";");
+      for (let pieceText of piecesTextArray) {
+        let loadedPieceData = Pieces.toLoadedPieceData(pieceText);
+        if (!loadedPieceData.valid) {
+          return;
+        }
+        this.props.board.pieces[loadedPieceData.id].x = loadedPieceData.x;
+        this.props.board.pieces[loadedPieceData.id].y = loadedPieceData.y;
+        this.props.board.pieces[loadedPieceData.id].orientation = loadedPieceData.orientation;
+        if (loadedPieceData.id != 15) {
+          this.props.addPiece(loadedPieceData.id);
+        }
+      }
+      console.log(this.props.board.pieces)
+      this.props.setPieces(this.props.board.pieces);
+    }
+  }
+
+  componentDidUpdate() {
+    let pieces: string[] = [];
+    for (let id of this.props.board.pieceIds) {
+      pieces.push(id + ":" + this.props.board.pieces[id].toString());
+    }
+    window.location.hash = pieces.join(";");
   }
 
   componentWillUnmount() {
