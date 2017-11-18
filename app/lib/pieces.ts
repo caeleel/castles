@@ -58,7 +58,7 @@ module Pieces {
     id?: number;
     x?: number;
     y?: number;
-    orientation?: number[];
+    rotateNumTimes?: number;
     valid: boolean;
   }
 
@@ -179,7 +179,7 @@ module Pieces {
     }
 
     public rotate = () => {
-      this.moveRelative((this.width -  this.height)/ 2, (this.height - this.width) / 2);
+      this.moveRelative((this.width - this.height) / 2, (this.height - this.width) / 2);
 
       if (this.subrect != null) {
         let xLocal = this.subrect.x - this.x;
@@ -260,7 +260,15 @@ module Pieces {
     }
 
     public toString = () => {
-      return this.x + "," + this.y + ":" + this.orientation;
+      let rotateNumTimes = 0;
+      if (this.orientation[0] == 0 && this.orientation[1] == 1) {
+        rotateNumTimes = 1;
+      } else if (this.orientation[0] == -1 && this.orientation[1] == 0) {
+        rotateNumTimes = 2;
+      } else if (this.orientation[0] == 0 && this.orientation[1] == -1) {
+        rotateNumTimes = 3;
+      }
+      return this.x + "," + this.y + ":" + rotateNumTimes;
     }
 
   }
@@ -276,15 +284,13 @@ module Pieces {
     if (coordinates.length !== 2) {
       return {valid: false};
     }
-    let orientation = parts[2].split(",");
-    if (orientation.length !== 2) {
-      return {valid: false};
-    }
+    let rotateNumTimes = +parts[2];
+
     let loadedPieceData: LoadedPieceData = {
       id: +id,
       x: +coordinates[0],
       y: +coordinates[1],
-      orientation: [+orientation[0], +orientation[1]],
+      rotateNumTimes: rotateNumTimes,
       valid: true,
     }
     return loadedPieceData;

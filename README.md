@@ -10,7 +10,7 @@ yarn
 
 Local dev server will watch local Typescript files and auto-compile when they change
 ```
-yarn s
+yarn start
 Visit localhost:8080
 ```
 

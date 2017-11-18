@@ -30,7 +30,6 @@
   },
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "server": "webpack-dev-server",
-    "s": "webpack-dev-server"
+    "start": "webpack-dev-server"
   }
 }
