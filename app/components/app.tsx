@@ -8,6 +8,7 @@ import TouchBackend from 'react-dnd-touch-backend';
 import HTML5Backend from 'react-dnd-html5-backend';
 import Pieces from '../lib/pieces';
 import { Score } from '../lib/score';
+import { UrlPieceEncoding } from '../lib/url_piece_encoding';
 
 export interface DataProps {
   pieceScores: Score.PieceScores;
@@ -38,9 +39,10 @@ class App extends React.Component<DataProps & EventHandlerProps, {}> {
 
   loadPiecesFromUrlHash() {
     if (window.location.hash[0] === "#") {
-      let piecesTextArray = window.location.hash.substring(1).split(";");
+
+      let piecesTextArray = window.location.hash.substring(1).split("&");
       for (let pieceText of piecesTextArray) {
-        let loadedPieceData = Pieces.toLoadedPieceData(pieceText);
+        let loadedPieceData = UrlPieceEncoding.toLoadedPieceData(pieceText);
         if (!loadedPieceData.valid) {
           return;
         }
@@ -55,17 +57,12 @@ class App extends React.Component<DataProps & EventHandlerProps, {}> {
           this.props.addPiece(loadedPieceData.id);
         }
       }
-      console.log(this.props.board.pieces)
       this.props.setPieces(this.props.board.pieces);
     }
   }
 
   componentDidUpdate() {
-    let pieces: string[] = [];
-    for (let id of this.props.board.pieceIds) {
-      pieces.push(id + ":" + this.props.board.pieces[id].toString());
-    }
-    window.location.hash = pieces.join(";");
+    window.location.hash = UrlPieceEncoding.encodePieces(this.props.board.pieces, this.props.board.pieceIds);
   }
 
   componentWillUnmount() {

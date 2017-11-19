@@ -54,14 +54,6 @@ module Pieces {
     [id: number]: Pieces.Piece;
   }
 
-  export interface LoadedPieceData {
-    id?: number;
-    x?: number;
-    y?: number;
-    rotateNumTimes?: number;
-    valid: boolean;
-  }
-
   export class Piece {
     public x?: number;
     public y?: number;
@@ -258,42 +250,6 @@ module Pieces {
       }
       this.moveTo(0, 0);
     }
-
-    public toString = () => {
-      let rotateNumTimes = 0;
-      if (this.orientation[0] == 0 && this.orientation[1] == 1) {
-        rotateNumTimes = 1;
-      } else if (this.orientation[0] == -1 && this.orientation[1] == 0) {
-        rotateNumTimes = 2;
-      } else if (this.orientation[0] == 0 && this.orientation[1] == -1) {
-        rotateNumTimes = 3;
-      }
-      return this.x + "," + this.y + ":" + rotateNumTimes;
-    }
-
-  }
-
-  export function toLoadedPieceData(piece: string) : LoadedPieceData {
-    let parts = piece.split(":");
-    console.log(parts);
-    if (parts.length !== 3) {
-      return {valid: false};
-    }
-    let id = parts[0];
-    let coordinates = parts[1].split(",");
-    if (coordinates.length !== 2) {
-      return {valid: false};
-    }
-    let rotateNumTimes = +parts[2];
-
-    let loadedPieceData: LoadedPieceData = {
-      id: +id,
-      x: +coordinates[0],
-      y: +coordinates[1],
-      rotateNumTimes: rotateNumTimes,
-      valid: true,
-    }
-    return loadedPieceData;
   }
 
   export function loadPieces() {
