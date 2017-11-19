@@ -46,13 +46,11 @@ class App extends React.Component<DataProps & EventHandlerProps, {}> {
         if (!loadedPieceData.valid) {
           return;
         }
-        this.props.board.pieces[loadedPieceData.id].x = loadedPieceData.x;
-        this.props.board.pieces[loadedPieceData.id].y = loadedPieceData.y;
         for (let i = 0; i < loadedPieceData.rotateNumTimes; i++) {
           let piece = this.props.board.pieces[loadedPieceData.id]
           piece.rotate();
-          piece.moveRelative((piece.width - piece.height) / 2, (piece.height - piece.width) / 2);
         }
+        this.props.board.pieces[loadedPieceData.id].moveTo(loadedPieceData.x, loadedPieceData.y);
         if (loadedPieceData.id != 15) {
           this.props.addPiece(loadedPieceData.id);
         }
