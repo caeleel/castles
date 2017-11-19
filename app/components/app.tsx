@@ -61,10 +61,6 @@ class App extends React.Component<DataProps & EventHandlerProps, {}> {
     }
   }
 
-  componentDidUpdate() {
-    window.location.hash = UrlPieceEncoding.encodePieces(this.props.board.pieces, this.props.board.pieceIds);
-  }
-
   componentWillUnmount() {
     document.removeEventListener("keydown", this.onKeyPressed.bind(this));
   }

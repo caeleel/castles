@@ -1,7 +1,8 @@
 import * as React from "react";
 import { findDOMNode } from 'react-dom';
-import Pieces from '../lib/pieces';
 import { Piece } from "./Piece";
+import Pieces from '../lib/pieces';
+import { UrlPieceEncoding } from '../lib/url_piece_encoding';
 import { Score } from "../lib/score";
 import { BoardState } from '../reducers/board';
 import {
@@ -46,6 +47,7 @@ interface State {
   zoomScale: number;
   currentPinchDistance?: number;
   currentMidpoint?: number[];
+  isDragging: boolean;
 }
 
 let sourceSpec: DragSourceSpec<BoardProps> = {
@@ -55,6 +57,7 @@ let sourceSpec: DragSourceSpec<BoardProps> = {
 let targetSpec: DropTargetSpec<BoardProps> = {
   hover: (props: BoardProps, monitor: DropTargetMonitor, component: Board) => {
     let item = (monitor.getItem() as any);
+    component.setState({isDragging: true});
 
     if (isNaN(item.id)) { // Board dragging
       const delta = monitor.getDifferenceFromInitialOffset();
@@ -81,9 +84,8 @@ let targetSpec: DropTargetSpec<BoardProps> = {
     }
   },
   drop: (props: BoardProps, monitor: DropTargetMonitor, component: Board) => {
-    component.setState({initialOffsetX: component.state.offsetX, initialOffsetY: component.state.offsetY});
+    component.setState({isDragging: false, initialOffsetX: component.state.offsetX, initialOffsetY: component.state.offsetY});
   }
-
 }
 
 @DragSource("board", sourceSpec, (connect: DragSourceConnector, monitor: DragSourceMonitor) => ({
@@ -105,10 +107,15 @@ export class Board extends React.PureComponent<BoardProps, State> {
       initialOffsetX: x,
       initialOffsetY: y,
       zoomScale: 20,
+      isDragging: false,
     }
   }
 
   render(): JSX.Element | false {
+    if (!this.state.isDragging) {
+      window.location.hash = UrlPieceEncoding.encodePieces(this.props.board.pieces, this.props.board.pieceIds);
+    }
+
     this.props.connectDragPreview(getEmptyImage(), {
       // IE fallback: specify that we'd rather screenshot the node
       // when it already knows it's being dragged so we can hide it with CSS.
