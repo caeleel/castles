@@ -78,6 +78,7 @@ class App extends React.Component<DataProps & EventHandlerProps, {}> {
       case 39: x = Math.floor((x + 2) / 2) * 2; break; // right
       case 32: this.props.rotatePiece(this.props.board.selectedPieceId); return; // spacebar
       case 8: this.props.deletePiece(this.props.board.selectedPieceId); return; // backspace
+      case 46: this.props.deletePiece(this.props.board.selectedPieceId); return; // delete
       default: return;
     }
     this.props.movePiece(this.props.board.selectedPieceId, x, y)
