@@ -31,5 +31,8 @@
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "start": "webpack-dev-server"
+  },
+  "devDependencies": {
+    "tslint": "^5.8.0"
   }
 }
