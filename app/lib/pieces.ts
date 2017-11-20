@@ -98,6 +98,12 @@ namespace Pieces {
              this.touchesSide(p, [0, -1]);
     }
 
+    /* orientation represents:
+     * [1, 0]: touches top side
+     * [0, 1]: touches right side
+     * [-1, 0]: touches bottom
+     * [0, -1]: touches left side
+     */
     public touchesSide = (p: Piece, orientation: number[]) => {
       const tester = new Piece(0, 0, 0, 0, 0, 0, 0, [], [], "rectangle", null, "tester");
       if (this.type === "rectangle") {
@@ -113,8 +119,10 @@ namespace Pieces {
       } else if (this.type == "circle") {
         tester.width = cellLen;
         tester.height = cellLen;
-        tester.x = this.x + orientation[1] * cellLen * (p.type === "rectangle" ? 3 : 4) + cellLen * 2;
-        tester.y = this.y - orientation[0] * cellLen * (p.type === "rectangle" ? 3 : 4)  + cellLen * 2;
+        const baseWidth = (this.width - cellLen)/(2 * cellLen); // 2 for radius 5 circles, 1 for radius 3
+        const offset = baseWidth + (p.type === "rectangle" ? 1 : 2);
+        tester.x = this.x + orientation[1] * cellLen * offset + cellLen * baseWidth;
+        tester.y = this.y - orientation[0] * cellLen * offset  + cellLen * baseWidth;
 
         return tester.overlap(p) > 0;
       }
