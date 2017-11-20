@@ -4,7 +4,7 @@ import {
   DropTarget,
   DropTargetConnector,
   DropTargetMonitor,
-  DropTargetSpec } from 'react-dnd';
+  DropTargetSpec } from "react-dnd";
 
 export interface EventHandlerProps {
   deletePiece(id: number): void;
@@ -18,26 +18,26 @@ interface DragAndDropHandlerProps {
 
 export type GarbageProps = EventHandlerProps & DragAndDropHandlerProps;
 
-let targetSpec: DropTargetSpec<GarbageProps> = {
+const targetSpec: DropTargetSpec<GarbageProps> = {
   drop: (props: GarbageProps, monitor: DropTargetMonitor, component: Garbage) => {
-    let item = (monitor.getItem() as any);
+    const item = (monitor.getItem() as any);
 
     props.deletePiece(item.id);
   },
   canDrop: (props: GarbageProps, monitor: DropTargetMonitor) => {
-    let item = (monitor.getItem() as any);
+    const item = (monitor.getItem() as any);
     return item.id != 15;
-  }
-}
+  },
+};
 
-@DropTarget('piece', targetSpec, (connect: DropTargetConnector, monitor: DropTargetMonitor) => ({
+@DropTarget("piece", targetSpec, (connect: DropTargetConnector, monitor: DropTargetMonitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
   canDrop: monitor.canDrop(),
 }))
 export class Garbage extends React.Component<GarbageProps, {}> {
-  render(): JSX.Element | false {
-    let { connectDropTarget, isOver, canDrop } = this.props;
+  public render(): JSX.Element | false {
+    const { connectDropTarget, isOver, canDrop } = this.props;
 
     let className = "garbage";
     if (canDrop) { className += " visible"; }

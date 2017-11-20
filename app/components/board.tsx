@@ -1,25 +1,25 @@
 import * as React from "react";
-import { findDOMNode } from 'react-dom';
-import { Piece } from "./Piece";
-import Pieces from '../lib/pieces';
-import { UrlPieceEncoding } from '../lib/url_piece_encoding';
-import { Score } from "../lib/score";
-import { BoardState } from '../reducers/board';
 import {
-  DragDropContext,
-  ConnectDropTarget,
-  ConnectDragSource,
   ConnectDragPreview,
+  ConnectDragSource,
+  ConnectDropTarget,
+  DragDropContext,
   DragSource,
-  DragSourceSpec,
   DragSourceCollector,
   DragSourceConnector,
   DragSourceMonitor,
+  DragSourceSpec,
   DropTarget,
   DropTargetConnector,
   DropTargetMonitor,
-  DropTargetSpec } from 'react-dnd';
-import { getEmptyImage } from 'react-dnd-html5-backend';
+  DropTargetSpec } from "react-dnd";
+import { getEmptyImage } from "react-dnd-html5-backend";
+import { findDOMNode } from "react-dom";
+import Pieces from "../lib/pieces";
+import { Score } from "../lib/score";
+import { UrlPieceEncoding } from "../lib/url_piece_encoding";
+import { BoardState } from "../reducers/board";
+import { Piece } from "./Piece";
 
 export interface DataProps {
   pieceScores: Score.PieceScores;
@@ -50,13 +50,13 @@ interface State {
   isDragging: boolean;
 }
 
-let sourceSpec: DragSourceSpec<BoardProps> = {
-  beginDrag: (props: BoardProps, monitor: DragSourceMonitor, component: Board) => (component.state)
+const sourceSpec: DragSourceSpec<BoardProps> = {
+  beginDrag: (props: BoardProps, monitor: DragSourceMonitor, component: Board) => (component.state),
 };
 
-let targetSpec: DropTargetSpec<BoardProps> = {
+const targetSpec: DropTargetSpec<BoardProps> = {
   hover: (props: BoardProps, monitor: DropTargetMonitor, component: Board) => {
-    let item = (monitor.getItem() as any);
+    const item = (monitor.getItem() as any);
     component.setState({isDragging: true});
 
     if (isNaN(item.id)) { // Board dragging
@@ -66,41 +66,41 @@ let targetSpec: DropTargetSpec<BoardProps> = {
       const offsetY = component.state.initialOffsetY + delta.y;
 
       component.setState({
-        offsetX: offsetX,
-        offsetY: offsetY,
-      })
+        offsetX,
+        offsetY,
+      });
     } else { // Piece hover
       const delta = monitor.getDifferenceFromInitialOffset();
 
       const offsetX = monitor.getInitialSourceClientOffset().x - component.state.offsetX;
       const offsetY = monitor.getInitialSourceClientOffset().y - component.state.offsetY;
 
-      let left = Math.round((delta.x + offsetX) / component.state.zoomScale / 2) * 2;
-      let top = Math.round((delta.y + offsetY) / component.state.zoomScale / 2) * 2;
+      const left = Math.round((delta.x + offsetX) / component.state.zoomScale / 2) * 2;
+      const top = Math.round((delta.y + offsetY) / component.state.zoomScale / 2) * 2;
 
       const piece = props.board.pieces[item.id];
-      if (piece.x != left || piece.y != top) props.movePiece(item.id, left, top);
-      if (props.board.selectedPieceId != item.id) props.selectPiece(item.id);
+      if (piece.x != left || piece.y != top) { props.movePiece(item.id, left, top); }
+      if (props.board.selectedPieceId != item.id) { props.selectPiece(item.id); }
     }
   },
   drop: (props: BoardProps, monitor: DropTargetMonitor, component: Board) => {
     component.setState({isDragging: false, initialOffsetX: component.state.offsetX, initialOffsetY: component.state.offsetY});
-  }
-}
+  },
+};
 
 @DragSource("board", sourceSpec, (connect: DragSourceConnector, monitor: DragSourceMonitor) => ({
   connectDragSource: connect.dragSource(),
   connectDragPreview: connect.dragPreview(),
-  isDragging: monitor.isDragging()
+  isDragging: monitor.isDragging(),
 }))
-@DropTarget(['board', 'piece'], targetSpec, (connect: DropTargetConnector, monitor: DropTargetMonitor) => ({
+@DropTarget(["board", "piece"], targetSpec, (connect: DropTargetConnector, monitor: DropTargetMonitor) => ({
   connectDropTarget: connect.dropTarget(),
 }))
 export class Board extends React.PureComponent<BoardProps, State> {
   constructor() {
     super();
-    let x = document.body.clientWidth / 2 - 60;
-    let y = document.body.clientHeight / 2 - 60;
+    const x = document.body.clientWidth / 2 - 60;
+    const y = document.body.clientHeight / 2 - 60;
     this.state = {
       offsetX: x,
       offsetY: y,
@@ -108,10 +108,10 @@ export class Board extends React.PureComponent<BoardProps, State> {
       initialOffsetY: y,
       zoomScale: 20,
       isDragging: false,
-    }
+    };
   }
 
-  render(): JSX.Element | false {
+  public render(): JSX.Element | false {
     if (!this.state.isDragging) {
       window.location.hash = UrlPieceEncoding.encodePieces(this.props.board.pieces, this.props.board.pieceIds);
     }
@@ -121,40 +121,39 @@ export class Board extends React.PureComponent<BoardProps, State> {
       // when it already knows it's being dragged so we can hide it with CSS.
       captureDraggingState: true,
     });
-    let { board, connectDragSource, connectDropTarget, movePiece, selectPiece, pieceScores } = this.props;
+    const { board, connectDragSource, connectDropTarget, movePiece, selectPiece, pieceScores } = this.props;
 
+    const touchEnd = (e: TouchEvent) => {
+      this.setState({currentPinchDistance: null, currentMidpoint: null});
+    };
 
-    let touchEnd = (e: TouchEvent) => {
-      this.setState({currentPinchDistance: null, currentMidpoint: null})
-    }
-
-    let touchMove = (e: TouchEvent) => {
+    const touchMove = (e: TouchEvent) => {
       if (e.touches.length != 2) {
         return;
       }
-      let d = Math.sqrt(
+      const d = Math.sqrt(
         Math.pow(e.touches[0].clientX - e.touches[1].clientX, 2) +
-        Math.pow(e.touches[0].clientY - e.touches[1].clientY, 2)
-      )
-      let currentMidpoint = [
+        Math.pow(e.touches[0].clientY - e.touches[1].clientY, 2),
+      );
+      const currentMidpoint = [
         (e.touches[0].clientX + e.touches[1].clientX) / 2,
         (e.touches[0].clientY + e.touches[1].clientY) / 2,
-      ]
+      ];
       if (this.state.currentPinchDistance && this.state.currentMidpoint) {
-        zoom(currentMidpoint[0], currentMidpoint[1], d / this.state.currentPinchDistance - 1)
+        zoom(currentMidpoint[0], currentMidpoint[1], d / this.state.currentPinchDistance - 1);
       }
-      this.setState({currentPinchDistance: d, currentMidpoint: currentMidpoint})
+      this.setState({currentPinchDistance: d, currentMidpoint});
 
-      e.preventDefault() // prevent iOS overscrolling
-    }
+      e.preventDefault(); // prevent iOS overscrolling
+    };
 
-    let zoom = (x: number, y: number, delta: number) => {
+    const zoom = (x: number, y: number, delta: number) => {
 
       const offsetX = this.state.offsetX + (this.state.offsetX - x) * delta;
       const offsetY = this.state.offsetY + (this.state.offsetY - y) * delta;
       const newZoom = this.state.zoomScale * (1 + delta);
 
-      if (newZoom < 5 || newZoom > 50) return;
+      if (newZoom < 5 || newZoom > 50) { return; }
 
       this.setState({
         offsetX,
@@ -163,18 +162,18 @@ export class Board extends React.PureComponent<BoardProps, State> {
         initialOffsetY: offsetY,
         zoomScale: newZoom,
       });
-    }
+    };
 
-    let wheel = (e: WheelEvent) => {
+    const wheel = (e: WheelEvent) => {
       let dy = -e.deltaY / 100;
-      if (navigator.platform == 'Win32') dy /= 8;
+      if (navigator.platform == "Win32") { dy /= 8; }
       zoom(e.clientX, e.clientY, dy);
-    }
+    };
 
     return connectDragSource(connectDropTarget(
       <div
         className="board"
-        onClick={() => { selectPiece(-1) }}
+        onClick={() => { selectPiece(-1); }}
         onTouchEnd={touchEnd.bind(this)}
         onTouchMove={touchMove.bind(this)}
         onWheel={wheel.bind(this)}
@@ -191,14 +190,14 @@ export class Board extends React.PureComponent<BoardProps, State> {
                 connectDragPreview={null}
                 selectPiece={selectPiece}
                 selected={board.selectedPieceId == index}
-                scorable={typeof pieceScores[index] === 'number'}
+                scorable={typeof pieceScores[index] === "number"}
                 score={pieceScores[index]}
                 zoomScale={this.state.zoomScale}
               />
             ))
           }
          </div>
-      </div>
+      </div>,
     ));
   }
 }

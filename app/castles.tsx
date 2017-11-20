@@ -1,28 +1,28 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import * as ReactRedux from 'react-redux';
-import * as Redux from 'redux';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import * as ReactRedux from "react-redux";
+import * as Redux from "redux";
 
-import { AppContainer } from './containers/app';
-import castlesApp from './reducers/reducers';
-import Pieces from './lib/pieces';
+import { AppContainer } from "./containers/app";
+import Pieces from "./lib/pieces";
+import castlesApp from "./reducers/reducers";
 
-document.addEventListener('DOMContentLoaded', () => {
-  Pieces.loadPieces().then((pieces : Pieces.Piece[]) => {
-    let store = Redux.createStore(castlesApp, {
+document.addEventListener("DOMContentLoaded", () => {
+  Pieces.loadPieces().then((pieces: Pieces.Piece[]) => {
+    const store = Redux.createStore(castlesApp, {
       board: {
         pieceIds: [15],
-        pieces: pieces,
-        selectedPieceId: -1
-      }
-    })
+        pieces,
+        selectedPieceId: -1,
+      },
+    });
     ReactDOM.render(
       <ReactRedux.Provider store={store}>
         <AppContainer />
       </ReactRedux.Provider>,
-      document.getElementById("castles")
+      document.getElementById("castles"),
     );
-  }).catch(err => {
+  }).catch((err) => {
     console.log(err);
-  })
+  });
 });

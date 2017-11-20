@@ -1,8 +1,8 @@
 import * as React from "react";
-import Pieces from '../lib/pieces';
-import { Garbage } from './garbage';
-import { BoardState } from '../reducers/board';
-var Autosuggest = require("react-autosuggest")
+import Pieces from "../lib/pieces";
+import { BoardState } from "../reducers/board";
+import { Garbage } from "./garbage";
+const Autosuggest = require("react-autosuggest");
 
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
@@ -44,27 +44,27 @@ export class Search extends React.Component<SearchProps, State> {
     // Suggestions also need to be provided to the Autosuggest,
     // and they are initially empty because the Autosuggest is closed.
     this.state = {
-      value: '',
-      suggestions: []
+      value: "",
+      suggestions: [],
     };
   }
 
-  onChange = (event: any, { newValue }: {newValue: string}) => {
+  public onChange = (event: any, { newValue }: {newValue: string}) => {
     this.setState({
-      value: newValue
+      value: newValue,
     });
-  };
+  }
 
   // Teach Autosuggest how to calculate suggestions for any given input value.
-  getSuggestions = (value: string) => {
+  public getSuggestions = (value: string) => {
     const inputValue = value.trim().toLowerCase();
 
-    let pieceMap: Pieces.PieceMap = {};
-    for (let id of this.props.board.pieceIds) {
+    const pieceMap: Pieces.PieceMap = {};
+    for (const id of this.props.board.pieceIds) {
       pieceMap[id] = this.props.board.pieces[id];
     }
 
-    let prevPieceName = '';
+    let prevPieceName = "";
     return this.props.board.pieces.filter((piece: Pieces.Piece, index: number) => {
       if (prevPieceName == piece.name || pieceMap[index]) {
         return false;
@@ -74,59 +74,59 @@ export class Search extends React.Component<SearchProps, State> {
     }).map((piece: Pieces.Piece) => {
       return piece.name;
     }).sort();
-  };
+  }
 
   // Autosuggest will call this function every time you need to update suggestions.
   // You already implemented this logic above, so just use it.
-  onSuggestionsFetchRequested = ({ value }: {value: string}) => {
+  public onSuggestionsFetchRequested = ({ value }: {value: string}) => {
     this.props.selectPiece(-1);
     this.setState({
-      suggestions: this.getSuggestions(value)
+      suggestions: this.getSuggestions(value),
     });
-  };
+  }
 
   // Autosuggest will call this function every time you need to clear suggestions.
-  onSuggestionsClearRequested = () => {
+  public onSuggestionsClearRequested = () => {
     this.setState({
-      suggestions: []
+      suggestions: [],
     });
-  };
+  }
 
   // Autosuggest will call this function every time suggestion is selected via mouse or keyboard.
-  onSuggestionSelected = (event: Event, suggestionEventData: any) => {
-    let pieceMap: Pieces.PieceMap = {};
-    for (let id of this.props.board.pieceIds) {
+  public onSuggestionSelected = (event: Event, suggestionEventData: any) => {
+    const pieceMap: Pieces.PieceMap = {};
+    for (const id of this.props.board.pieceIds) {
       pieceMap[id] = this.props.board.pieces[id];
     }
 
-    for (let index in this.props.board.pieces) {
+    for (const index in this.props.board.pieces) {
       if (this.props.board.pieces[index].name == suggestionEventData.suggestionValue && !pieceMap[index]) {
         this.props.addPiece(+index);
         this.setState({value: ""});
         return;
       }
     }
-  };
-
-  pieceNames = () => {
-    return this.props.board.pieces.map((piece: Pieces.Piece) => { return piece.name });
   }
 
-  render() {
+  public pieceNames = () => {
+    return this.props.board.pieces.map((piece: Pieces.Piece) => piece.name);
+  }
+
+  public render() {
     const { deletePiece, board } = this.props;
     const { value, suggestions } = this.state;
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
-      placeholder: 'Search for a castle piece',
+      placeholder: "Search for a castle piece",
       value,
-      onChange: this.onChange
+      onChange: this.onChange,
     };
 
     return (
       <div>
         <Garbage isOver={false} canDrop={false} deletePiece={deletePiece} connectDropTarget={null} />
-        <form onSubmit={(e: any) => {e.preventDefault();}}>
+        <form onSubmit={(e: any) => {e.preventDefault(); }}>
           <Autosuggest
             suggestions={suggestions}
             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -143,4 +143,3 @@ export class Search extends React.Component<SearchProps, State> {
     );
   }
 }
-

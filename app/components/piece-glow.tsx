@@ -12,11 +12,11 @@ interface Props {
   scorable: boolean;
 }
 
-export module PieceGlow {
+export namespace PieceGlow {
   export class PieceGlow extends React.Component<Props, {}> {
 
-    glowStyle() {
-      let { x, y, height, width, zoomScale, rotation } = this.props;
+    public glowStyle() {
+      const { x, y, height, width, zoomScale, rotation } = this.props;
 
       return {
         left: x * zoomScale,
@@ -24,19 +24,19 @@ export module PieceGlow {
         height: height * zoomScale,
         width: width * zoomScale,
         transform: "rotate(" + rotation + "rad)",
-      }
+      };
     }
 
-    className() {
+    public className() {
       if (this.props.scorable) {
         return "glow scorable";
       } else {
-        return "glow"
+        return "glow";
       }
     }
 
-    render() {
-      let { id, type } = this.props;
+    public render() {
+      const { id, type } = this.props;
 
       if (id == 15) {
         return null;

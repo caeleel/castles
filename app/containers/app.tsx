@@ -1,15 +1,15 @@
-import { connect } from 'react-redux'
-import * as actions from '../actions/actions';
-import { Dispatch } from 'redux';
-import App, { DataProps, EventHandlerProps } from '../components/app'
-import { AppState } from '../reducers/reducers';
-import Pieces from '../lib/pieces';
-import { Score } from '../lib/score';
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import * as actions from "../actions/actions";
+import App, { DataProps, EventHandlerProps } from "../components/app";
+import Pieces from "../lib/pieces";
+import { Score } from "../lib/score";
+import { AppState } from "../reducers/reducers";
 
 function mapStateToProps(state: AppState): DataProps {
-  let scorablePieceMap = Score.getScorablePieceMap(state.board.pieces, state.board.pieceIds);
-  let keys: number[] = [];
-  for (let i in scorablePieceMap) {
+  const scorablePieceMap = Score.getScorablePieceMap(state.board.pieces, state.board.pieceIds);
+  const keys: number[] = [];
+  for (const i in scorablePieceMap) {
     keys.push(+i);
   }
   return {
@@ -28,7 +28,7 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>): EventHandlerProps {
     },
     deletePiece(id: number): void {
       dispatch(actions.board.selectPiece({id: -1}));
-      dispatch(actions.board.deletePiece({id: id}));
+      dispatch(actions.board.deletePiece({id}));
     },
     addPiece(id: number): void {
       dispatch(actions.board.addPiece({id}));
@@ -47,4 +47,3 @@ export const AppContainer = connect<DataProps, EventHandlerProps, {}>(
   mapStateToProps,
   mapDispatchToProps,
 )(App);
-

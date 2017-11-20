@@ -1,5 +1,5 @@
-import * as actions from '../actions/actions';
-import Pieces from '../lib/pieces';
+import * as actions from "../actions/actions";
+import Pieces from "../lib/pieces";
 
 export interface BoardState {
   pieces: Pieces.Piece[];
@@ -10,7 +10,7 @@ export interface BoardState {
 export const DEFAULT_BOARD_STATE: BoardState = {
   pieceIds: [],
   pieces: [],
-  selectedPieceId: 0
+  selectedPieceId: 0,
 };
 
 export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: actions.Action<any>): BoardState {
@@ -19,7 +19,7 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
     // newPiece.y = state.pieceIds.length; // set y coord to length to stagger multiple incoming pieces
     return {
       ...state,
-      pieceIds: [...state.pieceIds, action.payload.id]
+      pieceIds: [...state.pieceIds, action.payload.id],
     };
   } else if (actions.board.movePiece.matches(action)) {
     return {
@@ -32,7 +32,7 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
         } else {
           return piece;
         }
-      })
+      }),
     };
   } else if (actions.board.selectPiece.matches(action)) {
     return {
@@ -44,7 +44,7 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
       ...state,
       pieceIds: state.pieceIds.filter((index: number) => {
         return index == 15 || index != action.payload.id;
-      })
+      }),
     };
   } else if (actions.board.rotatePiece.matches(action)) {
     return {
@@ -57,13 +57,13 @@ export function boardReducer(state: BoardState = DEFAULT_BOARD_STATE, action: ac
         } else {
           return piece;
         }
-      })
+      }),
     };
   } else if (actions.board.setPieces.matches(action)) {
     return {
       ...state,
       pieces: action.payload.pieces,
-    }
+    };
   } else {
     return state;
   }

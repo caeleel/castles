@@ -1,4 +1,4 @@
-import * as redux from 'redux'
+import * as redux from "redux";
 
 export interface Action<TPayload> extends redux.Action {
   payload?: TPayload;
@@ -6,8 +6,8 @@ export interface Action<TPayload> extends redux.Action {
   meta?: any;
   optimist?: {
     type: string
-    id: number
-  }
+    id: number,
+  };
 }
 
 export interface ActionCreator<TPayload> {
@@ -21,11 +21,11 @@ export function actionCreator<TPayload>(type: string): ActionCreator<TPayload>;
 export function actionCreator(type: string) {
   const creator: any = (payload = {}) => {
     return { type, payload };
-  }
+  };
 
   creator.matches = (action: Action<any>) => {
     return action.type == type;
-  }
+  };
 
   return creator;
 }

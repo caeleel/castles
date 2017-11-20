@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BoardState } from '../reducers/board';
+import { BoardState } from "../reducers/board";
 
 export interface DataProps {
   board: BoardState;
@@ -12,8 +12,8 @@ export interface EventHandlerProps {
 export type RotateButtonProps = DataProps & EventHandlerProps;
 
 export class RotateButton extends React.Component<RotateButtonProps, {}> {
-  render() {
-    let { selectedPieceId } = this.props.board;
+  public render() {
+    const { selectedPieceId } = this.props.board;
     if (selectedPieceId < 0) {
       return null;
     }
@@ -21,7 +21,7 @@ export class RotateButton extends React.Component<RotateButtonProps, {}> {
     return (
       <button
         className="rotate"
-        onClick={() => { this.props.rotatePiece(selectedPieceId) }}
+        onClick={() => { this.props.rotatePiece(selectedPieceId); }}
         onTouchStart={(e: any) => {
           this.props.rotatePiece(selectedPieceId);
           e.preventDefault(); // Prevent double click from zooming the page in on mobile
@@ -30,6 +30,6 @@ export class RotateButton extends React.Component<RotateButtonProps, {}> {
       {document.body.clientWidth > 600 && (<span className="rotate-tooltip">spacebar</span>)}
       </button>
 
-    )
+    );
   }
 }

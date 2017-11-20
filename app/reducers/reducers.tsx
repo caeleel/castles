@@ -1,9 +1,9 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from "redux";
 
 import {
-  BoardState,
   boardReducer,
-} from './board';
+  BoardState,
+} from "./board";
 
 export interface AppState {
   board: BoardState;
@@ -11,6 +11,6 @@ export interface AppState {
 
 const castlesApp = combineReducers<AppState>({
   board: boardReducer,
-})
+});
 
-export default castlesApp
+export default castlesApp;
