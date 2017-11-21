@@ -54,12 +54,12 @@ input[type="text"] {
   margin: 0px;
 }
 
-.react-autosuggest__suggestions-list li:nth-child(even) {
+.react-autosuggest__suggestions-list :nth-child(even) {
   background-color: #EEEEEE;
 }
 
-.react-autosuggest__suggestion--highlighted {
-  background-color: #FFFFCC;
+.react-autosuggest__suggestion--highlighted, .react-autosuggest__suggestion--highlighted:nth-child(even) {
+  background-color: #F8F8AA;
 }
 
 .suggestion-content {
