@@ -47,7 +47,8 @@ interface State {
   zoomScale: number;
   currentPinchDistance?: number;
   currentMidpoint?: number[];
-  isDragging: boolean;
+  shouldBeUpdatingUrlHash: boolean;
+  isCurrentlyTwoFingerPinching: boolean;
 }
 
 const sourceSpec: DragSourceSpec<BoardProps> = {
@@ -57,7 +58,10 @@ const sourceSpec: DragSourceSpec<BoardProps> = {
 const targetSpec: DropTargetSpec<BoardProps> = {
   hover: (props: BoardProps, monitor: DropTargetMonitor, component: Board) => {
     const item = (monitor.getItem() as any);
-    component.setState({isDragging: true});
+    if (component.state.isCurrentlyTwoFingerPinching) {
+      return;
+    }
+    component.setState({shouldBeUpdatingUrlHash: false});
 
     if (isNaN(item.id)) { // Board dragging
       const delta = monitor.getDifferenceFromInitialOffset();
@@ -84,7 +88,7 @@ const targetSpec: DropTargetSpec<BoardProps> = {
     }
   },
   drop: (props: BoardProps, monitor: DropTargetMonitor, component: Board) => {
-    component.setState({isDragging: false, initialOffsetX: component.state.offsetX, initialOffsetY: component.state.offsetY});
+    component.setState({shouldBeUpdatingUrlHash: true, initialOffsetX: component.state.offsetX, initialOffsetY: component.state.offsetY});
   },
 };
 
@@ -107,12 +111,13 @@ export class Board extends React.PureComponent<BoardProps, State> {
       initialOffsetX: x,
       initialOffsetY: y,
       zoomScale: 20,
-      isDragging: false,
+      shouldBeUpdatingUrlHash: false,
+      isCurrentlyTwoFingerPinching: false,
     };
   }
 
   public render(): JSX.Element | false {
-    if (!this.state.isDragging) {
+    if (this.state.shouldBeUpdatingUrlHash) {
       window.location.hash = UrlPieceEncoding.encodePieces(this.props.board.pieces, this.props.board.pieceIds);
     }
 
@@ -124,7 +129,7 @@ export class Board extends React.PureComponent<BoardProps, State> {
     const { board, connectDragSource, connectDropTarget, movePiece, selectPiece, pieceScores } = this.props;
 
     const touchEnd = (e: TouchEvent) => {
-      this.setState({currentPinchDistance: null, currentMidpoint: null});
+      this.setState({currentPinchDistance: null, currentMidpoint: null, isCurrentlyTwoFingerPinching: false});
     };
 
     const touchMove = (e: TouchEvent) => {
@@ -142,7 +147,7 @@ export class Board extends React.PureComponent<BoardProps, State> {
       if (this.state.currentPinchDistance && this.state.currentMidpoint) {
         zoom(currentMidpoint[0], currentMidpoint[1], d / this.state.currentPinchDistance - 1);
       }
-      this.setState({currentPinchDistance: d, currentMidpoint});
+      this.setState({currentPinchDistance: d, currentMidpoint, isCurrentlyTwoFingerPinching: true});
 
       e.preventDefault(); // prevent iOS overscrolling
     };
