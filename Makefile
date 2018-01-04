@@ -3,4 +3,4 @@ make lint:
 
 deploy:
 	yarn build
-	scp index.html castles.css pieces.json .htaccess dist/bundle-castles.js dist/bundle-castles.js.map favicon.ico golfsinteppadon.com:madcastles.com
+	scp index.html castles.css pieces.json .htaccess dist/bundle-castles.js favicon.ico golfsinteppadon.com:madcastles.com
