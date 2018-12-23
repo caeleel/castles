@@ -1,4 +1,4 @@
-import "isomorphic-fetch";
+import piecesJson from "../../pieces";
 
 namespace Pieces {
   const cellLen: number = 2;
@@ -255,46 +255,42 @@ namespace Pieces {
   }
 
   export function loadPieces() {
-    return fetch("pieces.json")
-      .then((resp) => {
-        return resp.json();
-      }).then((pieces: PieceFile) => {
-        const rooms: Piece[] = [];
+    let pieces = piecesJson as PieceFile
+    const rooms: Piece[] = [];
 
-        Object.keys(pieces).forEach((sqft: string) => {
-          const roomSize: RoomSize = pieces[sqft];
-          Object.keys(roomSize.rooms).forEach((roomType: string) => {
-            const room: Room = roomSize.rooms[roomType];
-            Object.keys(room.instances).forEach((name: string) => {
-              const instance: RoomInstance = room.instances[name];
-              const n = instance.number || 1;
-              for (let i = 0; i < n; i++) {
-                if (instance.exits) {
-                  for (let j = 0; j < instance.exits.length; j++) {
-                    instance.exits[j] = instance.exits[j].slice(0);
-                  }
-                }
-                rooms.push(new Piece(
-                  roomSize.dimensions[0],
-                  roomSize.dimensions[1],
-                  sqft === "150-H" ? 150 : Number(sqft),
-                  room.points || 0,
-                  room.modifier || 0,
-                  room.touches_modifier || 0,
-                  instance.all_modifier || room.all_modifier || 0,
-                  instance.combo ? instance.combo.slice(0) : [],
-                  instance.exits ? instance.exits.slice(0) : [],
-                  roomSize.type,
-                  roomType,
-                  name,
-                ));
+    Object.keys(pieces).forEach((sqft: string) => {
+      const roomSize: RoomSize = pieces[sqft];
+      Object.keys(roomSize.rooms).forEach((roomType: string) => {
+        const room: Room = roomSize.rooms[roomType];
+        Object.keys(room.instances).forEach((name: string) => {
+          const instance: RoomInstance = room.instances[name];
+          const n = instance.number || 1;
+          for (let i = 0; i < n; i++) {
+            if (instance.exits) {
+              for (let j = 0; j < instance.exits.length; j++) {
+                instance.exits[j] = instance.exits[j].slice(0);
               }
-            });
-          });
+            }
+            rooms.push(new Piece(
+              roomSize.dimensions[0],
+              roomSize.dimensions[1],
+              sqft === "150-H" ? 150 : Number(sqft),
+              room.points || 0,
+              room.modifier || 0,
+              room.touches_modifier || 0,
+              instance.all_modifier || room.all_modifier || 0,
+              instance.combo ? instance.combo.slice(0) : [],
+              instance.exits ? instance.exits.slice(0) : [],
+              roomSize.type,
+              roomType,
+              name,
+            ));
+          }
         });
-
-        return rooms;
       });
+    });
+
+    return rooms;
   }
 }
 

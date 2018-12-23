@@ -3,7 +3,7 @@ lint:
 
 deploy:
 	yarn build
-	scp index.html castles.css pieces.json .htaccess dist/bundle-castles.js favicon.ico golfsinteppadon.com:/var/www/madcastles.com
+	scp index.html castles.css .htaccess dist/bundle-castles.js favicon.ico golfsinteppadon.com:/var/www/madcastles.com
 
 deploy-images:
 	ssh golfsinteppadon.com "mkdir /var/www/madcastles.com/public"

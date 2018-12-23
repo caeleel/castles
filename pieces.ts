@@ -1,4 +1,4 @@
-{
+export default {
   "75": {
     "type": "rectangle",
     "dimensions": [6, 2],
@@ -573,4 +573,4 @@
       }
     }
   }
-}
+};

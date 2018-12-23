@@ -8,21 +8,17 @@ import Pieces from "./lib/pieces";
 import castlesApp from "./reducers/reducers";
 
 document.addEventListener("DOMContentLoaded", () => {
-  Pieces.loadPieces().then((pieces: Pieces.Piece[]) => {
-    const store = Redux.createStore(castlesApp, {
-      board: {
-        pieceIds: [15],
-        pieces,
-        selectedPieceId: -1,
-      },
-    });
-    ReactDOM.render(
-      <ReactRedux.Provider store={store}>
-        <AppContainer />
-      </ReactRedux.Provider>,
-      document.getElementById("castles"),
-    );
-  }).catch((err) => {
-    console.log(err);
+  const store = Redux.createStore(castlesApp, {
+    board: {
+      pieceIds: [15],
+      pieces: Pieces.loadPieces(),
+      selectedPieceId: -1,
+    },
   });
+  ReactDOM.render(
+    <ReactRedux.Provider store={store}>
+      <AppContainer />
+    </ReactRedux.Provider>,
+    document.getElementById("castles"),
+  );
 });
